@@ -1,2 +1,0 @@
-VDCM codec
-verilog
