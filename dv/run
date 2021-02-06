@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+vcs  -sverilog -full64 -f ../flist \
+  +lint=TFIPC-L \
+  -P $Verdi_HOME/share/PLI/VCS/LINUX64/novas.tab $Verdi_HOME/share/PLI/VCS/LINUX64/pli.a \
+  -l run.log \
+  +v2k \
+  -debug_all \
+  +notimingcheck \
+  -lca \
+
+./simv -l sim.log
+
+
