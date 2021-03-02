@@ -1,10 +1,13 @@
-module bitparse
+module bitparse #(parameter ssm_idx = 0)
 (
 input clk,
 input rstn,
 input start_dec,
 output codec_data_rd_en,
-input [127:0] codec_data
+input [127:0] codec_data,
+
+
+output [7:0] pnxtBlkQuant [0:16-1]
 
 );
 
@@ -14,6 +17,13 @@ reg [7:0] ssm0_fullness_ff;
 wire [7:0] ssmFunnelShiterSize = 255;//2*m_seMaxSize -1;
 reg [254:0] shifter0;
 wire wr_shifter0;
+
+wire [127:0] suffix_rmc0;
+wire [127:0] suffix_rmc01;
+wire [7:0] qres_size;
+reg [127:0] suffix;
+reg [2:0] stepSize_ssm0;
+wire [3:0] numPx = 16;//getWidth * getHeight
 
 reg [7:0]nxtBlkbitsSsm0 ;
 assign ssm0_fullness = /*wr_shifter0 ? ssm0_fullness_ff + 128 -nxtBlkbitsSsm0 : */ssm0_fullness_ff - nxtBlkbitsSsm0;
@@ -32,6 +42,7 @@ assign wr_shifter0 = start_dec & (ssm0_fullness< m_seMaxSize);
 //  else
 //    wr_shifter0 <= 0;
 
+wire [254:0] shifter_left = shifter0 << nxtBlkbitsSsm0;
 always@(posedge clk or negedge rstn)
   if(~rstn)
     shifter0 <= 0;
@@ -39,11 +50,15 @@ always@(posedge clk or negedge rstn)
     if(ssm0_fullness_ff==0)
       shifter0 <= {codec_data,127'b0};
     else
+      //case(ssm0_fullness)
+      //8'd48 : shifter0 <= {shifter0[47+127:127],codec_data,{255-48-128{1'b0}}};
       case(ssm0_fullness)
-      8'd48 : shifter0 <= {shifter0[47+127:127],codec_data,{255-48-128{1'b0}}};
-      default : shifter0 <= {shifter0[254:128],codec_data};
+      8'd48 : shifter0 <= {shifter_left[254-:48],codec_data,{255-48-128{1'b0}}};
+      8'd56 : shifter0 <= {shifter_left[254-:56],codec_data,{255-56-128{1'b0}}};
+      8'd98 : shifter0 <= {shifter_left[254-:98],codec_data,{255-98-128{1'b0}}};
+      8'd112 : shifter0 <= {shifter_left[254-:112],codec_data,{255-112-128{1'b0}}};
+      default : shifter0 <= {shifter_left[254:-128],codec_data};
       endcase
-
 assign codec_data_rd_en = wr_shifter0;
 
 
@@ -60,6 +75,10 @@ always@(*)
     shifter_out = shifter0[254:127];
   else
     shifter_out = 0;
+
+generate 
+if(ssm_idx==0)
+begin
 
 wire [2:0] mode_header_bits;
 //mode header
@@ -109,7 +128,6 @@ begin
   endcase
 end
 
-reg [127:0] suffix;
 always@*
 begin
   case (mode_flat_csc_size) 
@@ -130,8 +148,6 @@ wire [1:0] curSuffixCsc = m_nxtBlkCsc;
 wire [3:0] bitDepth_comp0 = m_bitDepth;
 
 //ssm0
-reg [2:0] stepSize_ssm0;
-wire [3:0] numPx = 16;//getWidth * getHeight
 always@*begin
   case (curSuffixCsc)
     Rgb,Ycbcr : stepSize_ssm0 = nxtBlkStepSize;
@@ -140,15 +156,27 @@ always@*begin
 endcase
 end
 
-wire [127:0] suffix_rmc0;
-wire [127:0] suffix_rmc01;
-wire [7:0] qres_size;
-decMppSuffix u_decMppSuffix_ssm0
+assign  nxtBlkbitsSsm0 = rd_shifter_rqst ? qres_size + mode_flat_csc_size + numBits : 0;
+
+end
+endgenerate
+
+generate 
+begin
+if(ssm_idx==1)
+begin
+assign suffix = shifter_out[127:0];
+assign  nxtBlkbitsSsm0 = rd_shifter_rqst ? qres_size  : 0;
+end
+end
+endgenerate
+
+decMppSuffix #(.ssm_idx(ssm_idx))u_decMppSuffix_ssm0
 (
-  .bitDepth  (bitDepth_comp0),
-  .stepSize  (stepSize_ssm0),
+  .bitDepth  (8/*bitDepth_comp0*/),
+  .stepSize  (ssm_idx ? 2 : stepSize_ssm0),
   .suffix    (suffix),
-  .pnxtBlkQuant(),
+  .pnxtBlkQuant(pnxtBlkQuant),
   .suffix_left(suffix_rmc0),
   .qres_size(qres_size)
 );
@@ -160,7 +188,6 @@ always@(posedge clk or negedge rstn)
   else
     parse_vld <= rd_shifter_rqst;
 
-assign  nxtBlkbitsSsm0 = rd_shifter_rqst ? qres_size + mode_flat_csc_size + numBits : 0;
 //decMppSuffix u_decMppSuffix_c1
 //(
 //  .bitDepth  (bitDepth_comp0),

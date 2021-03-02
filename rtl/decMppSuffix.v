@@ -56,6 +56,14 @@ for(i=0;i<4;i=i+1)begin
 end
 endgenerate
 
+
+generate
+for(i=0;i<12;i=i+1)begin
+  assign pnxtBlkQuant[i] = val[i]+minCode;
+end
+endgenerate
+
+
 always@*
   case(bits)
     8'h8:
