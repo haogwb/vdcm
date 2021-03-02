@@ -1,4 +1,5 @@
 ../tb/tb.v
 ../../rtl/bitparse.v
 ../../rtl/decMppSuffix.v
+../../rtl/decMpp.v
 
