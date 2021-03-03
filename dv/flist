@@ -2,4 +2,5 @@
 ../../rtl/bitparse.v
 ../../rtl/decMppSuffix.v
 ../../rtl/decMpp.v
+../../rtl/decMpp_com.v
 

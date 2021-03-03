@@ -41,13 +41,16 @@ bit codec_data_rd_en_ssm2;
 bit codec_data_rd_en_ssm3;
 bit start_dec;
 bit start_dec_ff;
+bit start_dec_ff1;
 initial begin
   #1us;
-  @(posedge clk) start_dec = 1;
-  @(posedge clk) start_dec_ff = 1;
+  @(posedge clk) start_dec <= 1;
+//  @(posedge clk) start_dec_ff = 1;
+//  @(posedge clk) start_dec_ff1 = 1;
 end
 
-
+always@(posedge clk)
+  start_dec_ff <= start_dec;
 
 wire [7:0] mpp_qres_ssm0 [0:16-1];
 reg  [7:0] mpp_qres_ssm0_ff [0:16-1];
@@ -109,6 +112,9 @@ bitparse #(.ssm_idx(1)) u_bitparse_ssm3(
 always@(posedge clk)
   mpp_qres_ssm0_ff <= mpp_qres_ssm0;
 decMpp  u_decMpp (
+    .clk     (clk),
+    .rstn     (rstn),
+    .blk_vld         ( start_dec_ff),
     .mpp_qres_ssm0   ( mpp_qres_ssm0_ff ),
     .mpp_qres_ssm1   ( mpp_qres_ssm1 ),
     .mpp_qres_ssm2   ( mpp_qres_ssm2 ),

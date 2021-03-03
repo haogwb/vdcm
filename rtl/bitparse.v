@@ -59,6 +59,8 @@ always@(posedge clk or negedge rstn)
       8'd112 : shifter0 <= {shifter_left[254-:112],codec_data,{255-112-128{1'b0}}};
       default : shifter0 <= {shifter_left[254:-128],codec_data};
       endcase
+  else
+      shifter0 <= shifter_left;
 assign codec_data_rd_en = wr_shifter0;
 
 
