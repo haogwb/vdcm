@@ -2,7 +2,7 @@ Command: vcs -sverilog -full64 -f ../flist +lint=TFIPC-L -P /opt/Synopsys/Verdi2
 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a -l run.log +v2k -debug_all +notimingcheck \
 -lca
                          Chronologic VCS (TM)
-         Version I-2014.03_Full64 -- Wed Mar  3 15:05:54 2021
+         Version I-2014.03_Full64 -- Wed Mar  3 15:17:35 2021
                Copyright (c) 1991-2014 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -23,12 +23,12 @@ Parsing design file '../../rtl/decMpp.v'
 Parsing design file '../../rtl/decMpp_com.v'
 
 Warning-[IPDW] Identifier previously declared
-../../rtl/decMpp_com.v, 36
+../../rtl/decMpp_com.v, 53
   Second declaration for identifier 'm_bitDepth' ignored
 
 
 Warning-[IPDW] Identifier previously declared
-../../rtl/decMpp_com.v, 37
+../../rtl/decMpp_com.v, 54
   Second declaration for identifier 'curStepSize' ignored
 
 Top Level Modules:
@@ -65,7 +65,7 @@ Warning-[SIOB] Select index out of bounds
 ../../rtl/bitparse.v, 60
 "shifter_left[254:(-128)]"
   The select index is out of declared bounds : [254:0].
-  In module instance : u_bitparse_ssm1 u_bitparse_ssm3 u_bitparse_ssm2 
+  In module instance : u_bitparse_ssm2 u_bitparse_ssm1 u_bitparse_ssm3 
   In module : bitparse.
 
 
@@ -88,17 +88,15 @@ Warning-[PCWM-W] Port connection width mismatch
 
 Starting vcs inline pass...
 5 modules and 0 UDP read.
-	However, due to incremental compilation, only 2 modules need to be compiled.
-recompiling module tb because:
-	Signal dependencies have changed
-	Module parameters have been changed via defparam.
+	However, due to incremental compilation, only 1 module needs to be compiled.
 recompiling module decMpp_com because:
-	Generated file (JPx0_1) not found, or not incremental.
-Both modules done.
+	This module or some inlined child module(s) has/have been modified.
 rm -f _csrc*.so amd64_scvhdl_*.so pre_vcsobj_*.so share_vcsobj_*.so
 ld -shared -o .//../simv.daidir//_csrc1.so --whole-archive _vcsobj_1_1.a  --no-whole-archive \
 
 ld -shared -o .//../simv.daidir//_csrc0.so 5NrI_d.o 5NrIB_d.o SIM_l.o  
+ld -shared -o .//../simv.daidir//pre_vcsobj_0_1.so --whole-archive pre_vcsobj_0_1.a \
+--no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_1.so --whole-archive pre_vcsobj_1_1.a \
 --no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_2.so --whole-archive pre_vcsobj_1_2.a \
@@ -107,8 +105,8 @@ ld -shared -o .//../simv.daidir//pre_vcsobj_1_3.so --whole-archive pre_vcsobj_1_
 --no-whole-archive
 if [ -x ../simv ]; then chmod -x ../simv; fi
 g++  -o ../simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/simv.daidir/ -Wl,-rpath='$ORIGIN'/simv.daidir//scsim.db.dir \
-_csrc1.so _csrc0.so   pre_vcsobj_1_1.so pre_vcsobj_1_2.so pre_vcsobj_1_3.so  rmapats_mop.o \
-rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so \
+_csrc1.so _csrc0.so   pre_vcsobj_0_1.so pre_vcsobj_1_1.so pre_vcsobj_1_2.so pre_vcsobj_1_3.so \
+rmapats_mop.o rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so \
 /opt/Synopsys/VCS2014/amd64/lib/libvirsim.so /opt/Synopsys/VCS2014/amd64/lib/liberrorinf.so \
 /opt/Synopsys/VCS2014/amd64/lib/libsnpsmalloc.so /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a \
 /opt/Synopsys/VCS2014/amd64/lib/libvcsnew.so /opt/Synopsys/VCS2014/amd64/lib/libuclinative.so \
@@ -116,4 +114,4 @@ rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.
 _vcs_pli_stub_.o   /opt/Synopsys/VCS2014/amd64/lib/vcs_save_restore_new.o -ldl -lm \
 -lm  -lc -lpthread -ldl 
 ../simv up to date
-CPU time: 1.918 seconds to compile + 1.705 seconds to elab + .214 seconds to link
+CPU time: 1.880 seconds to compile + 1.702 seconds to elab + .204 seconds to link
