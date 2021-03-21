@@ -58,6 +58,7 @@ wire [7:0] mpp_qres_ssm1 [0:16-1];
 wire [7:0] mpp_qres_ssm2 [0:16-1];
 wire [7:0] mpp_qres_ssm3 [0:16-1];
 
+wire modeNxt_XFM;
 bitparse #(.ssm_idx(0)) u_bitparse(
 
   .clk     (clk),
@@ -68,10 +69,12 @@ bitparse #(.ssm_idx(0)) u_bitparse(
 
   .codec_data       (codec_data),
 
+  .modeNxt_XFM      (modeNxt_XFM),
+
   .pnxtBlkQuant(mpp_qres_ssm0)
 
 );
-bitparse #(.ssm_idx(1)) u_bitparse_ssm1(
+bitparse_ssm123 #(.ssm_idx(1)) u_bitparse_ssm1(
 
   .clk     (clk),
 
@@ -81,9 +84,11 @@ bitparse #(.ssm_idx(1)) u_bitparse_ssm1(
 
   .codec_data       (codec_data_ssm1),
 
+  .modeNxt_XFM      (modeNxt_XFM),
+
   .pnxtBlkQuant(mpp_qres_ssm1)
 );
-bitparse #(.ssm_idx(1)) u_bitparse_ssm2(
+bitparse_ssm123 #(.ssm_idx(1)) u_bitparse_ssm2(
 
   .clk     (clk),
 
@@ -93,10 +98,12 @@ bitparse #(.ssm_idx(1)) u_bitparse_ssm2(
 
   .codec_data       (codec_data_ssm2),
 
+  .modeNxt_XFM      (modeNxt_XFM),
+
   .pnxtBlkQuant(mpp_qres_ssm2)
 );
 
-bitparse #(.ssm_idx(1)) u_bitparse_ssm3(
+bitparse_ssm123 #(.ssm_idx(1)) u_bitparse_ssm3(
 
   .clk     (clk),
 
@@ -126,7 +133,7 @@ decMpp  u_decMpp (
 
   
 
-reg [127:0] codec_bits[0:20];
+reg [127:0] codec_bits[0:100];
 
 initial begin
 
@@ -153,11 +160,30 @@ always@(posedge clk or negedge rstn)
 
 always@(*)
 begin
-
+  if(codec_data_rd_en)
   codec_data = codec_bits[codec_rd_addr];
-  codec_data_ssm1 = codec_bits[codec_rd_addr+1];
-  codec_data_ssm2 = codec_bits[codec_rd_addr+2];
-  codec_data_ssm3 = codec_bits[codec_rd_addr+3];
+
+  if(codec_data_rd_en & codec_data_rd_en_ssm1)
+    codec_data_ssm1 = codec_bits[codec_rd_addr+1];
+  else if(codec_data_rd_en_ssm1)
+    codec_data_ssm1 = codec_bits[codec_rd_addr];
+
+  if(codec_data_rd_en & codec_data_rd_en_ssm1& codec_data_rd_en_ssm2)
+    codec_data_ssm2 = codec_bits[codec_rd_addr+2];
+  else if((codec_data_rd_en ^ codec_data_rd_en_ssm1)& codec_data_rd_en_ssm2)
+    codec_data_ssm2 = codec_bits[codec_rd_addr+1];
+  else if(codec_data_rd_en_ssm2)
+    codec_data_ssm2 = codec_bits[codec_rd_addr+0];
+
+  if(codec_data_rd_en & codec_data_rd_en_ssm1& codec_data_rd_en_ssm2& codec_data_rd_en_ssm3)
+    codec_data_ssm3 = codec_bits[codec_rd_addr+3];
+  else if((codec_data_rd_en+codec_data_rd_en_ssm1+ codec_data_rd_en_ssm2)==2 & codec_data_rd_en_ssm3)
+    codec_data_ssm3 = codec_bits[codec_rd_addr+2];
+  else if((codec_data_rd_en+codec_data_rd_en_ssm1+ codec_data_rd_en_ssm2)==1 & codec_data_rd_en_ssm3)
+    codec_data_ssm3 = codec_bits[codec_rd_addr+1];
+  else 
+    codec_data_ssm3 = codec_bits[codec_rd_addr+0];
+
 
 //  if(codec_data_rd_en)
 

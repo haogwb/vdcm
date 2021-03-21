@@ -2,7 +2,7 @@ Command: vcs -sverilog -full64 -f ../flist +lint=TFIPC-L -P /opt/Synopsys/Verdi2
 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a -l run.log +v2k -debug_all +notimingcheck \
 -lca
                          Chronologic VCS (TM)
-         Version I-2014.03_Full64 -- Wed Mar  3 15:17:35 2021
+         Version I-2014.03_Full64 -- Mon Mar 22 07:38:16 2021
                Copyright (c) 1991-2014 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -18,6 +18,7 @@ Warning-[LCA_FEATURES_ENABLED] Usage warning
 
 Parsing design file '../tb/tb.v'
 Parsing design file '../../rtl/bitparse.v'
+Parsing design file '../../rtl/bitparse_ssm123.v'
 Parsing design file '../../rtl/decMppSuffix.v'
 Parsing design file '../../rtl/decMpp.v'
 Parsing design file '../../rtl/decMpp_com.v'
@@ -31,12 +32,28 @@ Warning-[IPDW] Identifier previously declared
 ../../rtl/decMpp_com.v, 54
   Second declaration for identifier 'curStepSize' ignored
 
+Parsing design file '../../rtl/decXfmCoeff.v'
+Parsing design file '../../rtl/parseEcg.v'
 Top Level Modules:
        tb
 TimeScale is 1 ns / 1 ps
 
+Lint-[TFIPC-L] Too few instance port connections
+../../rtl/bitparse_ssm123.v, 238
+"decXfmCoeff #(.ssm_idx(ssm_idx)) u_decXfmCoeff( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix : 0)));"
+  The above instance has fewer port connections than the module definition,
+  output port 'pnxtBlkQuant' is not connected.
+
+
+Lint-[TFIPC-L] Too few instance port connections
+../tb/tb.v, 106
+"bitparse_ssm123 #(.ssm_idx(1)) u_bitparse_ssm3( .clk (clk),  .rstn (rstn),  .start_dec (start_dec_ff),  .codec_data_rd_en (codec_data_rd_en_ssm3),  .codec_data (codec_data_ssm3),  .pnxtBlkQuant (mpp_qres_ssm3));"
+  The above instance has fewer port connections than the module definition,
+  input port 'modeNxt_XFM' is not connected.
+
+
 Warning-[SIOB] Select index out of bounds
-../../rtl/bitparse.v, 60
+../../rtl/bitparse.v, 192
 "shifter_left[254:(-128)]"
   The select index is out of declared bounds : [254:0].
   In module instance : u_bitparse 
@@ -44,8 +61,8 @@ Warning-[SIOB] Select index out of bounds
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 176
-"decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? 2 : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
+../../rtl/bitparse.v, 493
+"decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 32-bit expression is connected to 4-bit port "bitDepth" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
   Expression: 8
@@ -53,25 +70,25 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 176
-"decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? 2 : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
-  The following 32-bit expression is connected to 4-bit port "stepSize" of 
+../../rtl/bitparse.v, 493
+"decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
+  The following 3-bit expression is connected to 4-bit port "stepSize" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
-  Expression: (ssm_idx ? 2 : stepSize_ssm0)
+  Expression: (ssm_idx ? stepSize_ssm0[2:0] : stepSize_ssm0)
   	use +lint=PCWM for more details
 
 
 Warning-[SIOB] Select index out of bounds
-../../rtl/bitparse.v, 60
+../../rtl/bitparse_ssm123.v, 192
 "shifter_left[254:(-128)]"
   The select index is out of declared bounds : [254:0].
-  In module instance : u_bitparse_ssm2 u_bitparse_ssm1 u_bitparse_ssm3 
-  In module : bitparse.
+  In module instance : u_bitparse_ssm1 u_bitparse_ssm2 u_bitparse_ssm3 
+  In module : bitparse_ssm123.
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 176
-"decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? 2 : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
+../../rtl/bitparse_ssm123.v, 225
+"decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? tb.u_bitparse.stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 32-bit expression is connected to 4-bit port "bitDepth" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
   Expression: 8
@@ -79,18 +96,21 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 176
-"decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? 2 : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
-  The following 32-bit expression is connected to 4-bit port "stepSize" of 
+../../rtl/bitparse_ssm123.v, 225
+"decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? tb.u_bitparse.stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
+  The following 3-bit expression is connected to 4-bit port "stepSize" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
-  Expression: (ssm_idx ? 2 : stepSize_ssm0)
+  Expression: (ssm_idx ? tb.u_bitparse.stepSize_ssm0[2:0] : stepSize_ssm0)
   	use +lint=PCWM for more details
 
 Starting vcs inline pass...
-5 modules and 0 UDP read.
-	However, due to incremental compilation, only 1 module needs to be compiled.
-recompiling module decMpp_com because:
+8 modules and 0 UDP read.
+	However, due to incremental compilation, only 2 modules need to be compiled.
+recompiling module decXfmCoeff because:
 	This module or some inlined child module(s) has/have been modified.
+recompiling module parseEcg because:
+	This module or some inlined child module(s) has/have been modified.
+Both modules done.
 rm -f _csrc*.so amd64_scvhdl_*.so pre_vcsobj_*.so share_vcsobj_*.so
 ld -shared -o .//../simv.daidir//_csrc1.so --whole-archive _vcsobj_1_1.a  --no-whole-archive \
 
@@ -101,12 +121,10 @@ ld -shared -o .//../simv.daidir//pre_vcsobj_1_1.so --whole-archive pre_vcsobj_1_
 --no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_2.so --whole-archive pre_vcsobj_1_2.a \
 --no-whole-archive
-ld -shared -o .//../simv.daidir//pre_vcsobj_1_3.so --whole-archive pre_vcsobj_1_3.a \
---no-whole-archive
 if [ -x ../simv ]; then chmod -x ../simv; fi
 g++  -o ../simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/simv.daidir/ -Wl,-rpath='$ORIGIN'/simv.daidir//scsim.db.dir \
-_csrc1.so _csrc0.so   pre_vcsobj_0_1.so pre_vcsobj_1_1.so pre_vcsobj_1_2.so pre_vcsobj_1_3.so \
-rmapats_mop.o rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so \
+_csrc1.so _csrc0.so   pre_vcsobj_0_1.so pre_vcsobj_1_1.so pre_vcsobj_1_2.so  rmapats_mop.o \
+rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so \
 /opt/Synopsys/VCS2014/amd64/lib/libvirsim.so /opt/Synopsys/VCS2014/amd64/lib/liberrorinf.so \
 /opt/Synopsys/VCS2014/amd64/lib/libsnpsmalloc.so /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a \
 /opt/Synopsys/VCS2014/amd64/lib/libvcsnew.so /opt/Synopsys/VCS2014/amd64/lib/libuclinative.so \
@@ -114,4 +132,4 @@ rmapats_mop.o rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzero
 _vcs_pli_stub_.o   /opt/Synopsys/VCS2014/amd64/lib/vcs_save_restore_new.o -ldl -lm \
 -lm  -lc -lpthread -ldl 
 ../simv up to date
-CPU time: 1.880 seconds to compile + 1.702 seconds to elab + .204 seconds to link
+CPU time: 1.940 seconds to compile + 1.704 seconds to elab + .192 seconds to link
