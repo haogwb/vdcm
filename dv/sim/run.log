@@ -2,7 +2,7 @@ Command: vcs -sverilog -full64 -f ../flist +lint=TFIPC-L -P /opt/Synopsys/Verdi2
 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a -l run.log +v2k -debug_all +notimingcheck \
 -lca
                          Chronologic VCS (TM)
-         Version I-2014.03_Full64 -- Mon Mar 22 07:38:16 2021
+         Version I-2014.03_Full64 -- Mon Apr  5 09:56:44 2021
                Copyright (c) 1991-2014 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -33,27 +33,46 @@ Warning-[IPDW] Identifier previously declared
   Second declaration for identifier 'curStepSize' ignored
 
 Parsing design file '../../rtl/decXfmCoeff.v'
+
+Warning-[IPDW] Identifier previously declared
+../../rtl/decXfmCoeff.v, 44
+  Second declaration for identifier 'ecEd0' ignored
+
+
+Warning-[IPDW] Identifier previously declared
+../../rtl/decXfmCoeff.v, 45
+  Second declaration for identifier 'ecEd0' ignored
+
+
+Warning-[IPDW] Identifier previously declared
+../../rtl/decXfmCoeff.v, 46
+  Second declaration for identifier 'ecEd0' ignored
+
 Parsing design file '../../rtl/parseEcg.v'
+Parsing design file '../../rtl/parse_signbits_ec.v'
+Parsing design file '../../rtl/decBpvBlock.v'
 Top Level Modules:
        tb
 TimeScale is 1 ns / 1 ps
 
 Lint-[TFIPC-L] Too few instance port connections
-../../rtl/bitparse_ssm123.v, 238
-"decXfmCoeff #(.ssm_idx(ssm_idx)) u_decXfmCoeff( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix : 0)));"
+../../rtl/bitparse_ssm123.v, 239
+"decXfmCoeff #(.ssm_idx(ssm_idx)) u_decXfmCoeff( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix : 0)),  .coef_size (xfm_size));"
   The above instance has fewer port connections than the module definition,
   output port 'pnxtBlkQuant' is not connected.
 
 
-Lint-[TFIPC-L] Too few instance port connections
-../tb/tb.v, 106
-"bitparse_ssm123 #(.ssm_idx(1)) u_bitparse_ssm3( .clk (clk),  .rstn (rstn),  .start_dec (start_dec_ff),  .codec_data_rd_en (codec_data_rd_en_ssm3),  .codec_data (codec_data_ssm3),  .pnxtBlkQuant (mpp_qres_ssm3));"
-  The above instance has fewer port connections than the module definition,
-  input port 'modeNxt_XFM' is not connected.
+Warning-[PCWM-W] Port connection width mismatch
+../../rtl/decXfmCoeff.v, 216
+"parseEcg #(ssm_idx, 3, ) u_parseEcg3( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix_rm_ecg2 : 0)),  .ecNumSample (ecNumSample3),  .m_signBitValid (m_signBitValid_ecg3),  .numbits (numbits3),  .coeff_0 (coeff_ec3_0),  .coeff_1 (coeff_ec3_1),  .coeff_2 (coeff_ec3_2),  .coeff_3 (coeff_ec3_3),  .coeff_4 (coeff_ec3_4),  .coeff_5 (coeff_ec3_5),  .coeff_6 (coeff_ec3_6));"
+  The following 4-bit expression is connected to 3-bit port "ecNumSample" of 
+  module "parseEcg", instance "u_parseEcg3".
+  Expression: ecNumSample3
+  	use +lint=PCWM for more details
 
 
 Warning-[SIOB] Select index out of bounds
-../../rtl/bitparse.v, 192
+../../rtl/bitparse.v, 194
 "shifter_left[254:(-128)]"
   The select index is out of declared bounds : [254:0].
   In module instance : u_bitparse 
@@ -61,7 +80,7 @@ Warning-[SIOB] Select index out of bounds
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 493
+../../rtl/bitparse.v, 497
 "decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 32-bit expression is connected to 4-bit port "bitDepth" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
@@ -70,7 +89,7 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 493
+../../rtl/bitparse.v, 497
 "decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 3-bit expression is connected to 4-bit port "stepSize" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
@@ -79,15 +98,15 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[SIOB] Select index out of bounds
-../../rtl/bitparse_ssm123.v, 192
+../../rtl/bitparse_ssm123.v, 195
 "shifter_left[254:(-128)]"
   The select index is out of declared bounds : [254:0].
-  In module instance : u_bitparse_ssm1 u_bitparse_ssm2 u_bitparse_ssm3 
+  In module instance : u_bitparse_ssm1 u_bitparse_ssm3 u_bitparse_ssm2 
   In module : bitparse_ssm123.
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse_ssm123.v, 225
+../../rtl/bitparse_ssm123.v, 226
 "decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? tb.u_bitparse.stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 32-bit expression is connected to 4-bit port "bitDepth" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
@@ -96,7 +115,7 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse_ssm123.v, 225
+../../rtl/bitparse_ssm123.v, 226
 "decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? tb.u_bitparse.stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 3-bit expression is connected to 4-bit port "stepSize" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
@@ -104,27 +123,32 @@ Warning-[PCWM-W] Port connection width mismatch
   	use +lint=PCWM for more details
 
 Starting vcs inline pass...
-8 modules and 0 UDP read.
+9 modules and 0 UDP read.
 	However, due to incremental compilation, only 2 modules need to be compiled.
-recompiling module decXfmCoeff because:
+recompiling module tb because:
 	This module or some inlined child module(s) has/have been modified.
-recompiling module parseEcg because:
-	This module or some inlined child module(s) has/have been modified.
+recompiling module bitparse_ssm123 because:
+	Signal dependencies have changed
+	Module parameters have been changed via defparam.
 Both modules done.
 rm -f _csrc*.so amd64_scvhdl_*.so pre_vcsobj_*.so share_vcsobj_*.so
 ld -shared -o .//../simv.daidir//_csrc1.so --whole-archive _vcsobj_1_1.a  --no-whole-archive \
 
 ld -shared -o .//../simv.daidir//_csrc0.so 5NrI_d.o 5NrIB_d.o SIM_l.o  
-ld -shared -o .//../simv.daidir//pre_vcsobj_0_1.so --whole-archive pre_vcsobj_0_1.a \
---no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_1.so --whole-archive pre_vcsobj_1_1.a \
 --no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_2.so --whole-archive pre_vcsobj_1_2.a \
 --no-whole-archive
+ld -shared -o .//../simv.daidir//pre_vcsobj_1_3.so --whole-archive pre_vcsobj_1_3.a \
+--no-whole-archive
+ld -shared -o .//../simv.daidir//pre_vcsobj_1_4.so --whole-archive pre_vcsobj_1_4.a \
+--no-whole-archive
+ld -shared -o .//../simv.daidir//pre_vcsobj_1_5.so --whole-archive pre_vcsobj_1_5.a \
+--no-whole-archive
 if [ -x ../simv ]; then chmod -x ../simv; fi
 g++  -o ../simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/simv.daidir/ -Wl,-rpath='$ORIGIN'/simv.daidir//scsim.db.dir \
-_csrc1.so _csrc0.so   pre_vcsobj_0_1.so pre_vcsobj_1_1.so pre_vcsobj_1_2.so  rmapats_mop.o \
-rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so \
+_csrc1.so _csrc0.so   pre_vcsobj_1_1.so pre_vcsobj_1_2.so pre_vcsobj_1_3.so pre_vcsobj_1_4.so \
+pre_vcsobj_1_5.so  rmapats_mop.o rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so \
 /opt/Synopsys/VCS2014/amd64/lib/libvirsim.so /opt/Synopsys/VCS2014/amd64/lib/liberrorinf.so \
 /opt/Synopsys/VCS2014/amd64/lib/libsnpsmalloc.so /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a \
 /opt/Synopsys/VCS2014/amd64/lib/libvcsnew.so /opt/Synopsys/VCS2014/amd64/lib/libuclinative.so \
@@ -132,4 +156,4 @@ rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.
 _vcs_pli_stub_.o   /opt/Synopsys/VCS2014/amd64/lib/vcs_save_restore_new.o -ldl -lm \
 -lm  -lc -lpthread -ldl 
 ../simv up to date
-CPU time: 1.940 seconds to compile + 1.704 seconds to elab + .192 seconds to link
+CPU time: 2.230 seconds to compile + 1.846 seconds to elab + .184 seconds to link

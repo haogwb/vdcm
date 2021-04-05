@@ -7,6 +7,8 @@ output codec_data_rd_en,
 input [127:0] codec_data,
 
 output modeNxt_XFM,
+output modeNxt_BP,
+output [3:0] use2x2,
 
 output [7:0] pnxtBlkQuant [0:16-1]
 
@@ -224,7 +226,7 @@ reg [1:0] prevMode;
 wire [1:0] modeNxt = sameFlag ? prevMode : (&tmp ? MPPF_BPSkip : tmp);
 wire modeNxt_MPP = modeNxt == 2;
 assign modeNxt_XFM = modeNxt == 0;
-wire modeNxt_BP = modeNxt == 1;
+assign modeNxt_BP = modeNxt == 1;
 always@(posedge clk or negedge rstn)
   if(~rstn)
     prevMode <= 2'b0;
@@ -314,7 +316,7 @@ wire [2:0] m_numSubBlocks = 4;
 wire [3:0] m_bpvNumBits = 6;
 wire isNxtBlockFls = 1;
 wire [3:0]  bitsPerBpv = isNxtBlockFls ? m_bpvNumBits - 1 : m_bpvNumBits;
-wire [3:0] use2x2;
+//wire [3:0] use2x2;
 assign use2x2[0] = modeNxt_BP & shifter_out[127-(flatness_header_bits+mode_header_bits)];
 assign use2x2[1] = modeNxt_BP & shifter_out[127-(flatness_header_bits+mode_header_bits+1)];
 assign use2x2[2] = modeNxt_BP & shifter_out[127-(flatness_header_bits+mode_header_bits+2)];
@@ -473,7 +475,9 @@ assign bpv2x2[0] = use2x2[0] ? bpv2x2_tmp[0] + 32 : 0;
 
 
 ///////////////////////////////////                                                                                                     //XFM
-assign  nxtBlkbitsSsm0 = rd_shifter_rqst ? (modeNxt_MPP ? qres_size + mode_flat_csc_size + numBits : mode_header_bits + flatness_header_bits)
+assign  nxtBlkbitsSsm0 = rd_shifter_rqst ? (modeNxt_MPP ? qres_size + mode_flat_csc_size + numBits : 
+                                            modeNxt_BP ?  bp_header_bits+4 + bitsPerBpv :
+                                                          mode_header_bits + flatness_header_bits)
                                          : 0;
 
 end

@@ -1,4 +1,6 @@
 ../tb/tb.v
+
+//+incdir+../../rtl/
 ../../rtl/bitparse.v
 ../../rtl/bitparse_ssm123.v
 ../../rtl/decMppSuffix.v
@@ -6,4 +8,7 @@
 ../../rtl/decMpp_com.v
 ../../rtl/decXfmCoeff.v
 ../../rtl/parseEcg.v
+../../rtl/parse_signbits_ec.v
+
+../../rtl/decBpvBlock.v
 

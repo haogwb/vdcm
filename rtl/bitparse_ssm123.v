@@ -7,6 +7,8 @@ output codec_data_rd_en,
 input [127:0] codec_data,
 
 input modeNxt_XFM,
+input modeNxt_BP,
+input use2x2,
 
 output [7:0] pnxtBlkQuant [0:16-1]
 
@@ -22,6 +24,7 @@ wire wr_shifter0;
 wire [127:0] suffix_rmc0;
 wire [127:0] suffix_rmc01;
 wire [7:0] qres_size;
+wire [7:0] xfm_size;
 reg [127:0] suffix;
 reg [2:0] stepSize_ssm0;
 wire [3:0] numPx = 16;//getWidth * getHeight
@@ -211,16 +214,14 @@ always@(*)
     shifter_out = 0;
 
 
-generate 
-begin
-if(ssm_idx==1)
-begin
+//generate 
+//begin
+//if(ssm_idx==1)
+//begin
 assign suffix = shifter_out[127:0];
-assign  nxtBlkbitsSsm0 = rd_shifter_rqst ? ( qres_size  )//: 0)
-                                         : 0;
-end
-end
-endgenerate
+//end
+//end
+//endgenerate
 
 decMppSuffix #(.ssm_idx(ssm_idx))u_decMppSuffix_ssm0
 (
@@ -240,10 +241,23 @@ decXfmCoeff #(.ssm_idx(ssm_idx))u_decXfmCoeff
   .mode_XFM   (mode_XFM),
   .suffix    (mode_XFM ? suffix : 0),
 //  .suffix_left(suffix_rmc0),
-  .coef_size()
+  .coef_size(xfm_size)
 );
 
 
+reg mode_BP;
+always@(posedge clk)
+  mode_BP <= modeNxt_BP;
+wire [7:0] bpv_size;
+decBpvBlock #(.ssm_idx(ssm_idx)) u_decBpvBlock (
+    .mode_BP                 ( mode_BP           ),
+    .use2x2                  ( use2x2            ),
+    .suffix                  ( suffix    [127:0] ),
+    .bpv_size                ( bpv_size  [7:0]   )
+);
+
+assign  nxtBlkbitsSsm0 = rd_shifter_rqst ? ( mode_XFM ? xfm_size : qres_size  )//: 0)
+                                         : 0;
 reg parse_vld;
 always@(posedge clk or negedge rstn)
   if(~rstn)

@@ -59,6 +59,8 @@ wire [7:0] mpp_qres_ssm2 [0:16-1];
 wire [7:0] mpp_qres_ssm3 [0:16-1];
 
 wire modeNxt_XFM;
+wire modeNxt_BP;
+wire [3:0] use2x2;
 bitparse #(.ssm_idx(0)) u_bitparse(
 
   .clk     (clk),
@@ -70,7 +72,8 @@ bitparse #(.ssm_idx(0)) u_bitparse(
   .codec_data       (codec_data),
 
   .modeNxt_XFM      (modeNxt_XFM),
-
+  .modeNxt_BP       (modeNxt_BP),
+  .use2x2           (use2x2),
   .pnxtBlkQuant(mpp_qres_ssm0)
 
 );
@@ -85,10 +88,12 @@ bitparse_ssm123 #(.ssm_idx(1)) u_bitparse_ssm1(
   .codec_data       (codec_data_ssm1),
 
   .modeNxt_XFM      (modeNxt_XFM),
+  .modeNxt_BP       (modeNxt_BP),
+  .use2x2           (use2x2[1]),
 
   .pnxtBlkQuant(mpp_qres_ssm1)
 );
-bitparse_ssm123 #(.ssm_idx(1)) u_bitparse_ssm2(
+bitparse_ssm123 #(.ssm_idx(2)) u_bitparse_ssm2(
 
   .clk     (clk),
 
@@ -99,11 +104,13 @@ bitparse_ssm123 #(.ssm_idx(1)) u_bitparse_ssm2(
   .codec_data       (codec_data_ssm2),
 
   .modeNxt_XFM      (modeNxt_XFM),
+  .modeNxt_BP       (modeNxt_BP),
+  .use2x2           (use2x2[2]),
 
   .pnxtBlkQuant(mpp_qres_ssm2)
 );
 
-bitparse_ssm123 #(.ssm_idx(1)) u_bitparse_ssm3(
+bitparse_ssm123 #(.ssm_idx(3)) u_bitparse_ssm3(
 
   .clk     (clk),
 
@@ -112,6 +119,10 @@ bitparse_ssm123 #(.ssm_idx(1)) u_bitparse_ssm3(
   .codec_data_rd_en (codec_data_rd_en_ssm3),
 
   .codec_data       (codec_data_ssm3),
+
+  .modeNxt_XFM      (modeNxt_XFM),
+  .modeNxt_BP       (modeNxt_BP),
+  .use2x2           (use2x2[3]),
 
   .pnxtBlkQuant(mpp_qres_ssm3)
 );
