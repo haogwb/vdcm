@@ -248,11 +248,14 @@ decXfmCoeff #(.ssm_idx(ssm_idx))u_decXfmCoeff
 reg mode_BP;
 always@(posedge clk)
   mode_BP <= modeNxt_BP;
+reg use2x2_ff;
+always@(posedge clk)
+  use2x2_ff <= use2x2;
 wire [7:0] bpv_size;
 decBpvBlock #(.ssm_idx(ssm_idx)) u_decBpvBlock (
     .mode_BP                 ( mode_BP           ),
-    .use2x2                  ( use2x2            ),
-    .suffix                  ( suffix    [127:0] ),
+    .use2x2                  ( use2x2_ff            ),
+    .suffix                  ( mode_BP ? suffix    [127:0]:0 ),
     .bpv_size                ( bpv_size  [7:0]   )
 );
 

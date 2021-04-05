@@ -11,4 +11,6 @@
 ../../rtl/parse_signbits_ec.v
 
 ../../rtl/decBpvBlock.v
+../../rtl/decEcg_allGroups.v
+../../rtl/decVecEcSymbolSM.v
 

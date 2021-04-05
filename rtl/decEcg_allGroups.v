@@ -1,9 +1,8 @@
-module decXfmCoeff #(parameter ssm_idx = 0,comp=0)
+module decEcg_allGroups #(parameter ssm_idx = 0,comp=0)
 (
-  input mode_XFM,
   input [127:0] suffix,
-  output [7:0] pnxtBlkQuant [0:16-1],
-  output [7:0]  coef_size
+  input         mode_XFM,
+  output [7:0]  size
   
 
 );
@@ -14,7 +13,8 @@ wire [7:0] numbits2;
 wire [7:0] numbits3;
 
 parameter kEcXfm = 0;
-wire [3:0]m_modeType = 0;
+parameter kEcBP = 1;
+wire [3:0]m_modeType = 1;
 wire [3:0] numBitsLastSigPos = 4;
 wire isCompSkip = ssm_idx>1 ? suffix[127]: 0;
 reg  [3:0] lastSigPos;
@@ -36,10 +36,10 @@ reg [2:0]ecNumSample0;
 reg [2:0]ecNumSample1;
 reg [2:0]ecNumSample2;
 wire [3:0]ecNumSample3;
-wire [3:0]ecSt0=4;
-wire [3:0]ecSt1=1;
-wire [3:0]ecSt2=9;
-wire [3:0]ecSt3=0;
+wire [3:0]ecSt0=m_modeType==kEcXfm ? 4 : 0;
+wire [3:0]ecSt1=m_modeType==kEcXfm ? 1 : 4;
+wire [3:0]ecSt2=m_modeType==kEcXfm ? 9 : 8;
+wire [3:0]ecSt3=m_modeType==kEcXfm ? 0 : 12;
 wire [3:0]ecEd0=ecSt0 + ecNumSample0;
 wire [3:0]ecEd0=ecSt1 + ecNumSample1;
 wire [3:0]ecEd0=ecSt2 + ecNumSample2;
@@ -129,7 +129,7 @@ wire [6:0] m_signBitValid_ecg2;
 wire [6:0] m_signBitValid_ecg3;
 
 
-wire[127:0] suffix_rm_LSigPos = {suffix_rm_compSkip[127-4:0],4'b0};
+wire[127:0] suffix_rm_LSigPos = m_modeType==kEcXfm ? {suffix_rm_compSkip[127-4:0],4'b0} : suffix_rm_compSkip;
 
 wire [8:0]coeff_ec0_0;
 wire [8:0]coeff_ec0_1;
@@ -159,7 +159,7 @@ wire [8:0]coeff_ec3_3;
 wire [8:0]coeff_ec3_4;
 wire [8:0]coeff_ec3_5;
 wire [8:0]coeff_ec3_6;
-parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(0),.modeType(kEcXfm))u_parseEcg0 //decodeOneGroup
+parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(0),.modeType(kEcBP))u_parseEcg0 //decodeOneGroup
 (
   .mode_XFM   (mode_XFM),
   .suffix    (mode_XFM ? suffix_rm_LSigPos : 0),
@@ -177,7 +177,7 @@ parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(0),.modeType(kEcXfm))u_parseEcg0 //decodeO
 );
 
 wire[127:0] suffix_rm_ecg0 = suffix_rm_LSigPos<<numbits0;//{suffix[127-28:0],28'b0};
-parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(1),.modeType(kEcXfm))u_parseEcg1
+parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(1),.modeType(kEcBP))u_parseEcg1
 (
   .mode_XFM   (mode_XFM),
   .suffix    (mode_XFM ? suffix_rm_ecg0 : 0),
@@ -195,7 +195,7 @@ parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(1),.modeType(kEcXfm))u_parseEcg1
 );
 
 wire[127:0] suffix_rm_ecg1 = suffix_rm_ecg0<<numbits1;
-parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(2),.modeType(kEcXfm))u_parseEcg2
+parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(2),.modeType(kEcBP))u_parseEcg2
 (
   .mode_XFM   (mode_XFM),
   .suffix    (mode_XFM ? suffix_rm_ecg1 : 0),
@@ -213,7 +213,7 @@ parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(2),.modeType(kEcXfm))u_parseEcg2
 );
 
 wire[127:0] suffix_rm_ecg2 = suffix_rm_ecg1<<numbits2;
-parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(3),.modeType(kEcXfm))u_parseEcg3
+parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(3),.modeType(kEcBP))u_parseEcg3
 (
   .mode_XFM   (mode_XFM),
   .suffix    (mode_XFM ? suffix_rm_ecg2 : 0),

@@ -2,7 +2,7 @@ Command: vcs -sverilog -full64 -f ../flist +lint=TFIPC-L -P /opt/Synopsys/Verdi2
 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a -l run.log +v2k -debug_all +notimingcheck \
 -lca
                          Chronologic VCS (TM)
-         Version I-2014.03_Full64 -- Mon Apr  5 09:56:44 2021
+         Version I-2014.03_Full64 -- Mon Apr  5 21:41:06 2021
                Copyright (c) 1991-2014 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -51,9 +51,34 @@ Warning-[IPDW] Identifier previously declared
 Parsing design file '../../rtl/parseEcg.v'
 Parsing design file '../../rtl/parse_signbits_ec.v'
 Parsing design file '../../rtl/decBpvBlock.v'
+Parsing design file '../../rtl/decEcg_allGroups.v'
+
+Warning-[IPDW] Identifier previously declared
+../../rtl/decEcg_allGroups.v, 44
+  Second declaration for identifier 'ecEd0' ignored
+
+
+Warning-[IPDW] Identifier previously declared
+../../rtl/decEcg_allGroups.v, 45
+  Second declaration for identifier 'ecEd0' ignored
+
+
+Warning-[IPDW] Identifier previously declared
+../../rtl/decEcg_allGroups.v, 46
+  Second declaration for identifier 'ecEd0' ignored
+
+Parsing design file '../../rtl/decVecEcSymbolSM.v'
 Top Level Modules:
        tb
 TimeScale is 1 ns / 1 ps
+
+Lint-[TFIPC-L] Too few instance port connections
+../../rtl/parseEcg.v, 273
+"decVecEcSymbolSM #(.ssm_idx(ssm_idx)) u_decVecEcSymbolSM( .suffix ((((modeType == kEcBP) & (bitsReq <= VecEcThd)) ? suffix_of_ec : 128'b0)),  .bitsReq (bitsReq[1:0]),  .size (vecEcSymboleSize));"
+  The above instance has fewer port connections than the module definition,
+  output port 'symbol' is not connected,
+  output port 'mask' is not connected.
+
 
 Lint-[TFIPC-L] Too few instance port connections
 ../../rtl/bitparse_ssm123.v, 239
@@ -64,7 +89,16 @@ Lint-[TFIPC-L] Too few instance port connections
 
 Warning-[PCWM-W] Port connection width mismatch
 ../../rtl/decXfmCoeff.v, 216
-"parseEcg #(ssm_idx, 3, ) u_parseEcg3( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix_rm_ecg2 : 0)),  .ecNumSample (ecNumSample3),  .m_signBitValid (m_signBitValid_ecg3),  .numbits (numbits3),  .coeff_0 (coeff_ec3_0),  .coeff_1 (coeff_ec3_1),  .coeff_2 (coeff_ec3_2),  .coeff_3 (coeff_ec3_3),  .coeff_4 (coeff_ec3_4),  .coeff_5 (coeff_ec3_5),  .coeff_6 (coeff_ec3_6));"
+"parseEcg #(ssm_idx, 3, kEcXfm, , ) u_parseEcg3( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix_rm_ecg2 : 0)),  .ecNumSample (ecNumSample3),  .m_signBitValid (m_signBitValid_ecg3),  .numbits (numbits3),  .coeff_0 (coeff_ec3_0),  .coeff_1 (coeff_ec3_1),  .coeff_2 (coeff_ec3_2),  .coeff_3 (coeff_ec3_3),  .coeff_4 (coeff_ec3_4),  .coeff_5 (coeff_ec3_5),  .coeff_6 (coeff_ec3_6));"
+  The following 4-bit expression is connected to 3-bit port "ecNumSample" of 
+  module "parseEcg", instance "u_parseEcg3".
+  Expression: ecNumSample3
+  	use +lint=PCWM for more details
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../../rtl/decEcg_allGroups.v, 216
+"parseEcg #(ssm_idx, 3, kEcBP, , ) u_parseEcg3( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix_rm_ecg2 : 0)),  .ecNumSample (ecNumSample3),  .m_signBitValid (m_signBitValid_ecg3),  .numbits (numbits3),  .coeff_0 (coeff_ec3_0),  .coeff_1 (coeff_ec3_1),  .coeff_2 (coeff_ec3_2),  .coeff_3 (coeff_ec3_3),  .coeff_4 (coeff_ec3_4),  .coeff_5 (coeff_ec3_5),  .coeff_6 (coeff_ec3_6));"
   The following 4-bit expression is connected to 3-bit port "ecNumSample" of 
   module "parseEcg", instance "u_parseEcg3".
   Expression: ecNumSample3
@@ -123,14 +157,10 @@ Warning-[PCWM-W] Port connection width mismatch
   	use +lint=PCWM for more details
 
 Starting vcs inline pass...
-9 modules and 0 UDP read.
-	However, due to incremental compilation, only 2 modules need to be compiled.
-recompiling module tb because:
+10 modules and 0 UDP read.
+	However, due to incremental compilation, only 1 module needs to be compiled.
+recompiling module parseEcg because:
 	This module or some inlined child module(s) has/have been modified.
-recompiling module bitparse_ssm123 because:
-	Signal dependencies have changed
-	Module parameters have been changed via defparam.
-Both modules done.
 rm -f _csrc*.so amd64_scvhdl_*.so pre_vcsobj_*.so share_vcsobj_*.so
 ld -shared -o .//../simv.daidir//_csrc1.so --whole-archive _vcsobj_1_1.a  --no-whole-archive \
 
@@ -145,10 +175,12 @@ ld -shared -o .//../simv.daidir//pre_vcsobj_1_4.so --whole-archive pre_vcsobj_1_
 --no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_5.so --whole-archive pre_vcsobj_1_5.a \
 --no-whole-archive
+ld -shared -o .//../simv.daidir//pre_vcsobj_1_6.so --whole-archive pre_vcsobj_1_6.a \
+--no-whole-archive
 if [ -x ../simv ]; then chmod -x ../simv; fi
 g++  -o ../simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/simv.daidir/ -Wl,-rpath='$ORIGIN'/simv.daidir//scsim.db.dir \
 _csrc1.so _csrc0.so   pre_vcsobj_1_1.so pre_vcsobj_1_2.so pre_vcsobj_1_3.so pre_vcsobj_1_4.so \
-pre_vcsobj_1_5.so  rmapats_mop.o rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so \
+pre_vcsobj_1_5.so pre_vcsobj_1_6.so  rmapats_mop.o rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so \
 /opt/Synopsys/VCS2014/amd64/lib/libvirsim.so /opt/Synopsys/VCS2014/amd64/lib/liberrorinf.so \
 /opt/Synopsys/VCS2014/amd64/lib/libsnpsmalloc.so /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a \
 /opt/Synopsys/VCS2014/amd64/lib/libvcsnew.so /opt/Synopsys/VCS2014/amd64/lib/libuclinative.so \
@@ -156,4 +188,4 @@ pre_vcsobj_1_5.so  rmapats_mop.o rmapats.o rmar.o           /opt/Synopsys/VCS201
 _vcs_pli_stub_.o   /opt/Synopsys/VCS2014/amd64/lib/vcs_save_restore_new.o -ldl -lm \
 -lm  -lc -lpthread -ldl 
 ../simv up to date
-CPU time: 2.230 seconds to compile + 1.846 seconds to elab + .184 seconds to link
+CPU time: 2.276 seconds to compile + .004 seconds to elab + .145 seconds to link

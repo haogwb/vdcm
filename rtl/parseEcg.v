@@ -1,4 +1,4 @@
-module parseEcg #(parameter ssm_idx = 0,ecg_idx=0)
+module parseEcg #(parameter ssm_idx = 0,ecg_idx=0, modeType=0)
 (
   input mode_XFM,
   input [127:0] suffix,
@@ -17,7 +17,8 @@ module parseEcg #(parameter ssm_idx = 0,ecg_idx=0)
 );
 //reg [127:0] suffix_left;
 parameter kEcXfm = 0;
-wire [3:0]m_modeType = 0;
+parameter kEcBP = 1;
+wire [3:0]m_modeType = modeType;
 wire [3:0] numBitsLastSigPos = 4;
 wire isCompSkip = 0;
 //reg  [3:0] lastSigPos;
@@ -252,7 +253,6 @@ assign m_signBitValid = useSignMag ? m_signBitValid_all & signBitVld_mask[6:0] :
 
 
 //wire [127:0] suffix_left = {suffix_of_ec[127-4*5:0],20'b0};
-assign numbits = value ? 1 : size_before_ec+ecNumSample*bitsReq; //24;
 
 wire [7:0]th = (1<<(bitsReq-1))-1;
 
@@ -264,6 +264,25 @@ assign coeff_4 = value ? 0 :useSignMag ? src_tmp4 : src_c2(src_tmp4,th);
 assign coeff_5 = value ? 0 :useSignMag ? src_tmp5 : src_c2(src_tmp5,th);
 assign coeff_6 = value ? 0 :useSignMag ? src_tmp6 : src_c2(src_tmp6,th);
 
+
+
+//////////////////////DecVecEcSymbolSM/////////////////////////////////
+
+wire [1:0] VecEcThd = 2;
+wire [7:0] vecEcSymboleSize;
+decVecEcSymbolSM  #(.ssm_idx(ssm_idx))u_decVecEcSymbolSM (
+    .suffix                  ( modeType==kEcBP & bitsReq <= VecEcThd ? suffix_of_ec : 128'b0),
+    .bitsReq                 ( bitsReq[1:0]),
+    .size                    ( vecEcSymboleSize   )
+);
+
+
+
+//////////////////////DecVecEcSymbolSM/////////////////////////////////
+
+wire [7:0] cpec_size_bp = modeType==kEcBP &ssm_idx>0 ? bitsReq*4:0;
+wire [7:0] bp_ecg_size = size_before_ec+(bitsReq <= VecEcThd ? vecEcSymboleSize : cpec_size_bp);
+assign numbits = modeType==kEcBP &ssm_idx>0 ? bp_ecg_size :(value ? 1 : size_before_ec+ecNumSample*bitsReq); //24;
 
 function [7:0]GetBitsReqFromCodeWord;
   input [7:0]codeWord;
