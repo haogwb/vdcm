@@ -13,4 +13,5 @@
 ../../rtl/decBpvBlock.v
 ../../rtl/decEcg_allGroups.v
 ../../rtl/decVecEcSymbolSM.v
+../../rtl/decVecEcSymbol2C.v
 

@@ -51,7 +51,7 @@ wire [2:0]xfmEcgMappingLstSigPos3 = 1;
 //assign ecNumSample0 = xfmEcgMappingLstSigPos0[lastSigPos*3];
 //assign ecNumSample1 = xfmEcgMappingLstSigPos1[lastSigPos*3];
 //assign ecNumSample2 = xfmEcgMappingLstSigPos2[lastSigPos*3];
-assign ecNumSample3 = 1;
+assign ecNumSample3 = m_modeType == kEcBP ? 4 : 1;
 
 wire ecgDataActive0 = |ecNumSample0 ;
 wire ecgDataActive1 = |ecNumSample1 ;
@@ -59,6 +59,7 @@ wire ecgDataActive2 = |ecNumSample2 ;
 wire ecgDataActive3 = |ecNumSample3 ;
 always@(*)
 begin
+  if(m_modeType == kEcBP)begin
   case(lastSigPos)
     4'h0: ecNumSample0 = xfmEcgMappingLstSigPos0[3*(17-01)-1:(15-00)*3];
     4'h1: ecNumSample0 = xfmEcgMappingLstSigPos0[3*(17-02)-1:(15-01)*3];
@@ -77,9 +78,13 @@ begin
     4'he: ecNumSample0 = xfmEcgMappingLstSigPos0[3*(17-15)-1:(15-14)*3];
     4'hf: ecNumSample0 = xfmEcgMappingLstSigPos0[3*(17-16)-1:(15-15)*3];
   endcase
+  end else begin
+     ecNumSample0 = 4;
+  end
 end
 always@(*)
 begin
+  if(m_modeType == kEcBP)begin
   case(lastSigPos)
     4'h0: ecNumSample1 = xfmEcgMappingLstSigPos1[3*(17-01)-1:(15-00)*3];
     4'h1: ecNumSample1 = xfmEcgMappingLstSigPos1[3*(17-02)-1:(15-01)*3];
@@ -98,9 +103,13 @@ begin
     4'he: ecNumSample1 = xfmEcgMappingLstSigPos1[3*(17-15)-1:(15-14)*3];
     4'hf: ecNumSample1 = xfmEcgMappingLstSigPos1[3*(17-16)-1:(15-15)*3];
   endcase
+  end else begin
+     ecNumSample1 = 4;
+  end
 end
 always@(*)
 begin
+  if(m_modeType == kEcBP)begin
   case(lastSigPos)
     4'h0: ecNumSample2 = xfmEcgMappingLstSigPos2[3*(17-01)-1:(15-00)*3];
     4'h1: ecNumSample2 = xfmEcgMappingLstSigPos2[3*(17-02)-1:(15-01)*3];
@@ -119,6 +128,9 @@ begin
     4'he: ecNumSample2 = xfmEcgMappingLstSigPos2[3*(17-15)-1:(15-14)*3];
     4'hf: ecNumSample2 = xfmEcgMappingLstSigPos2[3*(17-16)-1:(15-15)*3];
   endcase
+  end else begin
+     ecNumSample2 = 4;
+  end
 end
 
 

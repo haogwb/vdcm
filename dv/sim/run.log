@@ -2,7 +2,7 @@ Command: vcs -sverilog -full64 -f ../flist +lint=TFIPC-L -P /opt/Synopsys/Verdi2
 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a -l run.log +v2k -debug_all +notimingcheck \
 -lca
                          Chronologic VCS (TM)
-         Version I-2014.03_Full64 -- Mon Apr  5 21:41:06 2021
+         Version I-2014.03_Full64 -- Fri Apr  9 07:49:59 2021
                Copyright (c) 1991-2014 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -68,13 +68,1966 @@ Warning-[IPDW] Identifier previously declared
   Second declaration for identifier 'ecEd0' ignored
 
 Parsing design file '../../rtl/decVecEcSymbolSM.v'
+Parsing design file '../../rtl/decVecEcSymbol2C.v'
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 44
+  The specified width is '4' bits, actually got '8' bits.
+  The offending number is : '10'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 44
+  The specified width is '4' bits, actually got '8' bits.
+  The offending number is : '12'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 44
+  The specified width is '4' bits, actually got '8' bits.
+  The offending number is : '11'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 44
+  The specified width is '4' bits, actually got '8' bits.
+  The offending number is : '14'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 44
+  The specified width is '4' bits, actually got '8' bits.
+  The offending number is : '13'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 44
+  The specified width is '4' bits, actually got '8' bits.
+  The offending number is : '15'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 45
+  The specified width is '4' bits, actually got '8' bits.
+  The offending number is : '12'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 45
+  The specified width is '4' bits, actually got '8' bits.
+  The offending number is : '10'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 45
+  The specified width is '4' bits, actually got '8' bits.
+  The offending number is : '15'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 45
+  The specified width is '4' bits, actually got '8' bits.
+  The offending number is : '11'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 45
+  The specified width is '4' bits, actually got '8' bits.
+  The offending number is : '13'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 45
+  The specified width is '4' bits, actually got '8' bits.
+  The offending number is : '14'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '193'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '196'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '208'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '112'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '128'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '241'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '244'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '197'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '209'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '200'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '115'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '212'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '205'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '116'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '113'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '140'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '224'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '124'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '220'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '176'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '199'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '132'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '129'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '211'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '144'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '194'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '131'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '136'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '245'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '203'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '160'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '119'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '215'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '125'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '221'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '188'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '114'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '117'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '228'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '227'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '177'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '206'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '133'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '248'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '127'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '180'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '225'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '213'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '148'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '242'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '223'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '236'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '247'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '179'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '141'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '216'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '210'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '120'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '201'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '135'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '100'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '147'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '253'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '143'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '145'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '156'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '198'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '108'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '130'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '254'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '251'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '202'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '250'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '239'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '191'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '184'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '161'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '229'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '121'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '109'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '163'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '118'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '181'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '226'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '172'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '139'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '164'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '217'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '151'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '214'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '103'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '137'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '157'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '101'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '232'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '104'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '149'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '134'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '231'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '123'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '189'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '126'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '178'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '222'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '183'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '187'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '152'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '142'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '146'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '246'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '219'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '111'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '238'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '249'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '237'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '175'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '159'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '165'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '138'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '190'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '235'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '153'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '186'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '168'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '162'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '170'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '102'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '230'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '234'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '167'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '150'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '105'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '185'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '218'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '174'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '155'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '110'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '171'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '173'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '122'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '158'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '182'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '233'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '107'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '154'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '106'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '166'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '169'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '255'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '207'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '243'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '195'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '252'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '204'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '240'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 46
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '192'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '193'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '112'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '208'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '196'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '128'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '224'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '176'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '241'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '244'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '200'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '197'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '160'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '209'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '115'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '205'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '116'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '140'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '220'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '245'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '113'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '129'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '211'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '124'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '212'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '199'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '194'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '203'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '144'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '136'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '132'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '131'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '250'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '227'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '221'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '119'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '188'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '175'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '254'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '251'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '206'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '248'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '239'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '228'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '191'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '177'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '236'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '143'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '242'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '202'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '179'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '114'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '223'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '170'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '117'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '141'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '247'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '225'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '213'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '127'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '253'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '216'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '180'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '172'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '133'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '165'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '201'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '163'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '238'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '145'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '156'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '100'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '187'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '226'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '215'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '161'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '184'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '125'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '139'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '164'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '181'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '229'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '130'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '135'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '120'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '108'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '148'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '234'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '198'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '210'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '171'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '147'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '217'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '174'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '118'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '186'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '137'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '157'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '235'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '152'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '219'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '190'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '231'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '178'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '103'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '232'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '237'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '142'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '189'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '138'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '249'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '126'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '153'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '149'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '162'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '101'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '102'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '183'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '111'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '246'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '222'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '123'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '168'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '159'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '109'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '151'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '121'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '134'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '214'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '218'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '104'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '122'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '146'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '230'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '155'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '105'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '150'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '167'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '173'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '233'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '185'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '110'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '158'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '182'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '107'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '169'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '154'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '106'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '166'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '255'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '207'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '243'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '195'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '252'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '204'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '240'.
+
+
+Warning-[TMBIN] Too many bits in Based Number
+../../rtl/decVecEcSymbol2C.v, 47
+  The specified width is '8' bits, actually got '12' bits.
+  The offending number is : '192'.
+
 Top Level Modules:
        tb
 TimeScale is 1 ns / 1 ps
 
 Lint-[TFIPC-L] Too few instance port connections
-../../rtl/parseEcg.v, 273
-"decVecEcSymbolSM #(.ssm_idx(ssm_idx)) u_decVecEcSymbolSM( .suffix ((((modeType == kEcBP) & (bitsReq <= VecEcThd)) ? suffix_of_ec : 128'b0)),  .bitsReq (bitsReq[1:0]),  .size (vecEcSymboleSize));"
+../../rtl/parseEcg.v, 258
+"decVecEcSymbolSM #(.ssm_idx(ssm_idx)) u_decVecEcSymbolSM( .suffix ((((modeType == kEcBP) & (bitsReq <= VecEcThd)) ? suffix_of_ec : 128'b0)),  .bitsReq (bitsReq[1:0]),  .size (vecEcSymboleSize_SM),  .src_0 (vecSample0),  .src_1 (vecSample1),  .src_2 (vecSample2),  .src_3 (vecSample3));"
+  The above instance has fewer port connections than the module definition,
+  output port 'symbol' is not connected,
+  output port 'mask' is not connected.
+
+
+Lint-[TFIPC-L] Too few instance port connections
+../../rtl/parseEcg.v, 269
+"decVecEcSymbol2C #(.ssm_idx(ssm_idx)) u_decVecEcSymbol2C( .suffix ((((modeType == kEcBP) & (bitsReq <= VecEcThd)) ? suffix_of_ec : 128'b0)),  .bitsReq (bitsReq[1:0]),  .size (vecEcSymboleSize_2C),  .src_0 (vecSample_2C_0),  .src_1 (vecSample_2C_1),  .src_2 (vecSample_2C_2),  .src_3 (vecSample_2C_3));"
   The above instance has fewer port connections than the module definition,
   output port 'symbol' is not connected,
   output port 'mask' is not connected.
@@ -97,7 +2050,25 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/decEcg_allGroups.v, 216
+../../rtl/parseEcg.v, 258
+"decVecEcSymbolSM #(ssm_idx) u_decVecEcSymbolSM( .suffix ((((modeType == kEcBP) & (bitsReq <= VecEcThd)) ? suffix_of_ec : 128'b0)),  .bitsReq (bitsReq[1:0]),  .size (vecEcSymboleSize_SM),  .src_0 (vecSample0),  .src_1 (vecSample1),  .src_2 (vecSample2),  .src_3 (vecSample3));"
+  The following 9-bit expression is connected to 8-bit port "size" of module 
+  "decVecEcSymbolSM", instance "u_decVecEcSymbolSM".
+  Expression: vecEcSymboleSize_SM
+  	use +lint=PCWM for more details
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../../rtl/parseEcg.v, 269
+"decVecEcSymbol2C #(ssm_idx) u_decVecEcSymbol2C( .suffix ((((modeType == kEcBP) & (bitsReq <= VecEcThd)) ? suffix_of_ec : 128'b0)),  .bitsReq (bitsReq[1:0]),  .size (vecEcSymboleSize_2C),  .src_0 (vecSample_2C_0),  .src_1 (vecSample_2C_1),  .src_2 (vecSample_2C_2),  .src_3 (vecSample_2C_3));"
+  The following 9-bit expression is connected to 8-bit port "size" of module 
+  "decVecEcSymbol2C", instance "u_decVecEcSymbol2C".
+  Expression: vecEcSymboleSize_2C
+  	use +lint=PCWM for more details
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../../rtl/decEcg_allGroups.v, 228
 "parseEcg #(ssm_idx, 3, kEcBP, , ) u_parseEcg3( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix_rm_ecg2 : 0)),  .ecNumSample (ecNumSample3),  .m_signBitValid (m_signBitValid_ecg3),  .numbits (numbits3),  .coeff_0 (coeff_ec3_0),  .coeff_1 (coeff_ec3_1),  .coeff_2 (coeff_ec3_2),  .coeff_3 (coeff_ec3_3),  .coeff_4 (coeff_ec3_4),  .coeff_5 (coeff_ec3_5),  .coeff_6 (coeff_ec3_6));"
   The following 4-bit expression is connected to 3-bit port "ecNumSample" of 
   module "parseEcg", instance "u_parseEcg3".
@@ -135,7 +2106,7 @@ Warning-[SIOB] Select index out of bounds
 ../../rtl/bitparse_ssm123.v, 195
 "shifter_left[254:(-128)]"
   The select index is out of declared bounds : [254:0].
-  In module instance : u_bitparse_ssm1 u_bitparse_ssm3 u_bitparse_ssm2 
+  In module instance : u_bitparse_ssm2 u_bitparse_ssm3 u_bitparse_ssm1 
   In module : bitparse_ssm123.
 
 
@@ -157,9 +2128,9 @@ Warning-[PCWM-W] Port connection width mismatch
   	use +lint=PCWM for more details
 
 Starting vcs inline pass...
-10 modules and 0 UDP read.
+11 modules and 0 UDP read.
 	However, due to incremental compilation, only 1 module needs to be compiled.
-recompiling module parseEcg because:
+recompiling module decBpvBlock because:
 	This module or some inlined child module(s) has/have been modified.
 rm -f _csrc*.so amd64_scvhdl_*.so pre_vcsobj_*.so share_vcsobj_*.so
 ld -shared -o .//../simv.daidir//_csrc1.so --whole-archive _vcsobj_1_1.a  --no-whole-archive \
@@ -177,15 +2148,17 @@ ld -shared -o .//../simv.daidir//pre_vcsobj_1_5.so --whole-archive pre_vcsobj_1_
 --no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_6.so --whole-archive pre_vcsobj_1_6.a \
 --no-whole-archive
+ld -shared -o .//../simv.daidir//pre_vcsobj_1_7.so --whole-archive pre_vcsobj_1_7.a \
+--no-whole-archive
 if [ -x ../simv ]; then chmod -x ../simv; fi
 g++  -o ../simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/simv.daidir/ -Wl,-rpath='$ORIGIN'/simv.daidir//scsim.db.dir \
 _csrc1.so _csrc0.so   pre_vcsobj_1_1.so pre_vcsobj_1_2.so pre_vcsobj_1_3.so pre_vcsobj_1_4.so \
-pre_vcsobj_1_5.so pre_vcsobj_1_6.so  rmapats_mop.o rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so \
-/opt/Synopsys/VCS2014/amd64/lib/libvirsim.so /opt/Synopsys/VCS2014/amd64/lib/liberrorinf.so \
-/opt/Synopsys/VCS2014/amd64/lib/libsnpsmalloc.so /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a \
-/opt/Synopsys/VCS2014/amd64/lib/libvcsnew.so /opt/Synopsys/VCS2014/amd64/lib/libuclinative.so \
--Wl,-whole-archive /opt/Synopsys/VCS2014/amd64/lib/libvcsucli.so -Wl,-no-whole-archive \
-_vcs_pli_stub_.o   /opt/Synopsys/VCS2014/amd64/lib/vcs_save_restore_new.o -ldl -lm \
--lm  -lc -lpthread -ldl 
+pre_vcsobj_1_5.so pre_vcsobj_1_6.so pre_vcsobj_1_7.so  rmapats_mop.o rmapats.o rmar.o \
+/opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so /opt/Synopsys/VCS2014/amd64/lib/libvirsim.so \
+/opt/Synopsys/VCS2014/amd64/lib/liberrorinf.so /opt/Synopsys/VCS2014/amd64/lib/libsnpsmalloc.so \
+/opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a    /opt/Synopsys/VCS2014/amd64/lib/libvcsnew.so \
+/opt/Synopsys/VCS2014/amd64/lib/libuclinative.so   -Wl,-whole-archive /opt/Synopsys/VCS2014/amd64/lib/libvcsucli.so \
+-Wl,-no-whole-archive        _vcs_pli_stub_.o   /opt/Synopsys/VCS2014/amd64/lib/vcs_save_restore_new.o \
+-ldl -lm -lm  -lc -lpthread -ldl 
 ../simv up to date
-CPU time: 2.276 seconds to compile + .004 seconds to elab + .145 seconds to link
+CPU time: 2.387 seconds to compile + 1.944 seconds to elab + .252 seconds to link

@@ -240,15 +240,63 @@ begin
   endcase
 end
 
+
+//////////////////////DecVecEcSymbol/////////////////////////////////
+
+wire [1:0] VecEcThd = 2;
+wire [8:0] vecEcSymboleSize_SM;
+wire [8:0] vecSample0;
+wire [8:0] vecSample1;
+wire [8:0] vecSample2;
+wire [8:0] vecSample3;
+wire [8:0] vecEcSymboleSize_2C;
+wire [8:0] vecSample_2C_0;
+wire [8:0] vecSample_2C_1;
+wire [8:0] vecSample_2C_2;
+wire [8:0] vecSample_2C_3;
+
+decVecEcSymbolSM  #(.ssm_idx(ssm_idx))u_decVecEcSymbolSM (
+    .suffix                  ( modeType==kEcBP & bitsReq <= VecEcThd ? suffix_of_ec : 128'b0),
+    .bitsReq                 ( bitsReq[1:0]),
+    .size                    ( vecEcSymboleSize_SM   ),
+
+    .src_0                   ( vecSample0),
+    .src_1                   ( vecSample1),
+    .src_2                   ( vecSample2),
+    .src_3                   ( vecSample3)
+);
+
+decVecEcSymbol2C  #(.ssm_idx(ssm_idx))u_decVecEcSymbol2C (
+    .suffix                  ( modeType==kEcBP & bitsReq <= VecEcThd ? suffix_of_ec : 128'b0),
+    .bitsReq                 ( bitsReq[1:0]),
+    .size                    ( vecEcSymboleSize_2C   ),
+
+    .src_0                   ( vecSample_2C_0),
+    .src_1                   ( vecSample_2C_1),
+    .src_2                   ( vecSample_2C_2),
+    .src_3                   ( vecSample_2C_3)
+);
+
+//////////////////////DecVecEcSymbol/////////////////////////////////
+
+
+wire [8:0] src_vec_cpec_0 = modeType==kEcXfm ?src_tmp0 : bitsReq >VecEcThd ? src_tmp0:vecSample0;
+wire [8:0] src_vec_cpec_1 = modeType==kEcXfm ?src_tmp1 : bitsReq >VecEcThd ? src_tmp1:vecSample1;
+wire [8:0] src_vec_cpec_2 = modeType==kEcXfm ?src_tmp2 : bitsReq >VecEcThd ? src_tmp2:vecSample2;
+wire [8:0] src_vec_cpec_3 = modeType==kEcXfm ?src_tmp3 : bitsReq >VecEcThd ? src_tmp3:vecSample3;
+wire [8:0] src_vec_cpec_4 = modeType==kEcXfm ?src_tmp4 : 'b0;
+wire [8:0] src_vec_cpec_5 = modeType==kEcXfm ?src_tmp5 : 'b0;
+wire [8:0] src_vec_cpec_6 = modeType==kEcXfm ?src_tmp6 : 'b0;
+
 wire[7:0] signBitVld_mask = (1<<ecNumSample) - 1;
 wire [6:0]m_signBitValid_all;
-assign m_signBitValid_all[0] = value ? 0 : |src_tmp0;
-assign m_signBitValid_all[1] = value ? 0 : |src_tmp1;
-assign m_signBitValid_all[2] = value ? 0 : |src_tmp2;
-assign m_signBitValid_all[3] = value ? 0 : |src_tmp3;
-assign m_signBitValid_all[4] = value ? 0 : |src_tmp4;
-assign m_signBitValid_all[5] = value ? 0 : |src_tmp5;
-assign m_signBitValid_all[6] = value ? 0 : |src_tmp6;
+assign m_signBitValid_all[0] = value ? 0 : |src_vec_cpec_0 ;
+assign m_signBitValid_all[1] = value ? 0 : |src_vec_cpec_1 ;
+assign m_signBitValid_all[2] = value ? 0 : |src_vec_cpec_2 ;
+assign m_signBitValid_all[3] = value ? 0 : |src_vec_cpec_3 ;
+assign m_signBitValid_all[4] = value ? 0 : |src_vec_cpec_4 ;
+assign m_signBitValid_all[5] = value ? 0 : |src_vec_cpec_5 ;
+assign m_signBitValid_all[6] = value ? 0 : |src_vec_cpec_6 ;
 assign m_signBitValid = useSignMag ? m_signBitValid_all & signBitVld_mask[6:0] : 0;
 
 
@@ -256,31 +304,19 @@ assign m_signBitValid = useSignMag ? m_signBitValid_all & signBitVld_mask[6:0] :
 
 wire [7:0]th = (1<<(bitsReq-1))-1;
 
-assign coeff_0 = value ? 0 :useSignMag ? src_tmp0 : src_c2(src_tmp0,th);
-assign coeff_1 = value ? 0 :useSignMag ? src_tmp1 : src_c2(src_tmp1,th);
-assign coeff_2 = value ? 0 :useSignMag ? src_tmp2 : src_c2(src_tmp2,th);
-assign coeff_3 = value ? 0 :useSignMag ? src_tmp3 : src_c2(src_tmp3,th);
-assign coeff_4 = value ? 0 :useSignMag ? src_tmp4 : src_c2(src_tmp4,th);
-assign coeff_5 = value ? 0 :useSignMag ? src_tmp5 : src_c2(src_tmp5,th);
-assign coeff_6 = value ? 0 :useSignMag ? src_tmp6 : src_c2(src_tmp6,th);
+assign coeff_0 = value ? 0 :useSignMag ? src_vec_cpec_0 : ( modeType==kEcXfm ? src_c2(src_tmp0,th) : bitsReq >VecEcThd?src_c2(src_tmp0,th) : vecSample_2C_0);
+assign coeff_1 = value ? 0 :useSignMag ? src_vec_cpec_1 : ( modeType==kEcXfm ? src_c2(src_tmp1,th) : bitsReq >VecEcThd?src_c2(src_tmp1,th) : vecSample_2C_1);
+assign coeff_2 = value ? 0 :useSignMag ? src_vec_cpec_2 : ( modeType==kEcXfm ? src_c2(src_tmp2,th) : bitsReq >VecEcThd?src_c2(src_tmp2,th) : vecSample_2C_2);
+assign coeff_3 = value ? 0 :useSignMag ? src_vec_cpec_3 : ( modeType==kEcXfm ? src_c2(src_tmp3,th) : bitsReq >VecEcThd?src_c2(src_tmp3,th) : vecSample_2C_3);
+assign coeff_4 = value ? 0 :useSignMag ? src_vec_cpec_4 : ( modeType==kEcXfm ? src_c2(src_tmp4,th) : 'b0);
+assign coeff_5 = value ? 0 :useSignMag ? src_vec_cpec_5 : ( modeType==kEcXfm ? src_c2(src_tmp5,th) : 'b0);
+assign coeff_6 = value ? 0 :useSignMag ? src_vec_cpec_6 : ( modeType==kEcXfm ? src_c2(src_tmp6,th) : 'b0);
 
 
 
-//////////////////////DecVecEcSymbolSM/////////////////////////////////
-
-wire [1:0] VecEcThd = 2;
-wire [7:0] vecEcSymboleSize;
-decVecEcSymbolSM  #(.ssm_idx(ssm_idx))u_decVecEcSymbolSM (
-    .suffix                  ( modeType==kEcBP & bitsReq <= VecEcThd ? suffix_of_ec : 128'b0),
-    .bitsReq                 ( bitsReq[1:0]),
-    .size                    ( vecEcSymboleSize   )
-);
-
-
-
-//////////////////////DecVecEcSymbolSM/////////////////////////////////
 
 wire [7:0] cpec_size_bp = modeType==kEcBP &ssm_idx>0 ? bitsReq*4:0;
+wire [7:0] vecEcSymboleSize = useSignMag ? vecEcSymboleSize_SM : vecEcSymboleSize_2C;
 wire [7:0] bp_ecg_size = size_before_ec+(bitsReq <= VecEcThd ? vecEcSymboleSize : cpec_size_bp);
 assign numbits = modeType==kEcBP &ssm_idx>0 ? bp_ecg_size :(value ? 1 : size_before_ec+ecNumSample*bitsReq); //24;
 

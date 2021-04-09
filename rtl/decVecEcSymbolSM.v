@@ -4,7 +4,12 @@ input [127:0] suffix,
 input [1:0] bitsReq,
 output reg[7:0] symbol,
 output reg[1:0] mask,
-output [7:0] size
+output [7:0] size,
+
+output [8:0] src_0,
+output [8:0] src_1,
+output [8:0] src_2,
+output [8:0] src_3
 );
 
 
@@ -57,7 +62,11 @@ begin
 end
 
 
-
+wire [7:0] maxValue = (1<<bitsReq) -1;
+assign src_0 = (symbol >> (bitsReq*3)) & mask;
+assign src_1 = (symbol >> (bitsReq*2)) & mask;
+assign src_2 = (symbol >> (bitsReq*1)) & mask;
+assign src_3 = (symbol >> (bitsReq*0)) & mask;
 
 assign size = prefix_size + vecGrk;
 
