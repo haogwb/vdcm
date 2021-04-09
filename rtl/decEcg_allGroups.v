@@ -1,8 +1,8 @@
-module decEcg_allGroups #(parameter ssm_idx = 0,comp=0)
+module decEcg_allGroups #(parameter ssm_idx = 0,comp=0,parameter m_modeType = 1)
 (
   input [127:0] suffix,
   input         mode_XFM,
-  output [7:0]  size
+  output [7:0]  coef_size
   
 
 );
@@ -14,7 +14,6 @@ wire [7:0] numbits3;
 
 parameter kEcXfm = 0;
 parameter kEcBP = 1;
-wire [3:0]m_modeType = 1;
 wire [3:0] numBitsLastSigPos = 4;
 wire isCompSkip = ssm_idx>1 ? suffix[127]: 0;
 reg  [3:0] lastSigPos;
@@ -59,7 +58,7 @@ wire ecgDataActive2 = |ecNumSample2 ;
 wire ecgDataActive3 = |ecNumSample3 ;
 always@(*)
 begin
-  if(m_modeType == kEcBP)begin
+  if(m_modeType == kEcXfm)begin
   case(lastSigPos)
     4'h0: ecNumSample0 = xfmEcgMappingLstSigPos0[3*(17-01)-1:(15-00)*3];
     4'h1: ecNumSample0 = xfmEcgMappingLstSigPos0[3*(17-02)-1:(15-01)*3];
@@ -84,7 +83,7 @@ begin
 end
 always@(*)
 begin
-  if(m_modeType == kEcBP)begin
+  if(m_modeType == kEcXfm)begin
   case(lastSigPos)
     4'h0: ecNumSample1 = xfmEcgMappingLstSigPos1[3*(17-01)-1:(15-00)*3];
     4'h1: ecNumSample1 = xfmEcgMappingLstSigPos1[3*(17-02)-1:(15-01)*3];
@@ -109,7 +108,7 @@ begin
 end
 always@(*)
 begin
-  if(m_modeType == kEcBP)begin
+  if(m_modeType == kEcXfm)begin
   case(lastSigPos)
     4'h0: ecNumSample2 = xfmEcgMappingLstSigPos2[3*(17-01)-1:(15-00)*3];
     4'h1: ecNumSample2 = xfmEcgMappingLstSigPos2[3*(17-02)-1:(15-01)*3];
@@ -251,7 +250,8 @@ wire [2:0] signBitVld_num_ec0;
 wire [2:0] signBitVld_num_ec1; 
 wire [2:0] signBitVld_num_ec2; 
 wire [2:0] signBitVld_num_ec3; 
-
+generate 
+if(kEcXfm == m_modeType) begin : parse_signbits
 parse_signbits_ec  u_parse_signbits_ec3 (
     .suffix                  ( suffix_rm_ecg          [127:0] ),
     .m_signBitValid          ( m_signBitValid_ecg3  [6:0]   ),
@@ -287,8 +287,45 @@ parse_signbits_ec  u_parse_signbits_ec2 (
     .signBitVld_num          ( signBitVld_num_ec2     ),
     .signBit                 ( sign_bits_ec2           )
 );
+end
+else begin : parse_signbits
+parse_signbits_ec  u_parse_signbits_ec0 (
+    .suffix                  ( suffix_rm_ecg          [127:0] ),
+    .m_signBitValid          ( m_signBitValid_ecg0  [6:0]   ),
 
-wire[6:0] ec3_coeff_vld=7'b0000001;
+    .signBitVld_num          ( signBitVld_num_ec0     ),
+    .signBit                 ( sign_bits_ec0           )
+);
+wire[127:0] suffix_for_ec1 = suffix_rm_ecg<<signBitVld_num_ec0;
+parse_signbits_ec  u_parse_signbits_ec1 (
+    .suffix                  ( suffix_for_ec1          [127:0] ),
+    .m_signBitValid          ( m_signBitValid_ecg1  [6:0]   ),
+
+    .signBitVld_num          ( signBitVld_num_ec1     ),
+    .signBit                 ( sign_bits_ec1           )
+);
+
+wire[127:0] suffix_for_ec2 = suffix_for_ec1<<signBitVld_num_ec1;
+parse_signbits_ec  u_parse_signbits_ec2 (
+    .suffix                  ( suffix_for_ec2          [127:0] ),
+    .m_signBitValid          ( m_signBitValid_ecg2  [6:0]   ),
+
+    .signBitVld_num          ( signBitVld_num_ec2     ),
+    .signBit                 ( sign_bits_ec2           )
+);
+
+wire[127:0] suffix_for_ec3 = suffix_for_ec2<<signBitVld_num_ec2;
+parse_signbits_ec  u_parse_signbits_ec3 (
+    .suffix                  ( suffix_for_ec3          [127:0] ),
+    .m_signBitValid          ( m_signBitValid_ecg3  [6:0]   ),
+
+    .signBitVld_num          ( signBitVld_num_ec3     ),
+    .signBit                 ( sign_bits_ec3           )
+);
+end
+endgenerate
+
+wire[6:0] ec3_coeff_vld=m_modeType == kEcBP ? 7'b0001111 :7'b0000001;
 reg[6:0] ec1_coeff_vld;
 reg[6:0] ec0_coeff_vld;
 reg[6:0] ec2_coeff_vld;
@@ -367,8 +404,10 @@ wire [9*16-1:0] sm_coeff_fifo_ec3 =  {sm_coeff_ec3_0,sm_coeff_ec3_1,sm_coeff_ec3
 wire [9*16-1:0] sm_coeff_fifo_ec1 =  {sm_coeff_ec1_0,sm_coeff_ec1_1,sm_coeff_ec1_2,sm_coeff_ec1_3,sm_coeff_ec1_4,sm_coeff_ec1_5,sm_coeff_ec1_6,{9{9'b0}}};
 wire [9*16-1:0] sm_coeff_fifo_ec0 =  {sm_coeff_ec0_0,sm_coeff_ec0_1,sm_coeff_ec0_2,sm_coeff_ec0_3,sm_coeff_ec0_4,sm_coeff_ec0_5,sm_coeff_ec0_6,{9{9'b0}}};
 wire [9*16-1:0] sm_coeff_fifo_ec2 =  {sm_coeff_ec2_0,sm_coeff_ec2_1,sm_coeff_ec2_2,sm_coeff_ec2_3,sm_coeff_ec2_4,sm_coeff_ec2_5,sm_coeff_ec2_6,{9{9'b0}}};
-wire [9*16-1:0] sm_coeff_fifo = sm_coeff_fifo_ec3 | sm_coeff_fifo_ec1>> ecNumSample3*9 | sm_coeff_fifo_ec0>> (ecNumSample3 + ecNumSample1) *9  | sm_coeff_fifo_ec2>> (ecNumSample3 + ecNumSample1+ ecNumSample0) *9 ; 
-
+wire [9*16-1:0] sm_coeff_fifo = m_modeType==kEcXfm ?
+  sm_coeff_fifo_ec3 | sm_coeff_fifo_ec1>> ecNumSample3*9 | sm_coeff_fifo_ec0>> (ecNumSample3 + ecNumSample1) *9  | sm_coeff_fifo_ec2>> (ecNumSample3 + ecNumSample1+ ecNumSample0) *9 
+                                                   :
+  sm_coeff_fifo_ec0 | sm_coeff_fifo_ec1>> ecNumSample0*9 | sm_coeff_fifo_ec2>> (ecNumSample0 + ecNumSample1) *9  | sm_coeff_fifo_ec3>> (ecNumSample2 + ecNumSample1+ ecNumSample0) *9 ;
 wire [8:0] coeff_0   = sm_coeff_fifo[16*9-1:15*9];
 wire [8:0] coeff_1   = sm_coeff_fifo[15*9-1:14*9];
 wire [8:0] coeff_2   = sm_coeff_fifo[14*9-1:13*9];

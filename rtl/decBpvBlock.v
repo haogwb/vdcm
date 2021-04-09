@@ -4,7 +4,7 @@ module decBpvBlock #(parameter ssm_idx = 0)
   input mode_BP,
   input use2x2,
   input [127:0] suffix,
-  output [7:0]  bpv_size
+  output [7:0]  bp_size
 );
 
 reg [7:0] bpv2x2_tmp;
@@ -71,14 +71,15 @@ assign bpv_size = use2x2 ? bitsPerBpv : bitsPerBpv*2 ;
 
 
 wire [127:0] suffix_rm_bpv = use2x2 ? suffix<<bitsPerBpv : suffix<<(bitsPerBpv*2);
+wire [7:0] coef_size;
 decEcg_allGroups #(.ssm_idx(ssm_idx))u_decEcg_allGroups
 (
   .suffix    (suffix_rm_bpv),
   .mode_XFM  (mode_BP),
-  .size()
+  .coef_size(coef_size)
 );
 
-
+assign bp_size = bpv_size + coef_size;
 
 
 

@@ -2,7 +2,7 @@ Command: vcs -sverilog -full64 -f ../flist +lint=TFIPC-L -P /opt/Synopsys/Verdi2
 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a -l run.log +v2k -debug_all +notimingcheck \
 -lca
                          Chronologic VCS (TM)
-         Version I-2014.03_Full64 -- Fri Apr  9 07:49:59 2021
+         Version I-2014.03_Full64 -- Fri Apr  9 13:46:32 2021
                Copyright (c) 1991-2014 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -54,17 +54,17 @@ Parsing design file '../../rtl/decBpvBlock.v'
 Parsing design file '../../rtl/decEcg_allGroups.v'
 
 Warning-[IPDW] Identifier previously declared
+../../rtl/decEcg_allGroups.v, 43
+  Second declaration for identifier 'ecEd0' ignored
+
+
+Warning-[IPDW] Identifier previously declared
 ../../rtl/decEcg_allGroups.v, 44
   Second declaration for identifier 'ecEd0' ignored
 
 
 Warning-[IPDW] Identifier previously declared
 ../../rtl/decEcg_allGroups.v, 45
-  Second declaration for identifier 'ecEd0' ignored
-
-
-Warning-[IPDW] Identifier previously declared
-../../rtl/decEcg_allGroups.v, 46
   Second declaration for identifier 'ecEd0' ignored
 
 Parsing design file '../../rtl/decVecEcSymbolSM.v'
@@ -2067,15 +2067,6 @@ Warning-[PCWM-W] Port connection width mismatch
   	use +lint=PCWM for more details
 
 
-Warning-[PCWM-W] Port connection width mismatch
-../../rtl/decEcg_allGroups.v, 228
-"parseEcg #(ssm_idx, 3, kEcBP, , ) u_parseEcg3( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix_rm_ecg2 : 0)),  .ecNumSample (ecNumSample3),  .m_signBitValid (m_signBitValid_ecg3),  .numbits (numbits3),  .coeff_0 (coeff_ec3_0),  .coeff_1 (coeff_ec3_1),  .coeff_2 (coeff_ec3_2),  .coeff_3 (coeff_ec3_3),  .coeff_4 (coeff_ec3_4),  .coeff_5 (coeff_ec3_5),  .coeff_6 (coeff_ec3_6));"
-  The following 4-bit expression is connected to 3-bit port "ecNumSample" of 
-  module "parseEcg", instance "u_parseEcg3".
-  Expression: ecNumSample3
-  	use +lint=PCWM for more details
-
-
 Warning-[SIOB] Select index out of bounds
 ../../rtl/bitparse.v, 194
 "shifter_left[254:(-128)]"
@@ -2106,7 +2097,7 @@ Warning-[SIOB] Select index out of bounds
 ../../rtl/bitparse_ssm123.v, 195
 "shifter_left[254:(-128)]"
   The select index is out of declared bounds : [254:0].
-  In module instance : u_bitparse_ssm2 u_bitparse_ssm3 u_bitparse_ssm1 
+  In module instance : u_bitparse_ssm1 u_bitparse_ssm3 u_bitparse_ssm2 
   In module : bitparse_ssm123.
 
 
@@ -2127,6 +2118,15 @@ Warning-[PCWM-W] Port connection width mismatch
   Expression: (ssm_idx ? tb.u_bitparse.stepSize_ssm0[2:0] : stepSize_ssm0)
   	use +lint=PCWM for more details
 
+
+Warning-[PCWM-W] Port connection width mismatch
+../../rtl/decEcg_allGroups.v, 227
+"parseEcg #(ssm_idx, 3, kEcBP, , ) u_parseEcg3( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix_rm_ecg2 : 0)),  .ecNumSample (ecNumSample3),  .m_signBitValid (m_signBitValid_ecg3),  .numbits (numbits3),  .coeff_0 (coeff_ec3_0),  .coeff_1 (coeff_ec3_1),  .coeff_2 (coeff_ec3_2),  .coeff_3 (coeff_ec3_3),  .coeff_4 (coeff_ec3_4),  .coeff_5 (coeff_ec3_5),  .coeff_6 (coeff_ec3_6));"
+  The following 4-bit expression is connected to 3-bit port "ecNumSample" of 
+  module "parseEcg", instance "u_parseEcg3".
+  Expression: ecNumSample3
+  	use +lint=PCWM for more details
+
 Starting vcs inline pass...
 11 modules and 0 UDP read.
 	However, due to incremental compilation, only 1 module needs to be compiled.
@@ -2136,6 +2136,8 @@ rm -f _csrc*.so amd64_scvhdl_*.so pre_vcsobj_*.so share_vcsobj_*.so
 ld -shared -o .//../simv.daidir//_csrc1.so --whole-archive _vcsobj_1_1.a  --no-whole-archive \
 
 ld -shared -o .//../simv.daidir//_csrc0.so 5NrI_d.o 5NrIB_d.o SIM_l.o  
+ld -shared -o .//../simv.daidir//pre_vcsobj_0_1.so --whole-archive pre_vcsobj_0_1.a \
+--no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_1.so --whole-archive pre_vcsobj_1_1.a \
 --no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_2.so --whole-archive pre_vcsobj_1_2.a \
@@ -2152,13 +2154,14 @@ ld -shared -o .//../simv.daidir//pre_vcsobj_1_7.so --whole-archive pre_vcsobj_1_
 --no-whole-archive
 if [ -x ../simv ]; then chmod -x ../simv; fi
 g++  -o ../simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/simv.daidir/ -Wl,-rpath='$ORIGIN'/simv.daidir//scsim.db.dir \
-_csrc1.so _csrc0.so   pre_vcsobj_1_1.so pre_vcsobj_1_2.so pre_vcsobj_1_3.so pre_vcsobj_1_4.so \
-pre_vcsobj_1_5.so pre_vcsobj_1_6.so pre_vcsobj_1_7.so  rmapats_mop.o rmapats.o rmar.o \
-/opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so /opt/Synopsys/VCS2014/amd64/lib/libvirsim.so \
-/opt/Synopsys/VCS2014/amd64/lib/liberrorinf.so /opt/Synopsys/VCS2014/amd64/lib/libsnpsmalloc.so \
-/opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a    /opt/Synopsys/VCS2014/amd64/lib/libvcsnew.so \
-/opt/Synopsys/VCS2014/amd64/lib/libuclinative.so   -Wl,-whole-archive /opt/Synopsys/VCS2014/amd64/lib/libvcsucli.so \
--Wl,-no-whole-archive        _vcs_pli_stub_.o   /opt/Synopsys/VCS2014/amd64/lib/vcs_save_restore_new.o \
--ldl -lm -lm  -lc -lpthread -ldl 
+_csrc1.so _csrc0.so   pre_vcsobj_0_1.so pre_vcsobj_1_1.so pre_vcsobj_1_2.so pre_vcsobj_1_3.so \
+pre_vcsobj_1_4.so pre_vcsobj_1_5.so pre_vcsobj_1_6.so pre_vcsobj_1_7.so  rmapats_mop.o \
+rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so \
+/opt/Synopsys/VCS2014/amd64/lib/libvirsim.so /opt/Synopsys/VCS2014/amd64/lib/liberrorinf.so \
+/opt/Synopsys/VCS2014/amd64/lib/libsnpsmalloc.so /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a \
+/opt/Synopsys/VCS2014/amd64/lib/libvcsnew.so /opt/Synopsys/VCS2014/amd64/lib/libuclinative.so \
+-Wl,-whole-archive /opt/Synopsys/VCS2014/amd64/lib/libvcsucli.so -Wl,-no-whole-archive \
+_vcs_pli_stub_.o   /opt/Synopsys/VCS2014/amd64/lib/vcs_save_restore_new.o -ldl -lm \
+-lm  -lc -lpthread -ldl 
 ../simv up to date
-CPU time: 2.387 seconds to compile + 1.944 seconds to elab + .252 seconds to link
+CPU time: 2.445 seconds to compile + .011 seconds to elab + .218 seconds to link
