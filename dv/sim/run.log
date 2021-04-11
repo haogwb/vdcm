@@ -2,7 +2,7 @@ Command: vcs -sverilog -full64 -f ../flist +lint=TFIPC-L -P /opt/Synopsys/Verdi2
 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a -l run.log +v2k -debug_all +notimingcheck \
 -lca
                          Chronologic VCS (TM)
-         Version I-2014.03_Full64 -- Fri Apr  9 13:46:32 2021
+         Version I-2014.03_Full64 -- Sat Apr 10 22:29:25 2021
                Copyright (c) 1991-2014 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -33,21 +33,6 @@ Warning-[IPDW] Identifier previously declared
   Second declaration for identifier 'curStepSize' ignored
 
 Parsing design file '../../rtl/decXfmCoeff.v'
-
-Warning-[IPDW] Identifier previously declared
-../../rtl/decXfmCoeff.v, 44
-  Second declaration for identifier 'ecEd0' ignored
-
-
-Warning-[IPDW] Identifier previously declared
-../../rtl/decXfmCoeff.v, 45
-  Second declaration for identifier 'ecEd0' ignored
-
-
-Warning-[IPDW] Identifier previously declared
-../../rtl/decXfmCoeff.v, 46
-  Second declaration for identifier 'ecEd0' ignored
-
 Parsing design file '../../rtl/parseEcg.v'
 Parsing design file '../../rtl/parse_signbits_ec.v'
 Parsing design file '../../rtl/decBpvBlock.v'
@@ -2041,15 +2026,6 @@ Lint-[TFIPC-L] Too few instance port connections
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/decXfmCoeff.v, 216
-"parseEcg #(ssm_idx, 3, kEcXfm, , ) u_parseEcg3( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix_rm_ecg2 : 0)),  .ecNumSample (ecNumSample3),  .m_signBitValid (m_signBitValid_ecg3),  .numbits (numbits3),  .coeff_0 (coeff_ec3_0),  .coeff_1 (coeff_ec3_1),  .coeff_2 (coeff_ec3_2),  .coeff_3 (coeff_ec3_3),  .coeff_4 (coeff_ec3_4),  .coeff_5 (coeff_ec3_5),  .coeff_6 (coeff_ec3_6));"
-  The following 4-bit expression is connected to 3-bit port "ecNumSample" of 
-  module "parseEcg", instance "u_parseEcg3".
-  Expression: ecNumSample3
-  	use +lint=PCWM for more details
-
-
-Warning-[PCWM-W] Port connection width mismatch
 ../../rtl/parseEcg.v, 258
 "decVecEcSymbolSM #(ssm_idx) u_decVecEcSymbolSM( .suffix ((((modeType == kEcBP) & (bitsReq <= VecEcThd)) ? suffix_of_ec : 128'b0)),  .bitsReq (bitsReq[1:0]),  .size (vecEcSymboleSize_SM),  .src_0 (vecSample0),  .src_1 (vecSample1),  .src_2 (vecSample2),  .src_3 (vecSample3));"
   The following 9-bit expression is connected to 8-bit port "size" of module 
@@ -2097,7 +2073,7 @@ Warning-[SIOB] Select index out of bounds
 ../../rtl/bitparse_ssm123.v, 195
 "shifter_left[254:(-128)]"
   The select index is out of declared bounds : [254:0].
-  In module instance : u_bitparse_ssm1 u_bitparse_ssm3 u_bitparse_ssm2 
+  In module instance : u_bitparse_ssm1 u_bitparse_ssm2 u_bitparse_ssm3 
   In module : bitparse_ssm123.
 
 
@@ -2121,7 +2097,16 @@ Warning-[PCWM-W] Port connection width mismatch
 
 Warning-[PCWM-W] Port connection width mismatch
 ../../rtl/decEcg_allGroups.v, 227
-"parseEcg #(ssm_idx, 3, kEcBP, , ) u_parseEcg3( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix_rm_ecg2 : 0)),  .ecNumSample (ecNumSample3),  .m_signBitValid (m_signBitValid_ecg3),  .numbits (numbits3),  .coeff_0 (coeff_ec3_0),  .coeff_1 (coeff_ec3_1),  .coeff_2 (coeff_ec3_2),  .coeff_3 (coeff_ec3_3),  .coeff_4 (coeff_ec3_4),  .coeff_5 (coeff_ec3_5),  .coeff_6 (coeff_ec3_6));"
+"parseEcg #(ssm_idx, 3, m_modeType, , ) u_parseEcg3( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix_rm_ecg2 : 0)),  .ecNumSample (ecNumSample3),  .m_signBitValid (m_signBitValid_ecg3),  .numbits (numbits3),  .coeff_0 (coeff_ec3_0),  .coeff_1 (coeff_ec3_1),  .coeff_2 (coeff_ec3_2),  .coeff_3 (coeff_ec3_3),  .coeff_4 (coeff_ec3_4),  .coeff_5 (coeff_ec3_5),  .coeff_6 (coeff_ec3_6));"
+  The following 4-bit expression is connected to 3-bit port "ecNumSample" of 
+  module "parseEcg", instance "u_parseEcg3".
+  Expression: ecNumSample3
+  	use +lint=PCWM for more details
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../../rtl/decEcg_allGroups.v, 227
+"parseEcg #(ssm_idx, 3, m_modeType, , ) u_parseEcg3( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix_rm_ecg2 : 0)),  .ecNumSample (ecNumSample3),  .m_signBitValid (m_signBitValid_ecg3),  .numbits (numbits3),  .coeff_0 (coeff_ec3_0),  .coeff_1 (coeff_ec3_1),  .coeff_2 (coeff_ec3_2),  .coeff_3 (coeff_ec3_3),  .coeff_4 (coeff_ec3_4),  .coeff_5 (coeff_ec3_5),  .coeff_6 (coeff_ec3_6));"
   The following 4-bit expression is connected to 3-bit port "ecNumSample" of 
   module "parseEcg", instance "u_parseEcg3".
   Expression: ecNumSample3
@@ -2130,7 +2115,7 @@ Warning-[PCWM-W] Port connection width mismatch
 Starting vcs inline pass...
 11 modules and 0 UDP read.
 	However, due to incremental compilation, only 1 module needs to be compiled.
-recompiling module decBpvBlock because:
+recompiling module decXfmCoeff because:
 	This module or some inlined child module(s) has/have been modified.
 rm -f _csrc*.so amd64_scvhdl_*.so pre_vcsobj_*.so share_vcsobj_*.so
 ld -shared -o .//../simv.daidir//_csrc1.so --whole-archive _vcsobj_1_1.a  --no-whole-archive \
@@ -2164,4 +2149,4 @@ rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.
 _vcs_pli_stub_.o   /opt/Synopsys/VCS2014/amd64/lib/vcs_save_restore_new.o -ldl -lm \
 -lm  -lc -lpthread -ldl 
 ../simv up to date
-CPU time: 2.445 seconds to compile + .011 seconds to elab + .218 seconds to link
+CPU time: 2.091 seconds to compile + 1.761 seconds to elab + .198 seconds to link

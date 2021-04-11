@@ -170,7 +170,7 @@ wire [8:0]coeff_ec3_3;
 wire [8:0]coeff_ec3_4;
 wire [8:0]coeff_ec3_5;
 wire [8:0]coeff_ec3_6;
-parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(0),.modeType(kEcBP))u_parseEcg0 //decodeOneGroup
+parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(0),.modeType(m_modeType))u_parseEcg0 //decodeOneGroup
 (
   .mode_XFM   (mode_XFM),
   .suffix    (mode_XFM ? suffix_rm_LSigPos : 0),
@@ -188,7 +188,7 @@ parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(0),.modeType(kEcBP))u_parseEcg0 //decodeOn
 );
 
 wire[127:0] suffix_rm_ecg0 = suffix_rm_LSigPos<<numbits0;//{suffix[127-28:0],28'b0};
-parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(1),.modeType(kEcBP))u_parseEcg1
+parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(1),.modeType(m_modeType))u_parseEcg1
 (
   .mode_XFM   (mode_XFM),
   .suffix    (mode_XFM ? suffix_rm_ecg0 : 0),
@@ -206,7 +206,7 @@ parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(1),.modeType(kEcBP))u_parseEcg1
 );
 
 wire[127:0] suffix_rm_ecg1 = suffix_rm_ecg0<<numbits1;
-parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(2),.modeType(kEcBP))u_parseEcg2
+parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(2),.modeType(m_modeType))u_parseEcg2
 (
   .mode_XFM   (mode_XFM),
   .suffix    (mode_XFM ? suffix_rm_ecg1 : 0),
@@ -224,7 +224,7 @@ parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(2),.modeType(kEcBP))u_parseEcg2
 );
 
 wire[127:0] suffix_rm_ecg2 = suffix_rm_ecg1<<numbits2;
-parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(3),.modeType(kEcBP))u_parseEcg3
+parseEcg #(.ssm_idx(ssm_idx),.ecg_idx(3),.modeType(m_modeType))u_parseEcg3
 (
   .mode_XFM   (mode_XFM),
   .suffix    (mode_XFM ? suffix_rm_ecg2 : 0),
@@ -250,6 +250,8 @@ wire [2:0] signBitVld_num_ec0;
 wire [2:0] signBitVld_num_ec1; 
 wire [2:0] signBitVld_num_ec2; 
 wire [2:0] signBitVld_num_ec3; 
+
+wire[127:0] suffix_rm_ec_sign;
 generate 
 if(kEcXfm == m_modeType) begin : parse_signbits
 parse_signbits_ec  u_parse_signbits_ec3 (
@@ -287,6 +289,7 @@ parse_signbits_ec  u_parse_signbits_ec2 (
     .signBitVld_num          ( signBitVld_num_ec2     ),
     .signBit                 ( sign_bits_ec2           )
 );
+assign suffix_rm_ec_sign = suffix_for_ec2<<signBitVld_num_ec2;
 end
 else begin : parse_signbits
 parse_signbits_ec  u_parse_signbits_ec0 (
@@ -322,6 +325,7 @@ parse_signbits_ec  u_parse_signbits_ec3 (
     .signBitVld_num          ( signBitVld_num_ec3     ),
     .signBit                 ( sign_bits_ec3           )
 );
+
 end
 endgenerate
 
@@ -425,8 +429,26 @@ wire [8:0] coeff_13  = sm_coeff_fifo[03*9-1:02*9];
 wire [8:0] coeff_14  = sm_coeff_fifo[02*9-1:01*9];
 wire [8:0] coeff_15  = sm_coeff_fifo[01*9-1:00*9];
 
+generate 
+if(kEcXfm == m_modeType) begin : parse_signbits_lastPos
 
-assign coef_size = (ssm_idx > 1 ? 1:0) + numBitsLastSigPos + numbits0 + numbits1
+reg signSigPos;
+always@(*)
+begin
+  if(|lastSigPos | ssm_idx>1)
+    if(sm_coeff_fifo[(16-lastSigPos)*9-1-:9] == 0)
+      signSigPos = suffix_rm_ec_sign[127];
+    else
+      signSigPos = sm_coeff_fifo[(16-lastSigPos)*9-1-:9] >'hff ? 1 : 0;
+end
+
+
+//wire [9*16-1:0] sm_coeff_fifo_after_signLastSigPos = m_modeType==kEcXfm ?
+
+end
+endgenerate
+
+assign coef_size = (ssm_idx > 1 ? 1:0) + (m_modeType==kEcXfm ? numBitsLastSigPos : 0) + numbits0 + numbits1
                    +numbits2 + numbits3+signBitVld_num_ec3+signBitVld_num_ec1
                    +signBitVld_num_ec0+signBitVld_num_ec2;
   

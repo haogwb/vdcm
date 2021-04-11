@@ -35,7 +35,7 @@ begin
 end
 
 wire [3:0] prefix = prefix_tmp > maxPrefix  ? maxPrefix : prefix_tmp;
-wire [3:0] prefix_size = prefix+1;
+wire [3:0] prefix_size = prefix==maxPrefix ? prefix : prefix+1;
 
 wire [127:0] suffix_rm_prefix = suffix<<prefix_size;
 wire [7:0] gf_suffix = suffix_rm_prefix[127-:5];//vecGrk];
