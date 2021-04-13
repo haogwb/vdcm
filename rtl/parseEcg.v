@@ -84,6 +84,8 @@ wire [7:0] size_before_ec = 1+(prefix+1);
 always@(*)
 begin
   case(size_before_ec)
+    8'h1:suffix_of_ec = {suffix[127-1:0],1'b0};
+    8'h2:suffix_of_ec = {suffix[127-2:0],2'b0};
     8'h3:suffix_of_ec = {suffix[127-3:0],3'b0};
     8'h4:suffix_of_ec = {suffix[127-4:0],4'b0};
     8'h5:suffix_of_ec = {suffix[127-5:0],5'b0};

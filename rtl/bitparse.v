@@ -9,6 +9,7 @@ input [127:0] codec_data,
 output modeNxt_XFM,
 output modeNxt_BP,
 output [3:0] use2x2,
+output [3:0] modeNxt_Mpp_stepsize,
 
 output [7:0] pnxtBlkQuant [0:16-1]
 
@@ -303,6 +304,7 @@ always@*begin
 endcase
 end
 
+assign modeNxt_Mpp_stepsize = stepSize_ssm0;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////modeNxt==0, Transform 
 
@@ -346,6 +348,7 @@ wire [7:0] p1 = p0 + (1<<m_partBitsPerLine);
 reg [7:0] bpv2x2_tmp[0:3];
 wire [7:0] bpv2x2[0:3];
 wire [7:0] bpv2x1[0:9]; // is 9 ?,TBD
+reg [7:0] bpv2x1_tmp[0:1];
 
 always@(*)
 begin
@@ -361,122 +364,44 @@ begin
   default: bpv2x2_tmp[0] = 0;
   endcase
 end
+assign bpv2x2[0] = isNxtBlockFls ? bpv2x2_tmp[0] + 32 : bpv2x2_tmp[0] ;
 
-//always@(*)
-//begin
-//  bpv2x2_tmp[1] = 0;
-//  case(bitsPerBpv)
-//  8'h1: bpv2x2_tmp[1] = use2x2[1]&use2x2[0] ? bp_remove_header[127-1*1-:1] :use2x2[1] ? bp_remove_header[127-1*0-:1] : 0;
-//  8'h2: bpv2x2_tmp[1] = use2x2[1]&use2x2[0] ? bp_remove_header[127-2*1-:2] :use2x2[1] ? bp_remove_header[127-2*0-:2] : 0;
-//  8'h3: bpv2x2_tmp[1] = use2x2[1]&use2x2[0] ? bp_remove_header[127-3*1-:3] :use2x2[1] ? bp_remove_header[127-3*0-:3] : 0;
-//  8'h4: bpv2x2_tmp[1] = use2x2[1]&use2x2[0] ? bp_remove_header[127-4*1-:4] :use2x2[1] ? bp_remove_header[127-4*0-:4] : 0;
-//  8'h5: bpv2x2_tmp[1] = use2x2[1]&use2x2[0] ? bp_remove_header[127-5*1-:5] :use2x2[1] ? bp_remove_header[127-5*0-:5] : 0;
-//  8'h6: bpv2x2_tmp[1] = use2x2[1]&use2x2[0] ? bp_remove_header[127-6*1-:6] :use2x2[1] ? bp_remove_header[127-6*0-:6] : 0;
-//  8'h7: bpv2x2_tmp[1] = use2x2[1]&use2x2[0] ? bp_remove_header[127-7*1-:7] :use2x2[1] ? bp_remove_header[127-7*0-:7] : 0;
-//  default: bpv2x2_tmp[1] = 0;
-//  endcase
-//end
-//
-//always@(*)
-//begin
-//  if(use2x2[2]+use2x2[1]+use2x2[0]==3)begin
-//    case(bitsPerBpv)
-//    8'h1: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-1*2-:1] : 0;
-//    8'h2: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-2*2-:2] : 0;
-//    8'h3: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-3*2-:3] : 0;
-//    8'h4: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-4*2-:4] : 0;
-//    8'h5: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-5*2-:5] : 0;
-//    8'h6: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-6*2-:6] : 0;
-//    8'h7: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-7*2-:7] : 0;
-//    default: bpv2x2_tmp[2] = 0;
-//    endcase
-//  end else if(use2x2[2]+use2x2[1]+use2x2[0]==2)begin
-//    case(bitsPerBpv)
-//    8'h1: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-1*1-:1] : 0;
-//    8'h2: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-2*1-:2] : 0;
-//    8'h3: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-3*1-:3] : 0;
-//    8'h4: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-4*1-:4] : 0;
-//    8'h5: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-5*1-:5] : 0;
-//    8'h6: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-6*1-:6] : 0;
-//    8'h7: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-7*1-:7] : 0;
-//    default: bpv2x2_tmp[2] = 0;
-//    endcase
-//  end else if(use2x2[2]+use2x2[1]+use2x2[0]==1)begin
-//    case(bitsPerBpv)
-//    8'h1: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-1*0-:1] : 0;
-//    8'h2: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-2*0-:2] : 0;
-//    8'h3: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-3*0-:3] : 0;
-//    8'h4: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-4*0-:4] : 0;
-//    8'h5: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-5*0-:5] : 0;
-//    8'h6: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-6*0-:6] : 0;
-//    8'h7: bpv2x2_tmp[2] = use2x2[2]? bp_remove_header[127-7*0-:7] : 0;
-//    default: bpv2x2_tmp[2] = 0;
-//    endcase
-//  end else
-//    bpv2x2_tmp[2] = 0;
-//
-//end
-//
-//always@(*)
-//begin
-//  if(use2x2[3]+use2x2[2]+use2x2[1]+use2x2[0]==4)begin
-//    case(bitsPerBpv)
-//    8'h1: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-1*3-:1] : 0;
-//    8'h2: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-2*3-:2] : 0;
-//    8'h3: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-3*3-:3] : 0;
-//    8'h4: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-4*3-:4] : 0;
-//    8'h5: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-5*3-:5] : 0;
-//    8'h6: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-6*3-:6] : 0;
-//    8'h7: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-7*3-:7] : 0;
-//    default: bpv2x2_tmp[3] = 0;
-//    endcase
-//  end else if(use2x2[3]+use2x2[2]+use2x2[1]+use2x2[0]==3)begin
-//    case(bitsPerBpv)
-//    8'h1: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-1*2-:1] : 0;
-//    8'h2: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-2*2-:2] : 0;
-//    8'h3: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-3*2-:3] : 0;
-//    8'h4: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-4*2-:4] : 0;
-//    8'h5: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-5*2-:5] : 0;
-//    8'h6: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-6*2-:6] : 0;
-//    8'h7: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-7*2-:7] : 0;
-//    default: bpv2x2_tmp[3] = 0;
-//    endcase
-//  end else if(use2x2[3]+use2x2[2]+use2x2[1]+use2x2[0]==2)begin
-//    case(bitsPerBpv)
-//    8'h1: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-1*1-:1] : 0;
-//    8'h2: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-2*1-:2] : 0;
-//    8'h3: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-3*1-:3] : 0;
-//    8'h4: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-4*1-:4] : 0;
-//    8'h5: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-5*1-:5] : 0;
-//    8'h6: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-6*1-:6] : 0;
-//    8'h7: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-7*1-:7] : 0;
-//    default: bpv2x2_tmp[3] = 0;
-//    endcase
-//  end else if(use2x2[3]+use2x2[2]+use2x2[1]+use2x2[0]==1)begin
-//    case(bitsPerBpv)
-//    8'h1: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-1*0-:1] : 0;
-//    8'h2: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-2*0-:2] : 0;
-//    8'h3: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-3*0-:3] : 0;
-//    8'h4: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-4*0-:4] : 0;
-//    8'h5: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-5*0-:5] : 0;
-//    8'h6: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-6*0-:6] : 0;
-//    8'h7: bpv2x2_tmp[3] = use2x2[3]? bp_remove_header[127-7*0-:7] : 0;
-//    default: bpv2x2_tmp[3] = 0;
-//    endcase
-//
-//  end else
-//    bpv2x2_tmp[3] = 0;
-//
-//end
-assign bpv2x2[0] = use2x2[0] ? bpv2x2_tmp[0] + 32 : 0;
-//assign bpv2x2[1] = use2x2[1] ? bpv2x2_tmp[1] + 32 : 0;
-//assign bpv2x2[2] = use2x2[2] ? bpv2x2_tmp[2] + 32 : 0;
-//assign bpv2x2[3] = use2x2[3] ? bpv2x2_tmp[3] + 32 : 0;
+always@(*)
+begin
+  bpv2x1_tmp[0] = 0;
+  case(bitsPerBpv)
+  8'h1: bpv2x1_tmp[0] = ~use2x2[0] ? bp_remove_header[127] : 0;
+  8'h2: bpv2x1_tmp[0] = ~use2x2[0] ? bp_remove_header[127-:2] : 0;
+  8'h3: bpv2x1_tmp[0] = ~use2x2[0] ? bp_remove_header[127-:3] : 0;
+  8'h4: bpv2x1_tmp[0] = ~use2x2[0] ? bp_remove_header[127-:4] : 0;
+  8'h5: bpv2x1_tmp[0] = ~use2x2[0] ? bp_remove_header[127-:5] : 0;
+  8'h6: bpv2x1_tmp[0] = ~use2x2[0] ? bp_remove_header[127-:6] : 0;
+  8'h7: bpv2x1_tmp[0] = ~use2x2[0] ? bp_remove_header[127-:7] : 0;
+  default: bpv2x1_tmp[0] = 0;
+  endcase
+end
+assign bpv2x1[0] = isNxtBlockFls ? bpv2x1_tmp[0] + 32 : bpv2x1_tmp[0];
+
+always@(*)
+begin
+  bpv2x1_tmp[1] = 0;
+  case(bitsPerBpv)
+  8'h1: bpv2x1_tmp[1] = ~use2x2[0] ? bp_remove_header[127] : 0;
+  8'h2: bpv2x1_tmp[1] = ~use2x2[0] ? bp_remove_header[127-:2] : 0;
+  8'h3: bpv2x1_tmp[1] = ~use2x2[0] ? bp_remove_header[127-:3] : 0;
+  8'h4: bpv2x1_tmp[1] = ~use2x2[0] ? bp_remove_header[127-:4] : 0;
+  8'h5: bpv2x1_tmp[1] = ~use2x2[0] ? bp_remove_header[127-:5] : 0;
+  8'h6: bpv2x1_tmp[1] = ~use2x2[0] ? bp_remove_header[127-:6] : 0;
+  8'h7: bpv2x1_tmp[1] = ~use2x2[0] ? bp_remove_header[127-:7] : 0;
+  default: bpv2x1_tmp[0] = 0;
+  endcase
+end
+assign bpv2x1[1] = isNxtBlockFls ? bpv2x1_tmp[1] + 32 : bpv2x1_tmp[1] ;
 
 
 ///////////////////////////////////                                                                                                     //XFM
 assign  nxtBlkbitsSsm0 = rd_shifter_rqst ? (modeNxt_MPP ? qres_size + mode_flat_csc_size + numBits : 
-                                            modeNxt_BP ?  bp_header_bits+4 + bitsPerBpv :
+                                            modeNxt_BP ?  bp_header_bits+4 + (use2x2[0]?bitsPerBpv:bitsPerBpv*2):
                                                           mode_header_bits + flatness_header_bits)
                                          : 0;
 

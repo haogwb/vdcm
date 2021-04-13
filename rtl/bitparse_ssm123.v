@@ -10,6 +10,8 @@ input modeNxt_XFM,
 input modeNxt_BP,
 input use2x2,
 
+input [3:0] modeNxt_Mpp_stepsize,
+
 output [7:0] pnxtBlkQuant [0:16-1]
 
 );
@@ -222,11 +224,13 @@ assign suffix = shifter_out[127:0];
 //end
 //end
 //endgenerate
-
+reg [3:0] stepSize;
+always@(posedge clk)
+  stepSize <= modeNxt_Mpp_stepsize;
 decMppSuffix #(.ssm_idx(ssm_idx))u_decMppSuffix_ssm0
 (
   .bitDepth  (8/*bitDepth_comp0*/),
-  .stepSize  (ssm_idx ?tb.u_bitparse.stepSize_ssm0[2:0] /*2*/ : stepSize_ssm0),
+  .stepSize  (stepSize),//ssm_idx ?tb.u_bitparse.stepSize_ssm0[2:0] /*2*/ : stepSize_ssm0),
   .suffix    (suffix),
   .pnxtBlkQuant(pnxtBlkQuant),
   .suffix_left(suffix_rmc0),

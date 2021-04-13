@@ -45,7 +45,7 @@ wire [3:0]ecEd0=ecSt2 + ecNumSample2;
 wire [3:0]ecEd0=ecSt3 + ecNumSample3;
 wire [3*16-1:0]xfmEcgMappingLstSigPos0 = {3'h0,3'h0,3'h0,3'h0,3'h1,3'h2,3'h3,3'h4, 3'h5,3'h5,3'h5,3'h5,3'h5,3'h5,3'h5,3'h5};
 wire [3*16-1:0]xfmEcgMappingLstSigPos1 = {3'h0,3'h1,3'h2,3'h3,3'h3,3'h3,3'h3,3'h3, 3'h3,3'h3,3'h3,3'h3,3'h3,3'h3,3'h3,3'h3};
-wire [3*16-1:0]xfmEcgMappingLstSigPos2 = {3'h0,3'h0,3'h0,3'h0,3'h0,3'h0,3'h0,3'h0, 3'h0,3'h1,3'h2,3'h3,3'h4,3'h5,3'h7,3'h7};
+wire [3*16-1:0]xfmEcgMappingLstSigPos2 = {3'h0,3'h0,3'h0,3'h0,3'h0,3'h0,3'h0,3'h0, 3'h0,3'h1,3'h2,3'h3,3'h4,3'h5,3'h6,3'h7};
 wire [2:0]xfmEcgMappingLstSigPos3 = 1;
 //assign ecNumSample0 = xfmEcgMappingLstSigPos0[lastSigPos*3];
 //assign ecNumSample1 = xfmEcgMappingLstSigPos1[lastSigPos*3];
@@ -429,17 +429,24 @@ wire [8:0] coeff_13  = sm_coeff_fifo[03*9-1:02*9];
 wire [8:0] coeff_14  = sm_coeff_fifo[02*9-1:01*9];
 wire [8:0] coeff_15  = sm_coeff_fifo[01*9-1:00*9];
 
+reg signSigPos;
+reg size_signLast;
 generate 
 if(kEcXfm == m_modeType) begin : parse_signbits_lastPos
 
-reg signSigPos;
 always@(*)
 begin
   if(|lastSigPos | ssm_idx>1)
-    if(sm_coeff_fifo[(16-lastSigPos)*9-1-:9] == 0)
+    if(sm_coeff_fifo[(16-lastSigPos)*9-1-:9] == 0)begin
       signSigPos = suffix_rm_ec_sign[127];
-    else
+      size_signLast = 1;
+    end else begin
       signSigPos = sm_coeff_fifo[(16-lastSigPos)*9-1-:9] >'hff ? 1 : 0;
+      size_signLast = 0;
+    end else begin
+      signSigPos = 0;
+      size_signLast = 0;
+    end
 end
 
 
@@ -448,7 +455,7 @@ end
 end
 endgenerate
 
-assign coef_size = (ssm_idx > 1 ? 1:0) + (m_modeType==kEcXfm ? numBitsLastSigPos : 0) + numbits0 + numbits1
+assign coef_size = (ssm_idx > 1 ? 1:0) + (m_modeType==kEcXfm ? numBitsLastSigPos +size_signLast: 0) + numbits0 + numbits1
                    +numbits2 + numbits3+signBitVld_num_ec3+signBitVld_num_ec1
                    +signBitVld_num_ec0+signBitVld_num_ec2;
   
