@@ -13,7 +13,7 @@ output [8:0] src_3
 );
 
 
-wire [2:0] vecGrk = 5;
+wire [2:0] vecGrk = bitsReq==2 ? 5 : 1;;
 wire [7:0] maxPrefix = ((1<<(bitsReq*4))-1) >>vecGrk;
 wire [7:0] uiBits = suffix[127-:8];
 reg [3:0] prefix_tmp;

@@ -13,7 +13,7 @@ output [8:0] src_3
 );
 
 
-wire [2:0] vecGrk = 5;
+wire [2:0] vecGrk = bitsReq==2 ? 5 : 2;
 wire [7:0] maxPrefix = ((1<<(bitsReq*4))-1) >>vecGrk;
 wire [7:0] uiBits = suffix[127-:8];
 reg [3:0] prefix_tmp;
@@ -38,7 +38,15 @@ wire [3:0] prefix = prefix_tmp > maxPrefix  ? maxPrefix : prefix_tmp;
 wire [3:0] prefix_size = prefix==maxPrefix ? prefix : prefix+1;
 
 wire [127:0] suffix_rm_prefix = suffix<<prefix_size;
-wire [7:0] gf_suffix = suffix_rm_prefix[127-:5];//vecGrk];
+reg [7:0] gf_suffix;// = suffix_rm_prefix[127-:5];//vecGrk];
+always@(*)begin
+  case(vecGrk)
+    3'h2: gf_suffix = suffix_rm_prefix[127-:2];
+    3'h5: gf_suffix = suffix_rm_prefix[127-:5];
+    default: gf_suffix = suffix_rm_prefix[127-:5];
+  endcase
+end
+
 wire [7:0] vecCodeNum = (prefix<<vecGrk) | gf_suffix;
 
 wire [3:0] vec_sm_bitsReq_1_luma_inv [0:15];

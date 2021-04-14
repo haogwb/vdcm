@@ -22,7 +22,7 @@ initial begin
 
  rstn = 1'b1; 
 
- #2us;
+ #4us;
 
  $stop;
 
