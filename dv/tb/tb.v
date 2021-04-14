@@ -149,7 +149,7 @@ decMpp  u_decMpp (
 
   
 
-reg [127:0] codec_bits[0:100];
+reg [127:0] codec_bits[0:4050-1];
 
 initial begin
 
