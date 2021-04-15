@@ -2,7 +2,7 @@ Command: vcs -sverilog -full64 -f ../flist +lint=TFIPC-L -P /opt/Synopsys/Verdi2
 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a -l run.log +v2k -debug_all +notimingcheck \
 -lca
                          Chronologic VCS (TM)
-         Version I-2014.03_Full64 -- Thu Apr 15 19:43:36 2021
+         Version I-2014.03_Full64 -- Thu Apr 15 22:05:54 2021
                Copyright (c) 1991-2014 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -2060,7 +2060,7 @@ Warning-[SIOB] Select index out of bounds
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 431
+../../rtl/bitparse.v, 449
 "decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 32-bit expression is connected to 4-bit port "bitDepth" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
@@ -2069,7 +2069,7 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 431
+../../rtl/bitparse.v, 449
 "decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 3-bit expression is connected to 4-bit port "stepSize" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
@@ -2078,7 +2078,7 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 446
+../../rtl/bitparse.v, 464
 "decMppfSuffix #(ssm_idx, , , , ) u_decMppfSuffix_ssm0( .bitDepth (8),  .suffix (suffix_for_mppf),  .qres_size (qres_mppf_size));"
   The following 32-bit expression is connected to 4-bit port "bitDepth" of 
   module "decMppfSuffix", instance "u_decMppfSuffix_ssm0".
@@ -2090,7 +2090,7 @@ Warning-[SIOB] Select index out of bounds
 ../../rtl/bitparse_ssm123.v, 201
 "shifter_left[254:(-128)]"
   The select index is out of declared bounds : [254:0].
-  In module instance : u_bitparse_ssm2 u_bitparse_ssm1 u_bitparse_ssm3 
+  In module instance : u_bitparse_ssm1 u_bitparse_ssm3 u_bitparse_ssm2 
   In module : bitparse_ssm123.
 
 
@@ -2138,8 +2138,6 @@ rm -f _csrc*.so amd64_scvhdl_*.so pre_vcsobj_*.so share_vcsobj_*.so
 ld -shared -o .//../simv.daidir//_csrc1.so --whole-archive _vcsobj_1_1.a  --no-whole-archive \
 
 ld -shared -o .//../simv.daidir//_csrc0.so 5NrI_d.o 5NrIB_d.o SIM_l.o  
-ld -shared -o .//../simv.daidir//pre_vcsobj_0_1.so --whole-archive pre_vcsobj_0_1.a \
---no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_1.so --whole-archive pre_vcsobj_1_1.a \
 --no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_2.so --whole-archive pre_vcsobj_1_2.a \
@@ -2156,10 +2154,12 @@ ld -shared -o .//../simv.daidir//pre_vcsobj_1_7.so --whole-archive pre_vcsobj_1_
 --no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_8.so --whole-archive pre_vcsobj_1_8.a \
 --no-whole-archive
+ld -shared -o .//../simv.daidir//pre_vcsobj_1_9.so --whole-archive pre_vcsobj_1_9.a \
+--no-whole-archive
 if [ -x ../simv ]; then chmod -x ../simv; fi
 g++  -o ../simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/simv.daidir/ -Wl,-rpath='$ORIGIN'/simv.daidir//scsim.db.dir \
-_csrc1.so _csrc0.so   pre_vcsobj_0_1.so pre_vcsobj_1_1.so pre_vcsobj_1_2.so pre_vcsobj_1_3.so \
-pre_vcsobj_1_4.so pre_vcsobj_1_5.so pre_vcsobj_1_6.so pre_vcsobj_1_7.so pre_vcsobj_1_8.so \
+_csrc1.so _csrc0.so   pre_vcsobj_1_1.so pre_vcsobj_1_2.so pre_vcsobj_1_3.so pre_vcsobj_1_4.so \
+pre_vcsobj_1_5.so pre_vcsobj_1_6.so pre_vcsobj_1_7.so pre_vcsobj_1_8.so pre_vcsobj_1_9.so \
 rmapats_mop.o rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so \
 /opt/Synopsys/VCS2014/amd64/lib/libvirsim.so /opt/Synopsys/VCS2014/amd64/lib/liberrorinf.so \
 /opt/Synopsys/VCS2014/amd64/lib/libsnpsmalloc.so /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a \
@@ -2168,4 +2168,4 @@ rmapats_mop.o rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzero
 _vcs_pli_stub_.o   /opt/Synopsys/VCS2014/amd64/lib/vcs_save_restore_new.o -ldl -lm \
 -lm  -lc -lpthread -ldl 
 ../simv up to date
-CPU time: 2.343 seconds to compile + .011 seconds to elab + .209 seconds to link
+CPU time: 2.372 seconds to compile + .006 seconds to elab + .141 seconds to link

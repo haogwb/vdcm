@@ -318,7 +318,25 @@ assign modeNxt_Mpp_stepsize = stepSize_ssm0;
 
 //IntraPredictor
 //TBD
+wire isIntraSignaled = ~isNxtBlockFls;
+wire [7:0] intra_numTotalModeBits=isIntraSignaled ? 3 :0;
+reg [7:0] predictor;
+wire [127:0] suffix_xfm=shifter_out<<(flatness_header_bits+mode_header_bits);
 
+always@(*)
+begin
+  predictor = 0;
+  case(intra_numTotalModeBits)
+  8'h1: predictor = suffix_xfm[127] ;
+  8'h2: predictor = suffix_xfm[127-:2] ;
+  8'h3: predictor = suffix_xfm[127-:3] ;
+  8'h4: predictor = suffix_xfm[127-:4] ;
+  8'h5: predictor = suffix_xfm[127-:5] ;
+  8'h6: predictor = suffix_xfm[127-:6] ;
+  8'h7: predictor = suffix_xfm[127-:7] ;
+  default: predictor = 0;
+  endcase
+end
 
 ///////////////////////////////////////////////////////////////////////////////////////////////modeNxt==1, BP
 //DecodeBpvNextBlock
@@ -411,7 +429,7 @@ assign bpv2x1[1] = isNxtBlockFls ? bpv2x1_tmp[1] + 32 : bpv2x1_tmp[1] ;
 assign  nxtBlkbitsSsm0 = rd_shifter_rqst ? (modeNxt_MPP ? qres_size + mode_flat_csc_size + numBits : 
                                             modeNxt_MPPF ? qres_mppf_size + flatness_header_bits+mode_header_bits+1:
                                             modeNxt_BP ?  bp_header_bits+4 + (use2x2[0]?bitsPerBpv:bitsPerBpv*2):
-                                                          mode_header_bits + flatness_header_bits)
+                                                          mode_header_bits + flatness_header_bits+ intra_numTotalModeBits) 
                                          : 0;
 
 end
