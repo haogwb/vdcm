@@ -22,7 +22,7 @@ initial begin
 
  rstn = 1'b1; 
 
- #4us;
+ #8us;
 
  $stop;
 
@@ -49,8 +49,34 @@ initial begin
 //  @(posedge clk) start_dec_ff1 = 1;
 end
 
-always@(posedge clk)
+always@(posedge clk)begin
   start_dec_ff <= start_dec;
+  start_dec_ff1 <= start_dec_ff;
+end
+wire [10:0] blk_x;
+wire [10:0] blk_y;
+reg [9:0] c;
+reg [9:0] r;
+always@(posedge clk or negedge rstn)begin
+  if(~rstn)
+    c <= 'd0;
+  else if(start_dec_ff1)
+    if(c==1080/8-1)
+       c <= 0;
+    else
+       c <= c+'d1;
+end
+
+always@(posedge clk or negedge rstn)begin
+  if(~rstn)
+    r <= 'd0;
+  else if(start_dec_ff1)
+    if(c==1080/8-1)
+       r <= r+'d1;
+end
+
+assign blk_x = c*8;
+assign blk_y = r*2;
 
 wire [7:0] mpp_qres_ssm0 [0:16-1];
 reg  [7:0] mpp_qres_ssm0_ff [0:16-1];
@@ -159,7 +185,7 @@ end
 
 
 
-bit [7:0] codec_rd_addr;
+bit [10:0] codec_rd_addr;
 bit [2:0] rd_en_num;
 assign rd_en_num =  codec_data_rd_en + codec_data_rd_en_ssm1 + codec_data_rd_en_ssm2 + codec_data_rd_en_ssm3;
 always@(posedge clk or negedge rstn)

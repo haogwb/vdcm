@@ -8,6 +8,8 @@ input [127:0] codec_data,
 
 output modeNxt_XFM,
 output modeNxt_BP,
+output modeNxt_MPPF,
+output modeNxt_BPSKIP,
 output [3:0] use2x2,
 output [3:0] modeNxt_Mpp_stepsize,
 
@@ -222,12 +224,14 @@ wire [2:0] mode_header_bits;
 parameter MPP =2;
 wire sameFlag = shifter_out[127];
 wire [1:0] tmp = shifter_out[126:125];
-wire [1:0] MPPF_BPSkip = {1'b0,shifter_out[124]};
+wire  MPPF_BPSkip = shifter_out[124];
 reg [1:0] prevMode;
-wire [1:0] modeNxt = sameFlag ? prevMode : (&tmp ? MPPF_BPSkip : tmp);
+wire [2:0] modeNxt = sameFlag ? prevMode : (&tmp ? (MPPF_BPSkip?4:3) : tmp);
 wire modeNxt_MPP = modeNxt == 2;
 assign modeNxt_XFM = modeNxt == 0;
 assign modeNxt_BP = modeNxt == 1;
+assign modeNxt_MPPF = modeNxt == 3;
+assign modeNxt_BPSKIP = modeNxt == 4;
 always@(posedge clk or negedge rstn)
   if(~rstn)
     prevMode <= 2'b0;

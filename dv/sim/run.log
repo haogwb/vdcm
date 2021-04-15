@@ -2,7 +2,7 @@ Command: vcs -sverilog -full64 -f ../flist +lint=TFIPC-L -P /opt/Synopsys/Verdi2
 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a -l run.log +v2k -debug_all +notimingcheck \
 -lca
                          Chronologic VCS (TM)
-         Version I-2014.03_Full64 -- Thu Apr 15 07:34:46 2021
+         Version I-2014.03_Full64 -- Thu Apr 15 09:59:32 2021
                Copyright (c) 1991-2014 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -2025,6 +2025,14 @@ Lint-[TFIPC-L] Too few instance port connections
   output port 'pnxtBlkQuant' is not connected.
 
 
+Lint-[TFIPC-L] Too few instance port connections
+../tb/tb.v, 91
+"bitparse #(.ssm_idx(0)) u_bitparse( .clk (clk),  .rstn (rstn),  .start_dec (start_dec),  .codec_data_rd_en (codec_data_rd_en),  .codec_data (codec_data),  .modeNxt_XFM (modeNxt_XFM),  .modeNxt_BP (modeNxt_BP),  .use2x2 (use2x2),  .modeNxt_Mpp_stepsize (modeNxt_Mpp_stepsize),  .pnxtBlkQuant (mpp_qres_ssm0));"
+  The above instance has fewer port connections than the module definition,
+  output port 'modeNxt_MPPF' is not connected,
+  output port 'modeNxt_BPSKIP' is not connected.
+
+
 Warning-[PCWM-W] Port connection width mismatch
 ../../rtl/parseEcg.v, 260
 "decVecEcSymbolSM #(ssm_idx) u_decVecEcSymbolSM( .suffix ((((modeType == kEcBP) & (bitsReq <= VecEcThd)) ? suffix_of_ec : 128'b0)),  .bitsReq (bitsReq[1:0]),  .size (vecEcSymboleSize_SM),  .src_0 (vecSample0),  .src_1 (vecSample1),  .src_2 (vecSample2),  .src_3 (vecSample3));"
@@ -2044,7 +2052,7 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[SIOB] Select index out of bounds
-../../rtl/bitparse.v, 195
+../../rtl/bitparse.v, 197
 "shifter_left[254:(-128)]"
   The select index is out of declared bounds : [254:0].
   In module instance : u_bitparse 
@@ -2052,7 +2060,7 @@ Warning-[SIOB] Select index out of bounds
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 422
+../../rtl/bitparse.v, 426
 "decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 32-bit expression is connected to 4-bit port "bitDepth" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
@@ -2061,7 +2069,7 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 422
+../../rtl/bitparse.v, 426
 "decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 3-bit expression is connected to 4-bit port "stepSize" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
@@ -2073,7 +2081,7 @@ Warning-[SIOB] Select index out of bounds
 ../../rtl/bitparse_ssm123.v, 197
 "shifter_left[254:(-128)]"
   The select index is out of declared bounds : [254:0].
-  In module instance : u_bitparse_ssm2 u_bitparse_ssm3 u_bitparse_ssm1 
+  In module instance : u_bitparse_ssm1 u_bitparse_ssm3 u_bitparse_ssm2 
   In module : bitparse_ssm123.
 
 
@@ -2137,4 +2145,4 @@ pre_vcsobj_1_5.so pre_vcsobj_1_6.so pre_vcsobj_1_7.so  rmapats_mop.o rmapats.o r
 -Wl,-no-whole-archive        _vcs_pli_stub_.o   /opt/Synopsys/VCS2014/amd64/lib/vcs_save_restore_new.o \
 -ldl -lm -lm  -lc -lpthread -ldl 
 ../simv up to date
-CPU time: 2.249 seconds to compile + .006 seconds to elab + .216 seconds to link
+CPU time: 2.376 seconds to compile + 1.849 seconds to elab + .252 seconds to link
