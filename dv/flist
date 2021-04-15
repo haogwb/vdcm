@@ -15,3 +15,4 @@
 ../../rtl/decVecEcSymbolSM.v
 ../../rtl/decVecEcSymbol2C.v
 
+../../rtl/decMppfSuffix.v

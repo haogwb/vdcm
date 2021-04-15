@@ -2,7 +2,7 @@ Command: vcs -sverilog -full64 -f ../flist +lint=TFIPC-L -P /opt/Synopsys/Verdi2
 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a -l run.log +v2k -debug_all +notimingcheck \
 -lca
                          Chronologic VCS (TM)
-         Version I-2014.03_Full64 -- Thu Apr 15 09:59:32 2021
+         Version I-2014.03_Full64 -- Thu Apr 15 19:43:36 2021
                Copyright (c) 1991-2014 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -1998,6 +1998,7 @@ Warning-[TMBIN] Too many bits in Based Number
   The specified width is '8' bits, actually got '12' bits.
   The offending number is : '192'.
 
+Parsing design file '../../rtl/decMppfSuffix.v'
 Top Level Modules:
        tb
 TimeScale is 1 ns / 1 ps
@@ -2019,17 +2020,16 @@ Lint-[TFIPC-L] Too few instance port connections
 
 
 Lint-[TFIPC-L] Too few instance port connections
-../../rtl/bitparse_ssm123.v, 243
+../../rtl/bitparse_ssm123.v, 261
 "decXfmCoeff #(.ssm_idx(ssm_idx)) u_decXfmCoeff( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix : 0)),  .coef_size (xfm_size));"
   The above instance has fewer port connections than the module definition,
   output port 'pnxtBlkQuant' is not connected.
 
 
 Lint-[TFIPC-L] Too few instance port connections
-../tb/tb.v, 91
-"bitparse #(.ssm_idx(0)) u_bitparse( .clk (clk),  .rstn (rstn),  .start_dec (start_dec),  .codec_data_rd_en (codec_data_rd_en),  .codec_data (codec_data),  .modeNxt_XFM (modeNxt_XFM),  .modeNxt_BP (modeNxt_BP),  .use2x2 (use2x2),  .modeNxt_Mpp_stepsize (modeNxt_Mpp_stepsize),  .pnxtBlkQuant (mpp_qres_ssm0));"
+../tb/tb.v, 94
+"bitparse #(.ssm_idx(0)) u_bitparse( .clk (clk),  .rstn (rstn),  .start_dec (start_dec),  .codec_data_rd_en (codec_data_rd_en),  .codec_data (codec_data),  .isNxtBlockFls (isNxtBlkFls),  .modeNxt_XFM (modeNxt_XFM),  .modeNxt_BP (modeNxt_BP),  .modeNxt_MPPF (modeNxt_MPPF),  .use2x2 (use2x2),  .modeNxt_Mpp_stepsize (modeNxt_Mpp_stepsize),  .pnxtBlkQuant (mpp_qres_ssm0));"
   The above instance has fewer port connections than the module definition,
-  output port 'modeNxt_MPPF' is not connected,
   output port 'modeNxt_BPSKIP' is not connected.
 
 
@@ -2052,7 +2052,7 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[SIOB] Select index out of bounds
-../../rtl/bitparse.v, 197
+../../rtl/bitparse.v, 200
 "shifter_left[254:(-128)]"
   The select index is out of declared bounds : [254:0].
   In module instance : u_bitparse 
@@ -2060,7 +2060,7 @@ Warning-[SIOB] Select index out of bounds
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 426
+../../rtl/bitparse.v, 431
 "decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 32-bit expression is connected to 4-bit port "bitDepth" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
@@ -2069,7 +2069,7 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 426
+../../rtl/bitparse.v, 431
 "decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 3-bit expression is connected to 4-bit port "stepSize" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
@@ -2077,19 +2077,37 @@ Warning-[PCWM-W] Port connection width mismatch
   	use +lint=PCWM for more details
 
 
+Warning-[PCWM-W] Port connection width mismatch
+../../rtl/bitparse.v, 446
+"decMppfSuffix #(ssm_idx, , , , ) u_decMppfSuffix_ssm0( .bitDepth (8),  .suffix (suffix_for_mppf),  .qres_size (qres_mppf_size));"
+  The following 32-bit expression is connected to 4-bit port "bitDepth" of 
+  module "decMppfSuffix", instance "u_decMppfSuffix_ssm0".
+  Expression: 8
+  	use +lint=PCWM for more details
+
+
 Warning-[SIOB] Select index out of bounds
-../../rtl/bitparse_ssm123.v, 197
+../../rtl/bitparse_ssm123.v, 201
 "shifter_left[254:(-128)]"
   The select index is out of declared bounds : [254:0].
-  In module instance : u_bitparse_ssm1 u_bitparse_ssm3 u_bitparse_ssm2 
+  In module instance : u_bitparse_ssm2 u_bitparse_ssm1 u_bitparse_ssm3 
   In module : bitparse_ssm123.
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse_ssm123.v, 230
-"decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize (stepSize),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
+../../rtl/bitparse_ssm123.v, 234
+"decMppSuffix #(ssm_idx, ) u_decMppSuffix( .bitDepth (8),  .stepSize (stepSize),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 32-bit expression is connected to 4-bit port "bitDepth" of 
-  module "decMppSuffix", instance "u_decMppSuffix_ssm0".
+  module "decMppSuffix", instance "u_decMppSuffix".
+  Expression: 8
+  	use +lint=PCWM for more details
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../../rtl/bitparse_ssm123.v, 247
+"decMppfSuffix #(ssm_idx, , , , ) u_decMppfSuffix( .bitDepth (8),  .suffix (suffix),  .qres_size (qres_mppf_size));"
+  The following 32-bit expression is connected to 4-bit port "bitDepth" of 
+  module "decMppfSuffix", instance "u_decMppfSuffix".
   Expression: 8
   	use +lint=PCWM for more details
 
@@ -2112,7 +2130,7 @@ Warning-[PCWM-W] Port connection width mismatch
   	use +lint=PCWM for more details
 
 Starting vcs inline pass...
-11 modules and 0 UDP read.
+12 modules and 0 UDP read.
 	However, due to incremental compilation, only 1 module needs to be compiled.
 recompiling module tb because:
 	This module or some inlined child module(s) has/have been modified.
@@ -2120,6 +2138,8 @@ rm -f _csrc*.so amd64_scvhdl_*.so pre_vcsobj_*.so share_vcsobj_*.so
 ld -shared -o .//../simv.daidir//_csrc1.so --whole-archive _vcsobj_1_1.a  --no-whole-archive \
 
 ld -shared -o .//../simv.daidir//_csrc0.so 5NrI_d.o 5NrIB_d.o SIM_l.o  
+ld -shared -o .//../simv.daidir//pre_vcsobj_0_1.so --whole-archive pre_vcsobj_0_1.a \
+--no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_1.so --whole-archive pre_vcsobj_1_1.a \
 --no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_2.so --whole-archive pre_vcsobj_1_2.a \
@@ -2134,15 +2154,18 @@ ld -shared -o .//../simv.daidir//pre_vcsobj_1_6.so --whole-archive pre_vcsobj_1_
 --no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_7.so --whole-archive pre_vcsobj_1_7.a \
 --no-whole-archive
+ld -shared -o .//../simv.daidir//pre_vcsobj_1_8.so --whole-archive pre_vcsobj_1_8.a \
+--no-whole-archive
 if [ -x ../simv ]; then chmod -x ../simv; fi
 g++  -o ../simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/simv.daidir/ -Wl,-rpath='$ORIGIN'/simv.daidir//scsim.db.dir \
-_csrc1.so _csrc0.so   pre_vcsobj_1_1.so pre_vcsobj_1_2.so pre_vcsobj_1_3.so pre_vcsobj_1_4.so \
-pre_vcsobj_1_5.so pre_vcsobj_1_6.so pre_vcsobj_1_7.so  rmapats_mop.o rmapats.o rmar.o \
-/opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so /opt/Synopsys/VCS2014/amd64/lib/libvirsim.so \
-/opt/Synopsys/VCS2014/amd64/lib/liberrorinf.so /opt/Synopsys/VCS2014/amd64/lib/libsnpsmalloc.so \
-/opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a    /opt/Synopsys/VCS2014/amd64/lib/libvcsnew.so \
-/opt/Synopsys/VCS2014/amd64/lib/libuclinative.so   -Wl,-whole-archive /opt/Synopsys/VCS2014/amd64/lib/libvcsucli.so \
--Wl,-no-whole-archive        _vcs_pli_stub_.o   /opt/Synopsys/VCS2014/amd64/lib/vcs_save_restore_new.o \
--ldl -lm -lm  -lc -lpthread -ldl 
+_csrc1.so _csrc0.so   pre_vcsobj_0_1.so pre_vcsobj_1_1.so pre_vcsobj_1_2.so pre_vcsobj_1_3.so \
+pre_vcsobj_1_4.so pre_vcsobj_1_5.so pre_vcsobj_1_6.so pre_vcsobj_1_7.so pre_vcsobj_1_8.so \
+rmapats_mop.o rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so \
+/opt/Synopsys/VCS2014/amd64/lib/libvirsim.so /opt/Synopsys/VCS2014/amd64/lib/liberrorinf.so \
+/opt/Synopsys/VCS2014/amd64/lib/libsnpsmalloc.so /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a \
+/opt/Synopsys/VCS2014/amd64/lib/libvcsnew.so /opt/Synopsys/VCS2014/amd64/lib/libuclinative.so \
+-Wl,-whole-archive /opt/Synopsys/VCS2014/amd64/lib/libvcsucli.so -Wl,-no-whole-archive \
+_vcs_pli_stub_.o   /opt/Synopsys/VCS2014/amd64/lib/vcs_save_restore_new.o -ldl -lm \
+-lm  -lc -lpthread -ldl 
 ../simv up to date
-CPU time: 2.376 seconds to compile + 1.849 seconds to elab + .252 seconds to link
+CPU time: 2.343 seconds to compile + .011 seconds to elab + .209 seconds to link

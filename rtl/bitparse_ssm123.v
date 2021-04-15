@@ -6,6 +6,9 @@ input start_dec,
 output codec_data_rd_en,
 input [127:0] codec_data,
 
+input isFls,
+
+input modeNxt_MPPF,
 input modeNxt_XFM,
 input modeNxt_BP,
 input use2x2,
@@ -25,6 +28,7 @@ wire wr_shifter0;
 
 wire [127:0] suffix_rmc0;
 wire [127:0] suffix_rmc01;
+wire [7:0] qres_mppf_size;
 wire [7:0] qres_size;
 wire [7:0] xfm_size;
 reg [127:0] suffix;
@@ -227,7 +231,7 @@ assign suffix = shifter_out[127:0];
 reg [3:0] stepSize;
 always@(posedge clk)
   stepSize <= modeNxt_Mpp_stepsize;
-decMppSuffix #(.ssm_idx(ssm_idx))u_decMppSuffix_ssm0
+decMppSuffix #(.ssm_idx(ssm_idx))u_decMppSuffix
 (
   .bitDepth  (8/*bitDepth_comp0*/),
   .stepSize  (stepSize),//ssm_idx ?tb.u_bitparse.stepSize_ssm0[2:0] /*2*/ : stepSize_ssm0),
@@ -236,6 +240,20 @@ decMppSuffix #(.ssm_idx(ssm_idx))u_decMppSuffix_ssm0
   .suffix_left(suffix_rmc0),
   .qres_size(qres_size)
 );
+
+reg mode_MPPF;
+always@(posedge clk)
+  mode_MPPF <= modeNxt_MPPF;
+decMppfSuffix #(.ssm_idx(ssm_idx))u_decMppfSuffix
+(
+  .bitDepth  (8/*bitDepth_comp0*/),
+//  .stepSize  (stepSize),//ssm_idx ?tb.u_bitparse.stepSize_ssm0[2:0] /*2*/ : stepSize_ssm0),
+  .suffix    (suffix),
+  .pnxtBlkQuant(),
+  .suffix_left(),
+  .qres_size(qres_mppf_size)
+);
+
 
 reg mode_XFM;
 always@(posedge clk)
@@ -258,12 +276,13 @@ always@(posedge clk)
 wire [7:0] bp_size;
 decBpvBlock #(.ssm_idx(ssm_idx)) u_decBpvBlock (
     .mode_BP                 ( mode_BP           ),
+    .isFls                   ( isFls),
     .use2x2                  ( use2x2_ff            ),
     .suffix                  ( mode_BP ? suffix    [127:0]:0 ),
     .bp_size                ( bp_size  [7:0]   )
 );
 
-assign  nxtBlkbitsSsm0 = rd_shifter_rqst ? ( mode_XFM ? xfm_size :mode_BP ? bp_size: qres_size  )//: 0)
+assign  nxtBlkbitsSsm0 = rd_shifter_rqst ? ( mode_XFM ? xfm_size :mode_BP ? bp_size: mode_MPPF ? qres_mppf_size: qres_size  )//: 0)
                                          : 0;
 reg parse_vld;
 always@(posedge clk or negedge rstn)

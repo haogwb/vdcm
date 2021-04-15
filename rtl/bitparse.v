@@ -6,6 +6,8 @@ input start_dec,
 output codec_data_rd_en,
 input [127:0] codec_data,
 
+input isNxtBlockFls,
+
 output modeNxt_XFM,
 output modeNxt_BP,
 output modeNxt_MPPF,
@@ -27,6 +29,7 @@ wire wr_shifter0;
 wire [127:0] suffix_rmc0;
 wire [127:0] suffix_rmc01;
 wire [7:0] qres_size;
+wire [7:0] qres_mppf_size;
 reg [127:0] suffix;
 reg [2:0] stepSize_ssm0;
 wire [3:0] numPx = 16;//getWidth * getHeight
@@ -215,11 +218,12 @@ always@(*)
   else
     shifter_out = 0;
 
+wire[2:0] flatness_header_bits;
+wire [2:0] mode_header_bits;
 generate 
 if(ssm_idx==0)
 begin
 
-wire [2:0] mode_header_bits;
 //mode header
 parameter MPP =2;
 wire sameFlag = shifter_out[127];
@@ -245,7 +249,7 @@ wire flatnessFlag = sameFlag ? shifter_out[126] : (&tmp ? shifter_out[123] : shi
 wire [2:0] flatnessType = flatnessFlag ?( sameFlag ?{1'b0,shifter_out[125:124]}
                                                    :(&tmp ? {1'b0,shifter_out[122:121]} :{1'b0,shifter_out[123:122]}))
                                        : 4;
-wire [2:0] flatness_header_bits = 1 + (flatnessFlag ? 2 : 0); 
+assign flatness_header_bits = 1 + (flatnessFlag ? 2 : 0); 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////modeNxt==2, MPP 
 wire [1:0] m_origSrcCsc = 0;
@@ -320,7 +324,7 @@ assign modeNxt_Mpp_stepsize = stepSize_ssm0;
 //DecodeBpvNextBlock
 wire [2:0] m_numSubBlocks = 4;
 wire [3:0] m_bpvNumBits = 6;
-wire isNxtBlockFls = 1;
+//wire isNxtBlockFls = 1;
 wire [3:0]  bitsPerBpv = isNxtBlockFls ? m_bpvNumBits - 1 : m_bpvNumBits;
 //wire [3:0] use2x2;
 assign use2x2[0] = modeNxt_BP & shifter_out[127-(flatness_header_bits+mode_header_bits)];
@@ -405,6 +409,7 @@ assign bpv2x1[1] = isNxtBlockFls ? bpv2x1_tmp[1] + 32 : bpv2x1_tmp[1] ;
 
 ///////////////////////////////////                                                                                                     //XFM
 assign  nxtBlkbitsSsm0 = rd_shifter_rqst ? (modeNxt_MPP ? qres_size + mode_flat_csc_size + numBits : 
+                                            modeNxt_MPPF ? qres_mppf_size + flatness_header_bits+mode_header_bits+1:
                                             modeNxt_BP ?  bp_header_bits+4 + (use2x2[0]?bitsPerBpv:bitsPerBpv*2):
                                                           mode_header_bits + flatness_header_bits)
                                          : 0;
@@ -432,6 +437,21 @@ decMppSuffix #(.ssm_idx(ssm_idx))u_decMppSuffix_ssm0
   .suffix_left(suffix_rmc0),
   .qres_size(qres_size)
 );
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////modeNxt==3, MMPF
+wire mppf_type = shifter_out[127-(flatness_header_bits+mode_header_bits)];
+wire [127:0] suffix_for_mppf = shifter_out<<(flatness_header_bits+mode_header_bits+1);
+decMppfSuffix #(.ssm_idx(ssm_idx))u_decMppfSuffix_ssm0
+(
+  .bitDepth  (8/*bitDepth_comp0*/),
+  .suffix    (suffix_for_mppf),
+  .pnxtBlkQuant(),
+  .suffix_left(),
+  .qres_size(qres_mppf_size)
+);
+
 
 
 reg parse_vld;

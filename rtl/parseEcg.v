@@ -320,7 +320,7 @@ assign coeff_6 = value ? 0 :useSignMag ? src_vec_cpec_6 : ( modeType==kEcXfm ? s
 wire [7:0] cpec_size_bp = modeType==kEcBP &ssm_idx>0 ? bitsReq*4:0;
 wire [7:0] vecEcSymboleSize = useSignMag ? vecEcSymboleSize_SM : vecEcSymboleSize_2C;
 wire [7:0] bp_ecg_size = size_before_ec+(bitsReq <= VecEcThd ? vecEcSymboleSize : cpec_size_bp);
-assign numbits = modeType==kEcBP &ssm_idx>0 ? bp_ecg_size :(value ? 1 : size_before_ec+ecNumSample*bitsReq); //24;
+assign numbits = value ? 1 : (modeType==kEcBP &ssm_idx>0 ? bp_ecg_size : size_before_ec+ecNumSample*bitsReq); //24;
 
 function [7:0]GetBitsReqFromCodeWord;
   input [7:0]codeWord;

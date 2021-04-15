@@ -22,7 +22,7 @@ initial begin
 
  rstn = 1'b1; 
 
- #8us;
+ #16us;
 
  $stop;
 
@@ -77,6 +77,8 @@ end
 
 assign blk_x = c*8;
 assign blk_y = r*2;
+wire isFls = r==0;
+wire isNxtBlkFls = isFls & c<1080/8-1; 
 
 wire [7:0] mpp_qres_ssm0 [0:16-1];
 reg  [7:0] mpp_qres_ssm0_ff [0:16-1];
@@ -86,6 +88,7 @@ wire [7:0] mpp_qres_ssm3 [0:16-1];
 
 wire modeNxt_XFM;
 wire modeNxt_BP;
+wire modeNxt_MPPF;
 wire [3:0] use2x2;
 wire [3:0] modeNxt_Mpp_stepsize;
 bitparse #(.ssm_idx(0)) u_bitparse(
@@ -97,9 +100,11 @@ bitparse #(.ssm_idx(0)) u_bitparse(
   .codec_data_rd_en (codec_data_rd_en),
 
   .codec_data       (codec_data),
+  .isNxtBlockFls    (isNxtBlkFls), 
 
   .modeNxt_XFM      (modeNxt_XFM),
   .modeNxt_BP       (modeNxt_BP),
+  .modeNxt_MPPF       (modeNxt_MPPF),
   .use2x2           (use2x2),
   .modeNxt_Mpp_stepsize(modeNxt_Mpp_stepsize),
   .pnxtBlkQuant(mpp_qres_ssm0)
@@ -114,9 +119,10 @@ bitparse_ssm123 #(.ssm_idx(1)) u_bitparse_ssm1(
   .codec_data_rd_en (codec_data_rd_en_ssm1),
 
   .codec_data       (codec_data_ssm1),
-
+  .isFls            (isFls),
   .modeNxt_XFM      (modeNxt_XFM),
   .modeNxt_BP       (modeNxt_BP),
+  .modeNxt_MPPF       (modeNxt_MPPF),
   .use2x2           (use2x2[1]),
   .modeNxt_Mpp_stepsize(modeNxt_Mpp_stepsize),
 
@@ -132,8 +138,10 @@ bitparse_ssm123 #(.ssm_idx(2)) u_bitparse_ssm2(
 
   .codec_data       (codec_data_ssm2),
 
+  .isFls            (isFls),
   .modeNxt_XFM      (modeNxt_XFM),
   .modeNxt_BP       (modeNxt_BP),
+  .modeNxt_MPPF       (modeNxt_MPPF),
   .use2x2           (use2x2[2]),
   .modeNxt_Mpp_stepsize(modeNxt_Mpp_stepsize),
 
@@ -150,8 +158,10 @@ bitparse_ssm123 #(.ssm_idx(3)) u_bitparse_ssm3(
 
   .codec_data       (codec_data_ssm3),
 
+  .isFls            (isFls),
   .modeNxt_XFM      (modeNxt_XFM),
   .modeNxt_BP       (modeNxt_BP),
+  .modeNxt_MPPF       (modeNxt_MPPF),
   .use2x2           (use2x2[3]),
   .modeNxt_Mpp_stepsize(modeNxt_Mpp_stepsize),
 

@@ -2,6 +2,7 @@ module decBpvBlock #(parameter ssm_idx = 0)
 (
 
   input mode_BP,
+  input isFls,
   input use2x2,
   input [127:0] suffix,
   output [7:0]  bp_size
@@ -10,7 +11,7 @@ module decBpvBlock #(parameter ssm_idx = 0)
 reg [7:0] bpv2x2_tmp;
 wire [7:0] bpv2x2;
 wire [3:0] m_bpvNumBits = 6;
-wire m_isFls = 1;
+wire m_isFls = isFls;//1;
 wire [2:0] bitsPerBpv = m_isFls ? m_bpvNumBits -1 : m_bpvNumBits;
 always@(*)
 begin
