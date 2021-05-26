@@ -2,8 +2,24 @@ module decEcg_allGroups #(parameter ssm_idx = 0,comp=0,parameter m_modeType = 1)
 (
   input [127:0] suffix,
   input         mode_XFM,
-  output [7:0]  coef_size
+  output [7:0]  coef_size,
   
+  output [8:0] coeff_0   ,
+  output [8:0] coeff_1   ,
+  output [8:0] coeff_2   ,
+  output [8:0] coeff_3   ,
+  output [8:0] coeff_4   ,
+  output [8:0] coeff_5   ,
+  output [8:0] coeff_6   ,
+  output [8:0] coeff_7   ,
+  output [8:0] coeff_8   ,
+  output [8:0] coeff_9   ,
+  output [8:0] coeff_10  ,
+  output [8:0] coeff_11  ,
+  output [8:0] coeff_12  ,
+  output [8:0] coeff_13  ,
+  output [8:0] coeff_14  ,
+  output [8:0] coeff_15  
 
 );
 
@@ -412,22 +428,22 @@ wire [9*16-1:0] sm_coeff_fifo = m_modeType==kEcXfm ?
   sm_coeff_fifo_ec3 | sm_coeff_fifo_ec1>> ecNumSample3*9 | sm_coeff_fifo_ec0>> (ecNumSample3 + ecNumSample1) *9  | sm_coeff_fifo_ec2>> (ecNumSample3 + ecNumSample1+ ecNumSample0) *9 
                                                    :
   sm_coeff_fifo_ec0 | sm_coeff_fifo_ec1>> ecNumSample0*9 | sm_coeff_fifo_ec2>> (ecNumSample0 + ecNumSample1) *9  | sm_coeff_fifo_ec3>> (ecNumSample2 + ecNumSample1+ ecNumSample0) *9 ;
-wire [8:0] coeff_0   = sm_coeff_fifo[16*9-1:15*9];
-wire [8:0] coeff_1   = sm_coeff_fifo[15*9-1:14*9];
-wire [8:0] coeff_2   = sm_coeff_fifo[14*9-1:13*9];
-wire [8:0] coeff_3   = sm_coeff_fifo[13*9-1:12*9];
-wire [8:0] coeff_4   = sm_coeff_fifo[12*9-1:11*9];
-wire [8:0] coeff_5   = sm_coeff_fifo[11*9-1:10*9];
-wire [8:0] coeff_6   = sm_coeff_fifo[10*9-1:09*9];
-wire [8:0] coeff_7   = sm_coeff_fifo[09*9-1:08*9];
-wire [8:0] coeff_8   = sm_coeff_fifo[08*9-1:07*9];
-wire [8:0] coeff_9   = sm_coeff_fifo[07*9-1:06*9];
-wire [8:0] coeff_10  = sm_coeff_fifo[06*9-1:05*9];
-wire [8:0] coeff_11  = sm_coeff_fifo[05*9-1:04*9];
-wire [8:0] coeff_12  = sm_coeff_fifo[04*9-1:03*9];
-wire [8:0] coeff_13  = sm_coeff_fifo[03*9-1:02*9];
-wire [8:0] coeff_14  = sm_coeff_fifo[02*9-1:01*9];
-wire [8:0] coeff_15  = sm_coeff_fifo[01*9-1:00*9];
+assign coeff_0   = sm_coeff_fifo[16*9-1:15*9];
+assign coeff_1   = sm_coeff_fifo[15*9-1:14*9];
+assign coeff_2   = sm_coeff_fifo[14*9-1:13*9];
+assign coeff_3   = sm_coeff_fifo[13*9-1:12*9];
+assign coeff_4   = sm_coeff_fifo[12*9-1:11*9];
+assign coeff_5   = sm_coeff_fifo[11*9-1:10*9];
+assign coeff_6   = sm_coeff_fifo[10*9-1:09*9];
+assign coeff_7   = sm_coeff_fifo[09*9-1:08*9];
+assign coeff_8   = sm_coeff_fifo[08*9-1:07*9];
+assign coeff_9   = sm_coeff_fifo[07*9-1:06*9];
+assign coeff_10  = sm_coeff_fifo[06*9-1:05*9];
+assign coeff_11  = sm_coeff_fifo[05*9-1:04*9];
+assign coeff_12  = sm_coeff_fifo[04*9-1:03*9];
+assign coeff_13  = sm_coeff_fifo[03*9-1:02*9];
+assign coeff_14  = sm_coeff_fifo[02*9-1:01*9];
+assign coeff_15  = sm_coeff_fifo[01*9-1:00*9];
 
 reg signSigPos;
 reg size_signLast;

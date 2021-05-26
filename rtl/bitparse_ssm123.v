@@ -15,8 +15,24 @@ input use2x2,
 
 input [3:0] modeNxt_Mpp_stepsize,
 
-output [7:0] pnxtBlkQuant [0:16-1]
+output [7:0] pnxtBlkQuant [0:16-1],
 
+output [8:0] xfm_coeff_0   ,
+output [8:0] xfm_coeff_1   ,
+output [8:0] xfm_coeff_2   ,
+output [8:0] xfm_coeff_3   ,
+output [8:0] xfm_coeff_4   ,
+output [8:0] xfm_coeff_5   ,
+output [8:0] xfm_coeff_6   ,
+output [8:0] xfm_coeff_7   ,
+output [8:0] xfm_coeff_8   ,
+output [8:0] xfm_coeff_9   ,
+output [8:0] xfm_coeff_10  ,
+output [8:0] xfm_coeff_11  ,
+output [8:0] xfm_coeff_12  ,
+output [8:0] xfm_coeff_13  ,
+output [8:0] xfm_coeff_14  ,
+output [8:0] xfm_coeff_15  
 );
 
 wire [7:0] m_seMaxSize= 128;
@@ -263,7 +279,24 @@ decXfmCoeff #(.ssm_idx(ssm_idx))u_decXfmCoeff
   .mode_XFM   (mode_XFM),
   .suffix    (mode_XFM ? suffix : 0),
 //  .suffix_left(suffix_rmc0),
-  .coef_size(xfm_size)
+  .coef_size(xfm_size),
+
+  .coeff_0   (xfm_coeff_0 ) ,
+  .coeff_1   (xfm_coeff_1 ) ,
+  .coeff_2   (xfm_coeff_2 ) ,
+  .coeff_3   (xfm_coeff_3 ) ,
+  .coeff_4   (xfm_coeff_4 ) ,
+  .coeff_5   (xfm_coeff_5 ) ,
+  .coeff_6   (xfm_coeff_6 ) ,
+  .coeff_7   (xfm_coeff_7 ) ,
+  .coeff_8   (xfm_coeff_8 ) ,
+  .coeff_9   (xfm_coeff_9 ) ,
+  .coeff_10  (xfm_coeff_10) ,
+  .coeff_11  (xfm_coeff_11) ,
+  .coeff_12  (xfm_coeff_12) ,
+  .coeff_13  (xfm_coeff_13) ,
+  .coeff_14  (xfm_coeff_14) ,
+  .coeff_15  (xfm_coeff_15) 
 );
 
 

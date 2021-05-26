@@ -24,7 +24,8 @@ initial begin
 
  #32us;
 
- $stop;
+ //$stop;
+ $finish;
 
 end
 
@@ -91,6 +92,23 @@ wire modeNxt_BP;
 wire modeNxt_MPPF;
 wire [3:0] use2x2;
 wire [3:0] modeNxt_Mpp_stepsize;
+
+wire [8:0]xfm_coeff_0 ; 
+wire [8:0]xfm_coeff_1 ; 
+wire [8:0]xfm_coeff_2 ; 
+wire [8:0]xfm_coeff_3 ; 
+wire [8:0]xfm_coeff_4 ; 
+wire [8:0]xfm_coeff_5 ; 
+wire [8:0]xfm_coeff_6 ; 
+wire [8:0]xfm_coeff_7 ; 
+wire [8:0]xfm_coeff_8 ; 
+wire [8:0]xfm_coeff_9 ; 
+wire [8:0]xfm_coeff_10; 
+wire [8:0]xfm_coeff_11; 
+wire [8:0]xfm_coeff_12; 
+wire [8:0]xfm_coeff_13; 
+wire [8:0]xfm_coeff_14; 
+wire [8:0]xfm_coeff_15; 
 bitparse #(.ssm_idx(0)) u_bitparse(
 
   .clk     (clk),
@@ -126,7 +144,24 @@ bitparse_ssm123 #(.ssm_idx(1)) u_bitparse_ssm1(
   .use2x2           (use2x2[1]),
   .modeNxt_Mpp_stepsize(modeNxt_Mpp_stepsize),
 
-  .pnxtBlkQuant(mpp_qres_ssm1)
+  .pnxtBlkQuant(mpp_qres_ssm1),
+
+  .xfm_coeff_0   (xfm_coeff_0 ) ,
+  .xfm_coeff_1   (xfm_coeff_1 ) ,
+  .xfm_coeff_2   (xfm_coeff_2 ) ,
+  .xfm_coeff_3   (xfm_coeff_3 ) ,
+  .xfm_coeff_4   (xfm_coeff_4 ) ,
+  .xfm_coeff_5   (xfm_coeff_5 ) ,
+  .xfm_coeff_6   (xfm_coeff_6 ) ,
+  .xfm_coeff_7   (xfm_coeff_7 ) ,
+  .xfm_coeff_8   (xfm_coeff_8 ) ,
+  .xfm_coeff_9   (xfm_coeff_9 ) ,
+  .xfm_coeff_10  (xfm_coeff_10) ,
+  .xfm_coeff_11  (xfm_coeff_11) ,
+  .xfm_coeff_12  (xfm_coeff_12) ,
+  .xfm_coeff_13  (xfm_coeff_13) ,
+  .xfm_coeff_14  (xfm_coeff_14) ,
+  .xfm_coeff_15  (xfm_coeff_15) 
 );
 bitparse_ssm123 #(.ssm_idx(2)) u_bitparse_ssm2(
 
@@ -181,6 +216,26 @@ decMpp  u_decMpp (
 );
 
 
+xfm_rec  u_xfm_rec (
+    .clk                     ( clk                 ),
+    .rstn                    ( rstn                ),
+    .coeff_0             ( xfm_coeff_0   [8:0] ),
+    .coeff_1             ( xfm_coeff_1   [8:0] ),
+    .coeff_2             ( xfm_coeff_2   [8:0] ),
+    .coeff_3             ( xfm_coeff_3   [8:0] ),
+    .coeff_4             ( xfm_coeff_4   [8:0] ),
+    .coeff_5             ( xfm_coeff_5   [8:0] ),
+    .coeff_6             ( xfm_coeff_6   [8:0] ),
+    .coeff_7             ( xfm_coeff_7   [8:0] ),
+    .coeff_8             ( xfm_coeff_8   [8:0] ),
+    .coeff_9             ( xfm_coeff_9   [8:0] ),
+    .coeff_10            ( xfm_coeff_10  [8:0] ),
+    .coeff_11            ( xfm_coeff_11  [8:0] ),
+    .coeff_12            ( xfm_coeff_12  [8:0] ),
+    .coeff_13            ( xfm_coeff_13  [8:0] ),
+    .coeff_14            ( xfm_coeff_14  [8:0] ),
+    .coeff_15            ( xfm_coeff_15  [8:0] )
+);
 
 
   

@@ -16,3 +16,5 @@
 ../../rtl/decVecEcSymbol2C.v
 
 ../../rtl/decMppfSuffix.v
+
+../../rtl/xfm_rec.v
