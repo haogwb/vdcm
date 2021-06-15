@@ -15,6 +15,8 @@ input use2x2,
 
 input [3:0] modeNxt_Mpp_stepsize,
 
+output reg [7:0]nxtBlkbitsSsm ,
+
 output [7:0] pnxtBlkQuant [0:16-1],
 
 output [8:0] xfm_coeff_0   ,
@@ -51,8 +53,8 @@ reg [127:0] suffix;
 reg [2:0] stepSize_ssm0;
 wire [3:0] numPx = 16;//getWidth * getHeight
 
-reg [7:0]nxtBlkbitsSsm0 ;
-assign ssm0_fullness = /*wr_shifter0 ? ssm0_fullness_ff + 128 -nxtBlkbitsSsm0 : */ssm0_fullness_ff - nxtBlkbitsSsm0;
+//reg [7:0]nxtBlkbitsSsm ;
+assign ssm0_fullness = /*wr_shifter0 ? ssm0_fullness_ff + 128 -nxtBlkbitsSsm : */ssm0_fullness_ff - nxtBlkbitsSsm;
 
 always@(posedge clk or negedge rstn)
   if(~rstn)
@@ -70,7 +72,7 @@ assign wr_shifter0 = start_dec & (ssm0_fullness< m_seMaxSize);
 //  else
 //    wr_shifter0 <= 0;
 
-wire [254:0] shifter_left = shifter0 << nxtBlkbitsSsm0;
+wire [254:0] shifter_left = shifter0 << nxtBlkbitsSsm;
 genvar i;
 always@(posedge clk or negedge rstn)
   if(~rstn)
@@ -315,7 +317,7 @@ decBpvBlock #(.ssm_idx(ssm_idx)) u_decBpvBlock (
     .bp_size                ( bp_size  [7:0]   )
 );
 
-assign  nxtBlkbitsSsm0 = rd_shifter_rqst ? ( mode_XFM ? xfm_size :mode_BP ? bp_size: mode_MPPF ? qres_mppf_size: qres_size  )//: 0)
+assign  nxtBlkbitsSsm = rd_shifter_rqst ? ( mode_XFM ? xfm_size :mode_BP ? bp_size: mode_MPPF ? qres_mppf_size: qres_size  )//: 0)
                                          : 0;
 reg parse_vld;
 always@(posedge clk or negedge rstn)

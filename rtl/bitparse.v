@@ -15,6 +15,8 @@ output modeNxt_BPSKIP,
 output [3:0] use2x2,
 output [3:0] modeNxt_Mpp_stepsize,
 
+output reg [7:0]nxtBlkbitsSsm0 ,
+
 output [7:0] pnxtBlkQuant [0:16-1]
 
 );
@@ -34,7 +36,7 @@ reg [127:0] suffix;
 reg [2:0] stepSize_ssm0;
 wire [3:0] numPx = 16;//getWidth * getHeight
 
-reg [7:0]nxtBlkbitsSsm0 ;
+//reg [7:0]nxtBlkbitsSsm0 ;
 assign ssm0_fullness = /*wr_shifter0 ? ssm0_fullness_ff + 128 -nxtBlkbitsSsm0 : */ssm0_fullness_ff - nxtBlkbitsSsm0;
 
 always@(posedge clk or negedge rstn)

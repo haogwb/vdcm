@@ -92,23 +92,66 @@ wire modeNxt_BP;
 wire modeNxt_MPPF;
 wire [3:0] use2x2;
 wire [3:0] modeNxt_Mpp_stepsize;
+wire [7:0]nxtBlkbitsSsm0 ;
+wire [7:0]nxtBlkbitsSsm1 ;
+wire [7:0]nxtBlkbitsSsm2 ;
+wire [7:0]nxtBlkbitsSsm3 ;
+wire [7:0] r_initTxDelay;
+wire [15:0] r_rcBufferFullnessOffsetThd;
+wire [23:0] r_rcFullnessSlope;
+wire [15:0] r_sliceWidth;
+wire [16*8-1:0] r_tgt_rate_delta_lut ; 
+wire [7:0] r_rcFullnessScale;
+wire [7:0] m_qp;
 
-wire [8:0]xfm_coeff_0 ; 
-wire [8:0]xfm_coeff_1 ; 
-wire [8:0]xfm_coeff_2 ; 
-wire [8:0]xfm_coeff_3 ; 
-wire [8:0]xfm_coeff_4 ; 
-wire [8:0]xfm_coeff_5 ; 
-wire [8:0]xfm_coeff_6 ; 
-wire [8:0]xfm_coeff_7 ; 
-wire [8:0]xfm_coeff_8 ; 
-wire [8:0]xfm_coeff_9 ; 
-wire [8:0]xfm_coeff_10; 
-wire [8:0]xfm_coeff_11; 
-wire [8:0]xfm_coeff_12; 
-wire [8:0]xfm_coeff_13; 
-wire [8:0]xfm_coeff_14; 
-wire [8:0]xfm_coeff_15; 
+wire [8:0]xfm_coeff_c0_0 ; 
+wire [8:0]xfm_coeff_c0_1 ; 
+wire [8:0]xfm_coeff_c0_2 ; 
+wire [8:0]xfm_coeff_c0_3 ; 
+wire [8:0]xfm_coeff_c0_4 ; 
+wire [8:0]xfm_coeff_c0_5 ; 
+wire [8:0]xfm_coeff_c0_6 ; 
+wire [8:0]xfm_coeff_c0_7 ; 
+wire [8:0]xfm_coeff_c0_8 ; 
+wire [8:0]xfm_coeff_c0_9 ; 
+wire [8:0]xfm_coeff_c0_10; 
+wire [8:0]xfm_coeff_c0_11; 
+wire [8:0]xfm_coeff_c0_12; 
+wire [8:0]xfm_coeff_c0_13; 
+wire [8:0]xfm_coeff_c0_14; 
+wire [8:0]xfm_coeff_c0_15; 
+wire [8:0]xfm_coeff_c1_0 ; 
+wire [8:0]xfm_coeff_c1_1 ; 
+wire [8:0]xfm_coeff_c1_2 ; 
+wire [8:0]xfm_coeff_c1_3 ; 
+wire [8:0]xfm_coeff_c1_4 ; 
+wire [8:0]xfm_coeff_c1_5 ; 
+wire [8:0]xfm_coeff_c1_6 ; 
+wire [8:0]xfm_coeff_c1_7 ; 
+wire [8:0]xfm_coeff_c1_8 ; 
+wire [8:0]xfm_coeff_c1_9 ; 
+wire [8:0]xfm_coeff_c1_10; 
+wire [8:0]xfm_coeff_c1_11; 
+wire [8:0]xfm_coeff_c1_12; 
+wire [8:0]xfm_coeff_c1_13; 
+wire [8:0]xfm_coeff_c1_14; 
+wire [8:0]xfm_coeff_c1_15; 
+wire [8:0]xfm_coeff_c2_0 ; 
+wire [8:0]xfm_coeff_c2_1 ; 
+wire [8:0]xfm_coeff_c2_2 ; 
+wire [8:0]xfm_coeff_c2_3 ; 
+wire [8:0]xfm_coeff_c2_4 ; 
+wire [8:0]xfm_coeff_c2_5 ; 
+wire [8:0]xfm_coeff_c2_6 ; 
+wire [8:0]xfm_coeff_c2_7 ; 
+wire [8:0]xfm_coeff_c2_8 ; 
+wire [8:0]xfm_coeff_c2_9 ; 
+wire [8:0]xfm_coeff_c2_10; 
+wire [8:0]xfm_coeff_c2_11; 
+wire [8:0]xfm_coeff_c2_12; 
+wire [8:0]xfm_coeff_c2_13; 
+wire [8:0]xfm_coeff_c2_14; 
+wire [8:0]xfm_coeff_c2_15; 
 bitparse #(.ssm_idx(0)) u_bitparse(
 
   .clk     (clk),
@@ -125,6 +168,7 @@ bitparse #(.ssm_idx(0)) u_bitparse(
   .modeNxt_MPPF       (modeNxt_MPPF),
   .use2x2           (use2x2),
   .modeNxt_Mpp_stepsize(modeNxt_Mpp_stepsize),
+  .nxtBlkbitsSsm0    (nxtBlkbitsSsm0),
   .pnxtBlkQuant(mpp_qres_ssm0)
 
 );
@@ -144,24 +188,25 @@ bitparse_ssm123 #(.ssm_idx(1)) u_bitparse_ssm1(
   .use2x2           (use2x2[1]),
   .modeNxt_Mpp_stepsize(modeNxt_Mpp_stepsize),
 
+  .nxtBlkbitsSsm    (nxtBlkbitsSsm1),
   .pnxtBlkQuant(mpp_qres_ssm1),
 
-  .xfm_coeff_0   (xfm_coeff_0 ) ,
-  .xfm_coeff_1   (xfm_coeff_1 ) ,
-  .xfm_coeff_2   (xfm_coeff_2 ) ,
-  .xfm_coeff_3   (xfm_coeff_3 ) ,
-  .xfm_coeff_4   (xfm_coeff_4 ) ,
-  .xfm_coeff_5   (xfm_coeff_5 ) ,
-  .xfm_coeff_6   (xfm_coeff_6 ) ,
-  .xfm_coeff_7   (xfm_coeff_7 ) ,
-  .xfm_coeff_8   (xfm_coeff_8 ) ,
-  .xfm_coeff_9   (xfm_coeff_9 ) ,
-  .xfm_coeff_10  (xfm_coeff_10) ,
-  .xfm_coeff_11  (xfm_coeff_11) ,
-  .xfm_coeff_12  (xfm_coeff_12) ,
-  .xfm_coeff_13  (xfm_coeff_13) ,
-  .xfm_coeff_14  (xfm_coeff_14) ,
-  .xfm_coeff_15  (xfm_coeff_15) 
+  .xfm_coeff_0   (xfm_coeff_c0_0 ) ,
+  .xfm_coeff_1   (xfm_coeff_c0_1 ) ,
+  .xfm_coeff_2   (xfm_coeff_c0_2 ) ,
+  .xfm_coeff_3   (xfm_coeff_c0_3 ) ,
+  .xfm_coeff_4   (xfm_coeff_c0_4 ) ,
+  .xfm_coeff_5   (xfm_coeff_c0_5 ) ,
+  .xfm_coeff_6   (xfm_coeff_c0_6 ) ,
+  .xfm_coeff_7   (xfm_coeff_c0_7 ) ,
+  .xfm_coeff_8   (xfm_coeff_c0_8 ) ,
+  .xfm_coeff_9   (xfm_coeff_c0_9 ) ,
+  .xfm_coeff_10  (xfm_coeff_c0_10) ,
+  .xfm_coeff_11  (xfm_coeff_c0_11) ,
+  .xfm_coeff_12  (xfm_coeff_c0_12) ,
+  .xfm_coeff_13  (xfm_coeff_c0_13) ,
+  .xfm_coeff_14  (xfm_coeff_c0_14) ,
+  .xfm_coeff_15  (xfm_coeff_c0_15) 
 );
 bitparse_ssm123 #(.ssm_idx(2)) u_bitparse_ssm2(
 
@@ -180,7 +225,25 @@ bitparse_ssm123 #(.ssm_idx(2)) u_bitparse_ssm2(
   .use2x2           (use2x2[2]),
   .modeNxt_Mpp_stepsize(modeNxt_Mpp_stepsize),
 
-  .pnxtBlkQuant(mpp_qres_ssm2)
+  .nxtBlkbitsSsm    (nxtBlkbitsSsm2),
+  .pnxtBlkQuant(mpp_qres_ssm2),
+
+  .xfm_coeff_0   (xfm_coeff_c1_0 ) ,
+  .xfm_coeff_1   (xfm_coeff_c1_1 ) ,
+  .xfm_coeff_2   (xfm_coeff_c1_2 ) ,
+  .xfm_coeff_3   (xfm_coeff_c1_3 ) ,
+  .xfm_coeff_4   (xfm_coeff_c1_4 ) ,
+  .xfm_coeff_5   (xfm_coeff_c1_5 ) ,
+  .xfm_coeff_6   (xfm_coeff_c1_6 ) ,
+  .xfm_coeff_7   (xfm_coeff_c1_7 ) ,
+  .xfm_coeff_8   (xfm_coeff_c1_8 ) ,
+  .xfm_coeff_9   (xfm_coeff_c1_9 ) ,
+  .xfm_coeff_10  (xfm_coeff_c1_10) ,
+  .xfm_coeff_11  (xfm_coeff_c1_11) ,
+  .xfm_coeff_12  (xfm_coeff_c1_12) ,
+  .xfm_coeff_13  (xfm_coeff_c1_13) ,
+  .xfm_coeff_14  (xfm_coeff_c1_14) ,
+  .xfm_coeff_15  (xfm_coeff_c1_15) 
 );
 
 bitparse_ssm123 #(.ssm_idx(3)) u_bitparse_ssm3(
@@ -200,7 +263,26 @@ bitparse_ssm123 #(.ssm_idx(3)) u_bitparse_ssm3(
   .use2x2           (use2x2[3]),
   .modeNxt_Mpp_stepsize(modeNxt_Mpp_stepsize),
 
-  .pnxtBlkQuant(mpp_qres_ssm3)
+  .nxtBlkbitsSsm    (nxtBlkbitsSsm3),
+  .pnxtBlkQuant(mpp_qres_ssm3),
+
+
+  .xfm_coeff_0   (xfm_coeff_c2_0 ) ,
+  .xfm_coeff_1   (xfm_coeff_c2_1 ) ,
+  .xfm_coeff_2   (xfm_coeff_c2_2 ) ,
+  .xfm_coeff_3   (xfm_coeff_c2_3 ) ,
+  .xfm_coeff_4   (xfm_coeff_c2_4 ) ,
+  .xfm_coeff_5   (xfm_coeff_c2_5 ) ,
+  .xfm_coeff_6   (xfm_coeff_c2_6 ) ,
+  .xfm_coeff_7   (xfm_coeff_c2_7 ) ,
+  .xfm_coeff_8   (xfm_coeff_c2_8 ) ,
+  .xfm_coeff_9   (xfm_coeff_c2_9 ) ,
+  .xfm_coeff_10  (xfm_coeff_c2_10) ,
+  .xfm_coeff_11  (xfm_coeff_c2_11) ,
+  .xfm_coeff_12  (xfm_coeff_c2_12) ,
+  .xfm_coeff_13  (xfm_coeff_c2_13) ,
+  .xfm_coeff_14  (xfm_coeff_c2_14) ,
+  .xfm_coeff_15  (xfm_coeff_c2_15) 
 );
 
 always@(posedge clk)
@@ -215,31 +297,95 @@ decMpp  u_decMpp (
     .mpp_qres_ssm3   ( mpp_qres_ssm3 )
 );
 
-
+wire [3*16*9-1:0]xfm_coeff;
+assign xfm_coeff[1 *9-1 -:9] = xfm_coeff_c0_0 ;
+assign xfm_coeff[2 *9-1 -:9] = xfm_coeff_c0_1 ;
+assign xfm_coeff[3 *9-1 -:9] = xfm_coeff_c0_2 ;
+assign xfm_coeff[4 *9-1 -:9] = xfm_coeff_c0_3 ;
+assign xfm_coeff[5 *9-1 -:9] = xfm_coeff_c0_4 ;
+assign xfm_coeff[6 *9-1 -:9] = xfm_coeff_c0_5 ;
+assign xfm_coeff[7 *9-1 -:9] = xfm_coeff_c0_6 ;
+assign xfm_coeff[8 *9-1 -:9] = xfm_coeff_c0_7 ;
+assign xfm_coeff[9 *9-1 -:9] = xfm_coeff_c0_8 ;
+assign xfm_coeff[10*9-1 -:9] = xfm_coeff_c0_9 ;
+assign xfm_coeff[11*9-1 -:9] = xfm_coeff_c0_10;
+assign xfm_coeff[12*9-1 -:9] = xfm_coeff_c0_11;
+assign xfm_coeff[13*9-1 -:9] = xfm_coeff_c0_12;
+assign xfm_coeff[14*9-1 -:9] = xfm_coeff_c0_13;
+assign xfm_coeff[15*9-1 -:9] = xfm_coeff_c0_14;
+assign xfm_coeff[16*9-1 -:9] = xfm_coeff_c0_15;
+assign xfm_coeff[(1*16*9)+1 *9-1 -:9] = xfm_coeff_c1_0 ;
+assign xfm_coeff[(1*16*9)+2 *9-1 -:9] = xfm_coeff_c1_1 ;
+assign xfm_coeff[(1*16*9)+3 *9-1 -:9] = xfm_coeff_c1_2 ;
+assign xfm_coeff[(1*16*9)+4 *9-1 -:9] = xfm_coeff_c1_3 ;
+assign xfm_coeff[(1*16*9)+5 *9-1 -:9] = xfm_coeff_c1_4 ;
+assign xfm_coeff[(1*16*9)+6 *9-1 -:9] = xfm_coeff_c1_5 ;
+assign xfm_coeff[(1*16*9)+7 *9-1 -:9] = xfm_coeff_c1_6 ;
+assign xfm_coeff[(1*16*9)+8 *9-1 -:9] = xfm_coeff_c1_7 ;
+assign xfm_coeff[(1*16*9)+9 *9-1 -:9] = xfm_coeff_c1_8 ;
+assign xfm_coeff[(1*16*9)+10*9-1 -:9] = xfm_coeff_c1_9 ;
+assign xfm_coeff[(1*16*9)+11*9-1 -:9] = xfm_coeff_c1_10;
+assign xfm_coeff[(1*16*9)+12*9-1 -:9] = xfm_coeff_c1_11;
+assign xfm_coeff[(1*16*9)+13*9-1 -:9] = xfm_coeff_c1_12;
+assign xfm_coeff[(1*16*9)+14*9-1 -:9] = xfm_coeff_c1_13;
+assign xfm_coeff[(1*16*9)+15*9-1 -:9] = xfm_coeff_c1_14;
+assign xfm_coeff[(1*16*9)+16*9-1 -:9] = xfm_coeff_c1_15;
+assign xfm_coeff[(2*16*9)+1 *9-1 -:9] = xfm_coeff_c2_0 ;
+assign xfm_coeff[(2*16*9)+2 *9-1 -:9] = xfm_coeff_c2_1 ;
+assign xfm_coeff[(2*16*9)+3 *9-1 -:9] = xfm_coeff_c2_2 ;
+assign xfm_coeff[(2*16*9)+4 *9-1 -:9] = xfm_coeff_c2_3 ;
+assign xfm_coeff[(2*16*9)+5 *9-1 -:9] = xfm_coeff_c2_4 ;
+assign xfm_coeff[(2*16*9)+6 *9-1 -:9] = xfm_coeff_c2_5 ;
+assign xfm_coeff[(2*16*9)+7 *9-1 -:9] = xfm_coeff_c2_6 ;
+assign xfm_coeff[(2*16*9)+8 *9-1 -:9] = xfm_coeff_c2_7 ;
+assign xfm_coeff[(2*16*9)+9 *9-1 -:9] = xfm_coeff_c2_8 ;
+assign xfm_coeff[(2*16*9)+10*9-1 -:9] = xfm_coeff_c2_9 ;
+assign xfm_coeff[(2*16*9)+11*9-1 -:9] = xfm_coeff_c2_10;
+assign xfm_coeff[(2*16*9)+12*9-1 -:9] = xfm_coeff_c2_11;
+assign xfm_coeff[(2*16*9)+13*9-1 -:9] = xfm_coeff_c2_12;
+assign xfm_coeff[(2*16*9)+14*9-1 -:9] = xfm_coeff_c2_13;
+assign xfm_coeff[(2*16*9)+15*9-1 -:9] = xfm_coeff_c2_14;
+assign xfm_coeff[(2*16*9)+16*9-1 -:9] = xfm_coeff_c2_15;
 xfm_rec  u_xfm_rec (
     .clk                     ( clk                 ),
     .rstn                    ( rstn                ),
-    .coeff_0             ( xfm_coeff_0   [8:0] ),
-    .coeff_1             ( xfm_coeff_1   [8:0] ),
-    .coeff_2             ( xfm_coeff_2   [8:0] ),
-    .coeff_3             ( xfm_coeff_3   [8:0] ),
-    .coeff_4             ( xfm_coeff_4   [8:0] ),
-    .coeff_5             ( xfm_coeff_5   [8:0] ),
-    .coeff_6             ( xfm_coeff_6   [8:0] ),
-    .coeff_7             ( xfm_coeff_7   [8:0] ),
-    .coeff_8             ( xfm_coeff_8   [8:0] ),
-    .coeff_9             ( xfm_coeff_9   [8:0] ),
-    .coeff_10            ( xfm_coeff_10  [8:0] ),
-    .coeff_11            ( xfm_coeff_11  [8:0] ),
-    .coeff_12            ( xfm_coeff_12  [8:0] ),
-    .coeff_13            ( xfm_coeff_13  [8:0] ),
-    .coeff_14            ( xfm_coeff_14  [8:0] ),
-    .coeff_15            ( xfm_coeff_15  [8:0] )
+    .m_qp                    ( m_qp                ),
+    .xfm_coeff               ( xfm_coeff           )
 );
 
+wire [8*8-1:0] r_max_qp_lut;
+decRateControl u_decRateControl(
+    .clk                     ( clk                 ),
+    .rstn                    ( rstn                ),
+    .start_dec_ff1           (start_dec_ff1),
+  .isFls             (isFls),
+  .nxtBlkbitsSsm0    (nxtBlkbitsSsm0),
+  .nxtBlkbitsSsm1    (nxtBlkbitsSsm1),
+  .nxtBlkbitsSsm2    (nxtBlkbitsSsm2),
+  .nxtBlkbitsSsm3    (nxtBlkbitsSsm3),
+  .r_sliceWidth              ( r_sliceWidth        ),
+  .r_initTxDelay                ( r_initTxDelay                [7:0]  ),
+  .r_rcBufferFullnessOffsetThd  ( r_rcBufferFullnessOffsetThd  [15:0] ),
+  .r_rcFullnessSlope            ( r_rcFullnessSlope            [23:0] ),
+  .r_rcFullnessScale (r_rcFullnessScale),
+  .r_tgt_rate_delta_lut      ( r_tgt_rate_delta_lut),
+  .r_max_qp_lut              ( r_max_qp_lut        ),
+  .m_qp                      ( m_qp                )
+);
 
-  
+reg [7:0] pps[0:127];
+initial begin
+$readmemh("/mnt/hgfs/VDC-M/VDC-M_v1.2.2_2019.02.25/ppsbytes.txt",pps);
+end
 
+assign r_tgt_rate_delta_lut = {pps[64],pps[65],pps[66],pps[67],pps[68],pps[69],pps[70],pps[71],
+                                        pps[72],pps[73],pps[74],pps[75],pps[76],pps[77],pps[78],pps[79] } ; 
+assign r_rcFullnessScale=pps[37];
+assign r_initTxDelay =pps[29];
+assign r_rcBufferFullnessOffsetThd={pps[38],pps[39]};
+assign r_rcFullnessSlope={pps[40],pps[41],pps[42]};;
+assign r_sliceWidth = {pps[8],pps[9]};
+assign r_max_qp_lut = {pps[56],pps[57],pps[58],pps[59],pps[60],pps[61],pps[62],pps[63]};
 reg [127:0] codec_bits[0:4050-1];
 
 initial begin
@@ -299,6 +445,29 @@ begin
 end
 
 
+
+integer fd_fullness;
+integer fd_rc;
+initial begin
+  fd_fullness = $fopen("fullness.txt","w");
+  fd_rc = $fopen("/mnt/hgfs/VDC-M/VDC-M_v1.2.2_2019.02.25/debugTracerDecoder_targetrate.txt","r");
+end
+
+always@(posedge clk)
+  if(start_dec_ff1)begin
+    $fwrite(fd_fullness,"%02h ",tb.u_bitparse.ssm0_fullness_ff[7:0]);
+    $fwrite(fd_fullness,"%02h ",tb.u_bitparse_ssm1.ssm0_fullness_ff[7:0]);
+    $fwrite(fd_fullness,"%02h ",tb.u_bitparse_ssm2.ssm0_fullness_ff[7:0]);
+    $fwrite(fd_fullness,"%02h \n",tb.u_bitparse_ssm3.ssm0_fullness_ff[7:0]);
+  end
+
+bit[15:0] tgtRate;
+bit[15:0] bufferfullness;
+bit[15:0] rcbufferfullness;
+always@(posedge clk)
+  if(start_dec_ff)begin
+    $fscanf(fd_rc,"%d,%d,%d",tgtRate,bufferfullness,rcbufferfullness);
+  end
 
 initial begin
 

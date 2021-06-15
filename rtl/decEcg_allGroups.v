@@ -428,22 +428,40 @@ wire [9*16-1:0] sm_coeff_fifo = m_modeType==kEcXfm ?
   sm_coeff_fifo_ec3 | sm_coeff_fifo_ec1>> ecNumSample3*9 | sm_coeff_fifo_ec0>> (ecNumSample3 + ecNumSample1) *9  | sm_coeff_fifo_ec2>> (ecNumSample3 + ecNumSample1+ ecNumSample0) *9 
                                                    :
   sm_coeff_fifo_ec0 | sm_coeff_fifo_ec1>> ecNumSample0*9 | sm_coeff_fifo_ec2>> (ecNumSample0 + ecNumSample1) *9  | sm_coeff_fifo_ec3>> (ecNumSample2 + ecNumSample1+ ecNumSample0) *9 ;
-assign coeff_0   = sm_coeff_fifo[16*9-1:15*9];
-assign coeff_1   = sm_coeff_fifo[15*9-1:14*9];
-assign coeff_2   = sm_coeff_fifo[14*9-1:13*9];
-assign coeff_3   = sm_coeff_fifo[13*9-1:12*9];
-assign coeff_4   = sm_coeff_fifo[12*9-1:11*9];
-assign coeff_5   = sm_coeff_fifo[11*9-1:10*9];
-assign coeff_6   = sm_coeff_fifo[10*9-1:09*9];
-assign coeff_7   = sm_coeff_fifo[09*9-1:08*9];
-assign coeff_8   = sm_coeff_fifo[08*9-1:07*9];
-assign coeff_9   = sm_coeff_fifo[07*9-1:06*9];
-assign coeff_10  = sm_coeff_fifo[06*9-1:05*9];
-assign coeff_11  = sm_coeff_fifo[05*9-1:04*9];
-assign coeff_12  = sm_coeff_fifo[04*9-1:03*9];
-assign coeff_13  = sm_coeff_fifo[03*9-1:02*9];
-assign coeff_14  = sm_coeff_fifo[02*9-1:01*9];
-assign coeff_15  = sm_coeff_fifo[01*9-1:00*9];
+
+
+wire [8:0] tmp_coeff_0   ;
+wire [8:0] tmp_coeff_1   ;
+wire [8:0] tmp_coeff_2   ;
+wire [8:0] tmp_coeff_3   ;
+wire [8:0] tmp_coeff_4   ;
+wire [8:0] tmp_coeff_5   ;
+wire [8:0] tmp_coeff_6   ;
+wire [8:0] tmp_coeff_7   ;
+wire [8:0] tmp_coeff_8   ;
+wire [8:0] tmp_coeff_9   ;
+wire [8:0] tmp_coeff_10  ;
+wire [8:0] tmp_coeff_11  ;
+wire [8:0] tmp_coeff_12  ;
+wire [8:0] tmp_coeff_13  ;
+wire [8:0] tmp_coeff_14  ;
+wire [8:0] tmp_coeff_15  ; 
+assign tmp_coeff_0   = sm_coeff_fifo[16*9-1:15*9];
+assign tmp_coeff_1   = sm_coeff_fifo[15*9-1:14*9];
+assign tmp_coeff_2   = sm_coeff_fifo[14*9-1:13*9];
+assign tmp_coeff_3   = sm_coeff_fifo[13*9-1:12*9];
+assign tmp_coeff_4   = sm_coeff_fifo[12*9-1:11*9];
+assign tmp_coeff_5   = sm_coeff_fifo[11*9-1:10*9];
+assign tmp_coeff_6   = sm_coeff_fifo[10*9-1:09*9];
+assign tmp_coeff_7   = sm_coeff_fifo[09*9-1:08*9];
+assign tmp_coeff_8   = sm_coeff_fifo[08*9-1:07*9];
+assign tmp_coeff_9   = sm_coeff_fifo[07*9-1:06*9];
+assign tmp_coeff_10  = sm_coeff_fifo[06*9-1:05*9];
+assign tmp_coeff_11  = sm_coeff_fifo[05*9-1:04*9];
+assign tmp_coeff_12  = sm_coeff_fifo[04*9-1:03*9];
+assign tmp_coeff_13  = sm_coeff_fifo[03*9-1:02*9];
+assign tmp_coeff_14  = sm_coeff_fifo[02*9-1:01*9];
+assign tmp_coeff_15  = sm_coeff_fifo[01*9-1:00*9];
 
 reg signSigPos;
 reg size_signLast;
@@ -468,7 +486,42 @@ end
 
 //wire [9*16-1:0] sm_coeff_fifo_after_signLastSigPos = m_modeType==kEcXfm ?
 
+assign coeff_0   =(lastSigPos==0  & ssm_idx>1) ? (signSigPos ? tmp_coeff_0 -1 : tmp_coeff_0 +1)  :tmp_coeff_0  ;
+assign coeff_1   =(lastSigPos==1             ) ? (signSigPos ? tmp_coeff_1 -1 : tmp_coeff_1 +1)  :tmp_coeff_1   ;
+assign coeff_2   =(lastSigPos==2             ) ? (signSigPos ? tmp_coeff_2 -1 : tmp_coeff_2 +1)  :tmp_coeff_2   ;
+assign coeff_3   =(lastSigPos==3             ) ? (signSigPos ? tmp_coeff_3 -1 : tmp_coeff_3 +1)  :tmp_coeff_3   ;
+assign coeff_4   =(lastSigPos==4             ) ? (signSigPos ? tmp_coeff_4 -1 : tmp_coeff_4 +1)  :tmp_coeff_4   ;
+assign coeff_5   =(lastSigPos==5             ) ? (signSigPos ? tmp_coeff_5 -1 : tmp_coeff_5 +1)  :tmp_coeff_5   ;
+assign coeff_6   =(lastSigPos==6             ) ? (signSigPos ? tmp_coeff_6 -1 : tmp_coeff_6 +1)  :tmp_coeff_6   ;
+assign coeff_7   =(lastSigPos==7             ) ? (signSigPos ? tmp_coeff_7 -1 : tmp_coeff_7 +1)  :tmp_coeff_7   ;
+assign coeff_8   =(lastSigPos==8             ) ? (signSigPos ? tmp_coeff_8 -1 : tmp_coeff_8 +1)  :tmp_coeff_8   ;
+assign coeff_9   =(lastSigPos==9             ) ? (signSigPos ? tmp_coeff_9 -1 : tmp_coeff_9 +1)  :tmp_coeff_9   ;
+assign coeff_10  =(lastSigPos==10            ) ? (signSigPos ? tmp_coeff_10-1 : tmp_coeff_10+1)  :tmp_coeff_10  ;
+assign coeff_11  =(lastSigPos==11            ) ? (signSigPos ? tmp_coeff_11-1 : tmp_coeff_11+1)  :tmp_coeff_11  ;
+assign coeff_12  =(lastSigPos==12            ) ? (signSigPos ? tmp_coeff_12-1 : tmp_coeff_12+1)  :tmp_coeff_12  ;
+assign coeff_13  =(lastSigPos==13            ) ? (signSigPos ? tmp_coeff_13-1 : tmp_coeff_13+1)  :tmp_coeff_13  ;
+assign coeff_14  =(lastSigPos==14            ) ? (signSigPos ? tmp_coeff_14-1 : tmp_coeff_14+1)  :tmp_coeff_14  ;
+assign coeff_15  =(lastSigPos==15            ) ? (signSigPos ? tmp_coeff_15-1 : tmp_coeff_15+1)  :tmp_coeff_15  ;
+end else begin
+
+assign coeff_0   = tmp_coeff_0   ;
+assign coeff_1   = tmp_coeff_1   ;
+assign coeff_2   = tmp_coeff_2   ;
+assign coeff_3   = tmp_coeff_3   ;
+assign coeff_4   = tmp_coeff_4   ;
+assign coeff_5   = tmp_coeff_5   ;
+assign coeff_6   = tmp_coeff_6   ;
+assign coeff_7   = tmp_coeff_7   ;
+assign coeff_8   = tmp_coeff_8   ;
+assign coeff_9   = tmp_coeff_9   ;
+assign coeff_10  = tmp_coeff_10  ;
+assign coeff_11  = tmp_coeff_11  ;
+assign coeff_12  = tmp_coeff_12  ;
+assign coeff_13  = tmp_coeff_13  ;
+assign coeff_14  = tmp_coeff_14  ;
+assign coeff_15  = tmp_coeff_15  ;
 end
+
 endgenerate
 
 assign coef_size = (ssm_idx > 1 ? 1:0) + (m_modeType==kEcXfm ? numBitsLastSigPos +size_signLast: 0) + numbits0 + numbits1

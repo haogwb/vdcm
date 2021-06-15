@@ -2,7 +2,7 @@ Command: vcs -sverilog -full64 -f ../flist +lint=TFIPC-L -P /opt/Synopsys/Verdi2
 /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a -l run.log +v2k -debug_all +notimingcheck \
 -lca
                          Chronologic VCS (TM)
-         Version I-2014.03_Full64 -- Thu May 27 07:12:31 2021
+         Version I-2014.03_Full64 -- Tue Jun 15 17:29:28 2021
                Copyright (c) 1991-2014 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -17,6 +17,14 @@ Warning-[LCA_FEATURES_ENABLED] Usage warning
   features" in the VCS/VCS-MX Release Notes
 
 Parsing design file '../tb/tb.v'
+
+Warning-[RVOSFD] Return value discarded
+../tb/tb.v, 469
+  System function '$fscanf' is invoked as task, its return value is discarded.
+  "../tb/tb.v", 469
+  Source info:     
+  $fscanf(fd_rc,"%d,%d,%d",tgtRate,bufferfullness,rcbufferfullness);
+
 Parsing design file '../../rtl/bitparse.v'
 Parsing design file '../../rtl/bitparse_ssm123.v'
 Parsing design file '../../rtl/decMppSuffix.v'
@@ -1999,7 +2007,17 @@ Warning-[TMBIN] Too many bits in Based Number
   The offending number is : '192'.
 
 Parsing design file '../../rtl/decMppfSuffix.v'
+Parsing design file '../../rtl/xfm_rec_c.v'
 Parsing design file '../../rtl/xfm_rec.v'
+Parsing design file '../../rtl/idct.v'
+Parsing design file '../../rtl/decRateControl.v'
+Parsing design file '../../rtl/decBufferFullness.v'
+Parsing design file '../../rtl/updateRcOffset.v'
+
+Warning-[IPDW] Identifier previously declared
+../../rtl/updateRcOffset.v, 17
+  Second declaration for identifier 'm_rcOffsetInit' ignored
+
 Top Level Modules:
        tb
 TimeScale is 1 ns / 1 ps
@@ -2043,61 +2061,17 @@ Lint-[TFIPC-L] Too few instance port connections
 
 
 Lint-[TFIPC-L] Too few instance port connections
-../../rtl/bitparse_ssm123.v, 277
+../../rtl/bitparse_ssm123.v, 279
 "decXfmCoeff #(.ssm_idx(ssm_idx)) u_decXfmCoeff( .mode_XFM (mode_XFM),  .suffix ((mode_XFM ? suffix : 0)),  .coef_size (xfm_size),  .coeff_0 (xfm_coeff_0),  .coeff_1 (xfm_coeff_1),  .coeff_2 (xfm_coeff_2),  .coeff_3 (xfm_coeff_3),  .coeff_4 (xfm_coeff_4),  .coeff_5 (xfm_coeff_5),  .coeff_6 (xfm_coeff_6),  .coeff_7 (xfm_coeff_7),  .coeff_8 (xfm_coeff_8),  .coeff_9 (xfm_coeff_9),  .coeff_10 (xfm_coeff_10),  .coeff_11 (xfm_coeff_11),  .coeff_12 (xfm_coeff_12),  .coeff_13 (xfm_coeff_13),  .coeff_14 (xfm_coeff_14),  .coeff_15 (xfm_coeff_15));"
   The above instance has fewer port connections than the module definition,
   output port 'pnxtBlkQuant' is not connected.
 
 
 Lint-[TFIPC-L] Too few instance port connections
-../tb/tb.v, 112
-"bitparse #(.ssm_idx(0)) u_bitparse( .clk (clk),  .rstn (rstn),  .start_dec (start_dec),  .codec_data_rd_en (codec_data_rd_en),  .codec_data (codec_data),  .isNxtBlockFls (isNxtBlkFls),  .modeNxt_XFM (modeNxt_XFM),  .modeNxt_BP (modeNxt_BP),  .modeNxt_MPPF (modeNxt_MPPF),  .use2x2 (use2x2),  .modeNxt_Mpp_stepsize (modeNxt_Mpp_stepsize),  .pnxtBlkQuant (mpp_qres_ssm0));"
+../tb/tb.v, 155
+"bitparse #(.ssm_idx(0)) u_bitparse( .clk (clk),  .rstn (rstn),  .start_dec (start_dec),  .codec_data_rd_en (codec_data_rd_en),  .codec_data (codec_data),  .isNxtBlockFls (isNxtBlkFls),  .modeNxt_XFM (modeNxt_XFM),  .modeNxt_BP (modeNxt_BP),  .modeNxt_MPPF (modeNxt_MPPF),  .use2x2 (use2x2),  .modeNxt_Mpp_stepsize (modeNxt_Mpp_stepsize),  .nxtBlkbitsSsm0 (nxtBlkbitsSsm0),  .pnxtBlkQuant (mpp_qres_ssm0));"
   The above instance has fewer port connections than the module definition,
   output port 'modeNxt_BPSKIP' is not connected.
-
-
-Lint-[TFIPC-L] Too few instance port connections
-../tb/tb.v, 166
-"bitparse_ssm123 #(.ssm_idx(2)) u_bitparse_ssm2( .clk (clk),  .rstn (rstn),  .start_dec (start_dec_ff),  .codec_data_rd_en (codec_data_rd_en_ssm2),  .codec_data (codec_data_ssm2),  .isFls (isFls),  .modeNxt_XFM (modeNxt_XFM),  .modeNxt_BP (modeNxt_BP),  .modeNxt_MPPF (modeNxt_MPPF),  .use2x2 (use2x2[2]),  .modeNxt_Mpp_stepsize (modeNxt_Mpp_stepsize),  .pnxtBlkQuant (mpp_qres_ssm2));"
-  The above instance has fewer port connections than the module definition,
-  output port 'xfm_coeff_0' is not connected,
-  output port 'xfm_coeff_1' is not connected,
-  output port 'xfm_coeff_2' is not connected,
-  output port 'xfm_coeff_3' is not connected,
-  output port 'xfm_coeff_4' is not connected,
-  output port 'xfm_coeff_5' is not connected,
-  output port 'xfm_coeff_6' is not connected,
-  output port 'xfm_coeff_7' is not connected,
-  output port 'xfm_coeff_8' is not connected,
-  output port 'xfm_coeff_9' is not connected,
-  output port 'xfm_coeff_10' is not connected,
-  output port 'xfm_coeff_11' is not connected,
-  output port 'xfm_coeff_12' is not connected,
-  output port 'xfm_coeff_13' is not connected,
-  output port 'xfm_coeff_14' is not connected,
-  output port 'xfm_coeff_15' is not connected.
-
-
-Lint-[TFIPC-L] Too few instance port connections
-../tb/tb.v, 186
-"bitparse_ssm123 #(.ssm_idx(3)) u_bitparse_ssm3( .clk (clk),  .rstn (rstn),  .start_dec (start_dec_ff),  .codec_data_rd_en (codec_data_rd_en_ssm3),  .codec_data (codec_data_ssm3),  .isFls (isFls),  .modeNxt_XFM (modeNxt_XFM),  .modeNxt_BP (modeNxt_BP),  .modeNxt_MPPF (modeNxt_MPPF),  .use2x2 (use2x2[3]),  .modeNxt_Mpp_stepsize (modeNxt_Mpp_stepsize),  .pnxtBlkQuant (mpp_qres_ssm3));"
-  The above instance has fewer port connections than the module definition,
-  output port 'xfm_coeff_0' is not connected,
-  output port 'xfm_coeff_1' is not connected,
-  output port 'xfm_coeff_2' is not connected,
-  output port 'xfm_coeff_3' is not connected,
-  output port 'xfm_coeff_4' is not connected,
-  output port 'xfm_coeff_5' is not connected,
-  output port 'xfm_coeff_6' is not connected,
-  output port 'xfm_coeff_7' is not connected,
-  output port 'xfm_coeff_8' is not connected,
-  output port 'xfm_coeff_9' is not connected,
-  output port 'xfm_coeff_10' is not connected,
-  output port 'xfm_coeff_11' is not connected,
-  output port 'xfm_coeff_12' is not connected,
-  output port 'xfm_coeff_13' is not connected,
-  output port 'xfm_coeff_14' is not connected,
-  output port 'xfm_coeff_15' is not connected.
 
 
 Warning-[PCWM-W] Port connection width mismatch
@@ -2118,8 +2092,792 @@ Warning-[PCWM-W] Port connection width mismatch
   	use +lint=PCWM for more details
 
 
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 186
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 186
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 186
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 186
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 187
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 187
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 187
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 187
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 188
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 188
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 188
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 188
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 189
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 189
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 189
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 189
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 190
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 190
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 190
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 190
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 191
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 191
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 191
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 191
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 192
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 192
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 192
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 192
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 193
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 193
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 193
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 193
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 194
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 194
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 194
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 194
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 195
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 195
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 195
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 195
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 196
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 196
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 196
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 196
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 197
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 197
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 197
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 197
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 198
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 198
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 198
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 198
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 199
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 199
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 199
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 199
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 200
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 200
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 200
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 200
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 201
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 201
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 201
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 201
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 41
+"'h00000011"
+  An unsized constant ''h00000011' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 41
+"'h00000011"
+  An unsized constant ''h00000011' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 41
+"'h00000011"
+  An unsized constant ''h00000011' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 41
+"'h00000011"
+  An unsized constant ''h00000011' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 41
+"'h00000029"
+  An unsized constant ''h00000029' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 41
+"'h00000029"
+  An unsized constant ''h00000029' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 41
+"'h00000029"
+  An unsized constant ''h00000029' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 41
+"'h00000029"
+  An unsized constant ''h00000029' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 42
+"'h00000029"
+  An unsized constant ''h00000029' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 42
+"'h00000029"
+  An unsized constant ''h00000029' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 42
+"'h00000029"
+  An unsized constant ''h00000029' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 42
+"'h00000029"
+  An unsized constant ''h00000029' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 42
+"'h00000011"
+  An unsized constant ''h00000011' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 42
+"'h00000011"
+  An unsized constant ''h00000011' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 42
+"'h00000011"
+  An unsized constant ''h00000011' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 42
+"'h00000011"
+  An unsized constant ''h00000011' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 64
+"'d94"
+  An unsized constant ''d94' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 64
+"'d94"
+  An unsized constant ''d94' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 64
+"'d94"
+  An unsized constant ''d94' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 64
+"'d94"
+  An unsized constant ''d94' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 64
+"'d63"
+  An unsized constant ''d63' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 64
+"'d63"
+  An unsized constant ''d63' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 64
+"'d63"
+  An unsized constant ''d63' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 64
+"'d63"
+  An unsized constant ''d63' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 65
+"'d111"
+  An unsized constant ''d111' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 65
+"'d111"
+  An unsized constant ''d111' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 65
+"'d111"
+  An unsized constant ''d111' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 65
+"'d111"
+  An unsized constant ''d111' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 65
+"'d22"
+  An unsized constant ''d22' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 65
+"'d22"
+  An unsized constant ''d22' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 65
+"'d22"
+  An unsized constant ''d22' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 65
+"'d22"
+  An unsized constant ''d22' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 66
+"'d22"
+  An unsized constant ''d22' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 66
+"'d22"
+  An unsized constant ''d22' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 66
+"'d22"
+  An unsized constant ''d22' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 66
+"'d22"
+  An unsized constant ''d22' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 66
+"'d111"
+  An unsized constant ''d111' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 66
+"'d111"
+  An unsized constant ''d111' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 66
+"'d111"
+  An unsized constant ''d111' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 66
+"'d111"
+  An unsized constant ''d111' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 67
+"'d63"
+  An unsized constant ''d63' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 67
+"'d63"
+  An unsized constant ''d63' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 67
+"'d63"
+  An unsized constant ''d63' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 67
+"'d63"
+  An unsized constant ''d63' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 67
+"'d94"
+  An unsized constant ''d94' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 67
+"'d94"
+  An unsized constant ''d94' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 67
+"'d94"
+  An unsized constant ''d94' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/idct.v, 67
+"'d94"
+  An unsized constant ''d94' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
 Warning-[SIOB] Select index out of bounds
-../../rtl/bitparse.v, 200
+../../rtl/bitparse.v, 202
 "shifter_left[254:(-128)]"
   The select index is out of declared bounds : [254:0].
   In module instance : u_bitparse 
@@ -2127,7 +2885,7 @@ Warning-[SIOB] Select index out of bounds
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 449
+../../rtl/bitparse.v, 451
 "decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 32-bit expression is connected to 4-bit port "bitDepth" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
@@ -2136,7 +2894,7 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 449
+../../rtl/bitparse.v, 451
 "decMppSuffix #(ssm_idx, ) u_decMppSuffix_ssm0( .bitDepth (8),  .stepSize ((ssm_idx ? stepSize_ssm0[2:0] : stepSize_ssm0)),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 3-bit expression is connected to 4-bit port "stepSize" of 
   module "decMppSuffix", instance "u_decMppSuffix_ssm0".
@@ -2145,7 +2903,7 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse.v, 464
+../../rtl/bitparse.v, 466
 "decMppfSuffix #(ssm_idx, , , , ) u_decMppfSuffix_ssm0( .bitDepth (8),  .suffix (suffix_for_mppf),  .qres_size (qres_mppf_size));"
   The following 32-bit expression is connected to 4-bit port "bitDepth" of 
   module "decMppfSuffix", instance "u_decMppfSuffix_ssm0".
@@ -2154,7 +2912,7 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[SIOB] Select index out of bounds
-../../rtl/bitparse_ssm123.v, 217
+../../rtl/bitparse_ssm123.v, 219
 "shifter_left[254:(-128)]"
   The select index is out of declared bounds : [254:0].
   In module instance : u_bitparse_ssm1 u_bitparse_ssm2 u_bitparse_ssm3 
@@ -2162,7 +2920,7 @@ Warning-[SIOB] Select index out of bounds
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse_ssm123.v, 250
+../../rtl/bitparse_ssm123.v, 252
 "decMppSuffix #(ssm_idx, ) u_decMppSuffix( .bitDepth (8),  .stepSize (stepSize),  .suffix (suffix),  .pnxtBlkQuant (pnxtBlkQuant),  .suffix_left (suffix_rmc0),  .qres_size (qres_size));"
   The following 32-bit expression is connected to 4-bit port "bitDepth" of 
   module "decMppSuffix", instance "u_decMppSuffix".
@@ -2171,7 +2929,7 @@ Warning-[PCWM-W] Port connection width mismatch
 
 
 Warning-[PCWM-W] Port connection width mismatch
-../../rtl/bitparse_ssm123.v, 263
+../../rtl/bitparse_ssm123.v, 265
 "decMppfSuffix #(ssm_idx, , , , ) u_decMppfSuffix( .bitDepth (8),  .suffix (suffix),  .qres_size (qres_mppf_size));"
   The following 32-bit expression is connected to 4-bit port "bitDepth" of 
   module "decMppfSuffix", instance "u_decMppfSuffix".
@@ -2196,10 +2954,458 @@ Warning-[PCWM-W] Port connection width mismatch
   Expression: ecNumSample3
   	use +lint=PCWM for more details
 
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 186
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 186
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 186
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 186
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 187
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 187
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 187
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 187
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 188
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 188
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 188
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 188
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 189
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 189
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 189
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 189
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 190
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 190
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 190
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 190
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 191
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 191
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 191
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 191
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 192
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 192
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 192
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 192
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 193
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 193
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 193
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 193
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 194
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 194
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 194
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 194
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 195
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 195
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 195
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 195
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 196
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 196
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 196
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 196
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 197
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 197
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 197
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 197
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 198
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 198
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 198
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 198
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 199
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 199
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 199
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 199
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 200
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 200
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 200
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 200
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 201
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 201
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 201
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
+
+Warning-[CWUC] Concatenations with unsized constants
+../../rtl/xfm_rec_c.v, 201
+"'d128"
+  An unsized constant ''d128' is used in the concatenation. The unsized 
+  constant will be used as a 32-bit constant.
+
 Starting vcs inline pass...
-13 modules and 0 UDP read.
+16 modules and 0 UDP read.
 	However, due to incremental compilation, only 1 module needs to be compiled.
-recompiling module xfm_rec because:
+recompiling module tb because:
 	This module or some inlined child module(s) has/have been modified.
 rm -f _csrc*.so amd64_scvhdl_*.so pre_vcsobj_*.so share_vcsobj_*.so
 ld -shared -o .//../simv.daidir//_csrc1.so --whole-archive _vcsobj_1_1.a  --no-whole-archive \
@@ -2219,15 +3425,22 @@ ld -shared -o .//../simv.daidir//pre_vcsobj_1_6.so --whole-archive pre_vcsobj_1_
 --no-whole-archive
 ld -shared -o .//../simv.daidir//pre_vcsobj_1_7.so --whole-archive pre_vcsobj_1_7.a \
 --no-whole-archive
+ld -shared -o .//../simv.daidir//pre_vcsobj_1_8.so --whole-archive pre_vcsobj_1_8.a \
+--no-whole-archive
+ld -shared -o .//../simv.daidir//pre_vcsobj_1_9.so --whole-archive pre_vcsobj_1_9.a \
+--no-whole-archive
+ld -shared -o .//../simv.daidir//pre_vcsobj_1_10.so --whole-archive pre_vcsobj_1_10.a \
+--no-whole-archive
 if [ -x ../simv ]; then chmod -x ../simv; fi
 g++  -o ../simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/simv.daidir/ -Wl,-rpath='$ORIGIN'/simv.daidir//scsim.db.dir \
 _csrc1.so _csrc0.so   pre_vcsobj_1_1.so pre_vcsobj_1_2.so pre_vcsobj_1_3.so pre_vcsobj_1_4.so \
-pre_vcsobj_1_5.so pre_vcsobj_1_6.so pre_vcsobj_1_7.so  rmapats_mop.o rmapats.o rmar.o \
-/opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so /opt/Synopsys/VCS2014/amd64/lib/libvirsim.so \
-/opt/Synopsys/VCS2014/amd64/lib/liberrorinf.so /opt/Synopsys/VCS2014/amd64/lib/libsnpsmalloc.so \
-/opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a    /opt/Synopsys/VCS2014/amd64/lib/libvcsnew.so \
-/opt/Synopsys/VCS2014/amd64/lib/libuclinative.so   -Wl,-whole-archive /opt/Synopsys/VCS2014/amd64/lib/libvcsucli.so \
--Wl,-no-whole-archive        _vcs_pli_stub_.o   /opt/Synopsys/VCS2014/amd64/lib/vcs_save_restore_new.o \
--ldl -lm -lm  -lc -lpthread -ldl 
+pre_vcsobj_1_5.so pre_vcsobj_1_6.so pre_vcsobj_1_7.so pre_vcsobj_1_8.so pre_vcsobj_1_9.so \
+pre_vcsobj_1_10.so  rmapats_mop.o rmapats.o rmar.o           /opt/Synopsys/VCS2014/amd64/lib/libzerosoft_rt_stubs.so \
+/opt/Synopsys/VCS2014/amd64/lib/libvirsim.so /opt/Synopsys/VCS2014/amd64/lib/liberrorinf.so \
+/opt/Synopsys/VCS2014/amd64/lib/libsnpsmalloc.so /opt/Synopsys/Verdi2015/share/PLI/VCS/LINUX64/pli.a \
+/opt/Synopsys/VCS2014/amd64/lib/libvcsnew.so /opt/Synopsys/VCS2014/amd64/lib/libuclinative.so \
+-Wl,-whole-archive /opt/Synopsys/VCS2014/amd64/lib/libvcsucli.so -Wl,-no-whole-archive \
+_vcs_pli_stub_.o   /opt/Synopsys/VCS2014/amd64/lib/vcs_save_restore_new.o -ldl -lm \
+-lm  -lc -lpthread -ldl 
 ../simv up to date
-CPU time: 2.091 seconds to compile + 1.732 seconds to elab + .191 seconds to link
+CPU time: 2.509 seconds to compile + .012 seconds to elab + .204 seconds to link

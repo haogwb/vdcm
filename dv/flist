@@ -17,4 +17,11 @@
 
 ../../rtl/decMppfSuffix.v
 
+../../rtl/xfm_rec_c.v
 ../../rtl/xfm_rec.v
+../../rtl/idct.v
+
+
+../../rtl/decRateControl.v
+../../rtl/decBufferFullness.v
+../../rtl/updateRcOffset.v
