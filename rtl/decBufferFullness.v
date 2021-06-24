@@ -5,10 +5,11 @@ input rstn,
 input start_dec_ff1,
 input [9:0] prevBlkBits,
 output reg [15:0] m_numPixelsCoded,
+output reg [15:0] m_numBlocksCoded,
 output reg [15:0] m_bufferFullness
 );
 
-reg [15:0] m_numBlocksCoded ;
+//reg [15:0] m_numBlocksCoded ;
 reg [15:0] m_bufferFullness_prev;
 wire [9:0]m_aveBlkBits=128;
 always@(posedge clk or negedge rstn)

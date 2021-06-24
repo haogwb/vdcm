@@ -5,11 +5,13 @@ module decBpvBlock #(parameter ssm_idx = 0)
   input isFls,
   input use2x2,
   input [127:0] suffix,
-  output [7:0]  bp_size
+  output [7:0]  bp_size,
+  output [5:0] bpv2x2,
+  output [5:0] bpv2x1_p0,
+  output [5:0] bpv2x1_p1
 );
 
-reg [7:0] bpv2x2_tmp;
-wire [7:0] bpv2x2;
+reg [5:0] bpv2x2_tmp;
 wire [3:0] m_bpvNumBits = 6;
 wire m_isFls = isFls;//1;
 wire [2:0] bitsPerBpv = m_isFls ? m_bpvNumBits -1 : m_bpvNumBits;
@@ -23,16 +25,14 @@ begin
   8'h4: bpv2x2_tmp = use2x2 ? suffix[127-:4] : 0;
   8'h5: bpv2x2_tmp = use2x2 ? suffix[127-:5] : 0;
   8'h6: bpv2x2_tmp = use2x2 ? suffix[127-:6] : 0;
-  8'h7: bpv2x2_tmp = use2x2 ? suffix[127-:7] : 0;
+//  8'h7: bpv2x2_tmp = use2x2 ? suffix[127-:7] : 0;
   default: bpv2x2_tmp = 0;
   endcase
 end
 assign bpv2x2 = use2x2 & m_isFls? bpv2x2_tmp + 32 : bpv2x2_tmp;
 
-reg [7:0] bpv2x1_p0_tmp;
-wire [7:0] bpv2x1_p0;
-reg [7:0] bpv2x1_p1_tmp;
-wire [7:0] bpv2x1_p1;
+reg [5:0] bpv2x1_p0_tmp;
+reg [5:0] bpv2x1_p1_tmp;
 always@(*)
 begin
   bpv2x1_p0_tmp = 0;
@@ -43,7 +43,7 @@ begin
   8'h4: bpv2x1_p0_tmp = ~use2x2 ? suffix[127-:4] : 0;
   8'h5: bpv2x1_p0_tmp = ~use2x2 ? suffix[127-:5] : 0;
   8'h6: bpv2x1_p0_tmp = ~use2x2 ? suffix[127-:6] : 0;
-  8'h7: bpv2x1_p0_tmp = ~use2x2 ? suffix[127-:7] : 0;
+//  8'h7: bpv2x1_p0_tmp = ~use2x2 ? suffix[127-:7] : 0;
   default: bpv2x1_p0_tmp = 0;
   endcase
 end
@@ -59,7 +59,7 @@ begin
   8'h4: bpv2x1_p1_tmp = ~use2x2 ? suffix[127-4-:4] : 0;
   8'h5: bpv2x1_p1_tmp = ~use2x2 ? suffix[127-5-:5] : 0;
   8'h6: bpv2x1_p1_tmp = ~use2x2 ? suffix[127-6-:6] : 0;
-  8'h7: bpv2x1_p1_tmp = ~use2x2 ? suffix[127-7-:7] : 0;
+//  8'h7: bpv2x1_p1_tmp = ~use2x2 ? suffix[127-7-:7] : 0;
   default: bpv2x1_p1_tmp = 0;
   endcase
 end

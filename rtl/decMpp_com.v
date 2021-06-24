@@ -1,10 +1,14 @@
-module decMpp_com
+module decMpp_com #(parameter depth=8)
 (
   input clk,
   input rstn,
   input blk_vld,
+  input isFls,
   input [15:0] blkcounter,
-  input [7:0] c0[0:15]
+  input [depth-1:0]   prev_rec[0:15] ,
+  input [7:0] c0[0:15],
+
+  output reg [depth-1:0] pRec0 [0:15]
 );
 wire [7:0] c0[0:15];
 
@@ -13,9 +17,6 @@ wire [7:0] clipMax = (1<<m_bitDepth) -1;
 wire [7:0] clipMinc0 = 0;
 wire [7:0] mp[0:3] ;//= 8'h84;
 wire [2:0] curStepSize = 2;
-reg [8:0] pRec0 [0:15];
-reg [8:0] pRec1 [0:15];
-reg [8:0] pRec2 [0:15];
 genvar i;
 generate
 for(i=0;i<16;i=i+1)begin
@@ -36,18 +37,24 @@ end
 endgenerate
 
 reg [10:0] mean_c0[0:3];
-always@(posedge clk or rstn)
-  if(blk_vld)
+//always@(posedge clk or rstn)
+//  if(blk_vld)
+  always@(*)
     if(blkcounter==0)begin
+    //if(isFls==1)begin
       mean_c0[0] = 1<<(8-1);
       mean_c0[1] = 1<<(8-1);
       mean_c0[2] = 1<<(8-1);
       mean_c0[3] = 1<<(8-1);
     end else begin
-      mean_c0[0] = (pRec0[0]+pRec0[1] + pRec0[08] + pRec0[09])>>2;
-      mean_c0[1] = (pRec0[2]+pRec0[3] + pRec0[10] + pRec0[11])>>2;
-      mean_c0[2] = (pRec0[4]+pRec0[5] + pRec0[12] + pRec0[13])>>2;
-      mean_c0[3] = (pRec0[6]+pRec0[7] + pRec0[14] + pRec0[15])>>2;
+      mean_c0[0] = (prev_rec[0]+prev_rec[1] + prev_rec[08] + prev_rec[09])>>2;
+      mean_c0[1] = (prev_rec[2]+prev_rec[3] + prev_rec[10] + prev_rec[11])>>2;
+      mean_c0[2] = (prev_rec[4]+prev_rec[5] + prev_rec[12] + prev_rec[13])>>2;
+      mean_c0[3] = (prev_rec[6]+prev_rec[7] + prev_rec[14] + prev_rec[15])>>2;
+     //mean_c0[0] <= (pRec0[0]+pRec0[1] + pRec0[08] + pRec0[09])>>2;
+     //mean_c0[1] <= (pRec0[2]+pRec0[3] + pRec0[10] + pRec0[11])>>2;
+     //mean_c0[2] <= (pRec0[4]+pRec0[5] + pRec0[12] + pRec0[13])>>2;
+     //mean_c0[3] <= (pRec0[6]+pRec0[7] + pRec0[14] + pRec0[15])>>2;
     end
 wire [7:0] middle = 1<<(m_bitDepth-1);
 wire [3:0] m_bitDepth = 8;

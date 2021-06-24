@@ -15,6 +15,7 @@ input [15:0] r_rcBufferFullnessOffsetThd,
 input [23:0] r_rcFullnessSlope,
 input [7:0] r_rcFullnessScale,
 input [15:0] r_sliceWidth,
+input [15:0] r_sliceHeight,
 input [16*8-1:0] r_tgt_rate_delta_lut,
 input [8*8-1:0] r_max_qp_lut,
 
@@ -47,6 +48,7 @@ always@(posedge clk or negedge rstn)
     prevBlkBits <= postBits;//curBlkBits;;
   
 wire [15:0] m_numPixelsCoded;
+wire [15:0] m_numBlocksCoded;
 wire [15:0] m_bufferFullness;
 decBufferFullnes  u_decBufferFullnes (
     .clk                     ( clk                ),
@@ -54,12 +56,14 @@ decBufferFullnes  u_decBufferFullnes (
     .start_dec_ff1           ( start_dec_ff1      ),
     .prevBlkBits             ( prevBlkBits  [9:0] ),
     .m_numPixelsCoded        ( m_numPixelsCoded   ),
+    .m_numBlocksCoded        ( m_numBlocksCoded   ),
     .m_bufferFullness        ( m_bufferFullness   )
 );
 
 wire [7:0] m_numBlksInLine = r_sliceWidth[10:3];
 //wire [7:0] m_numBlksInSlice;
 wire [15:0] m_rcOffsetInit;
+wire [15:0] m_rcOffset;
 updateRcOffset  u_updateRcOffset (
     .clk                          ( clk                                 ),
     .rstn                         ( rstn                                ),
@@ -70,21 +74,29 @@ updateRcOffset  u_updateRcOffset (
     .r_rcBufferFullnessOffsetThd  ( r_rcBufferFullnessOffsetThd  [15:0] ),
     .r_rcFullnessSlope            ( r_rcFullnessSlope            [23:0] ),
     .m_numPixelsCoded             ( m_numPixelsCoded             [15:0] ),
+    .m_numBlocksCoded             ( m_numBlocksCoded   ),
     .m_slicePixelsRemaining       ( m_slicePixelsRemaining       [15:0] ),
-    .m_rcOffsetInit               ( m_rcOffsetInit                      )
+    .m_rcOffsetInit               ( m_rcOffsetInit                      ),
+    .m_rcOffset                   ( m_rcOffset                          )
 );
-wire [15:0] m_rcOffset=0;
 wire [31:0] temp = r_rcFullnessScale * (m_bufferFullness + m_rcOffset + m_rcOffsetInit);
 wire [15:0] m_rcFullness = temp[31:4] > (1<<16)-1 ?  (1<<16)-1 :temp[19:4];
 
 //wire [8:0] prevBlockBits='d296;
 wire [8:0] targetBits ;//= 'd222;
 wire [8:0] diffBits = prevBlkBits -targetBits;
-wire [2:0] deltaQp = 5;
+wire [3:0] deltaQp ;//= 5;
 reg [7:0] maxQp ;//= 32;
 wire [7:0] minQp = 16;
 reg [3:0] minQpOffset ;//= 0;//8;
 wire [15:0] m_rcBufferInitSize=8192;
+
+calcDeltaQp  u_calcDeltaQp (
+    .r_sliceHeight           ( r_sliceHeight        ),
+    .m_rcFullness            ( m_rcFullness  [15:0] ),
+    .diffBits                ( diffBits      [8:0]  ),
+    .deltaQp                 ( deltaQp              )
+);
 
 always@(*)begin
   if(m_rcFullness>62259)
@@ -102,7 +114,11 @@ end
 
 reg [7:0] m_qp_prev;// = 36;
 wire [7:0] m_qp_sel ;
-assign m_qp_sel = clip3(maxQp,minQp+minQpOffset,m_qp_prev+deltaQp);
+//assign m_qp_sel = clip3(maxQp,minQp+minQpOffset,m_qp_prev+deltaQp);
+wire [8:0] qp_add = {1'b0,m_qp_prev} + {{5{deltaQp[3]}},deltaQp};
+wire [8:0] minQp_off = minQp + minQpOffset;
+wire [8:0] m_qp_sel_tmp = qp_add > maxQp ? maxQp : qp_add < minQp_off ? minQp_off : qp_add;
+assign m_qp_sel = m_qp_sel_tmp[7:0];
 
 //wire [7:0] m_qp;
 //wire isFls = 1;
@@ -140,7 +156,7 @@ reg [15:0] m_tgtRateThd_prev;
 reg [4:0] m_tgtRateSacle;
 reg [15:0] m_tgtRateThd;
 always@(*)begin
-  if(m_slicePixelsRemaining <= m_tgtRateThd_prev)begin
+  if(m_slicePixelsRemaining < m_tgtRateThd_prev)begin
     m_tgtRateSacle = m_tgtRateSacle_prev -1;
     m_tgtRateThd = 1<<(m_tgtRateSacle-1);
   end else begin

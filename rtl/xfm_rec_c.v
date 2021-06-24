@@ -1,4 +1,4 @@
-module xfm_rec_c #(parameter COEFF_SIZE=9,k)
+module xfm_rec_c #(parameter COEFF_SIZE=9,k,depth=8)
 (
 input clk,
 input rstn,
@@ -19,7 +19,9 @@ input [COEFF_SIZE-1:0]coeff_11,
 input [COEFF_SIZE-1:0]coeff_12, 
 input [COEFF_SIZE-1:0]coeff_13, 
 input [COEFF_SIZE-1:0]coeff_14, 
-input [COEFF_SIZE-1:0]coeff_15 
+input [COEFF_SIZE-1:0]coeff_15,
+
+output [depth-1:0] xfm_rec_out[0:15]
 );
 
 //    { 16, 18, 33, 26 },
@@ -254,7 +256,7 @@ wire [18:0] tmp_rec_out15 = xfm_out_15 + (k==0 ? 'h80 : 0);
 
 wire [7:0] max = (1<<8)-1;
 wire [8:0] min = k==0 ? 8'b0 : 9'h100;
-parameter depth = k==0 ? 8 : 9;
+//parameter depth = k==0 ? 8 : 9;
 wire [depth-1:0] rec_out0  = k==0 ? clip3_tmp(min,max,tmp_rec_out0  ) : clip3_c12(min,max,tmp_rec_out0  );
 wire [depth-1:0] rec_out1  = k==0 ? clip3_tmp(min,max,tmp_rec_out1  ) : clip3_c12(min,max,tmp_rec_out1  );
 wire [depth-1:0] rec_out2  = k==0 ? clip3_tmp(min,max,tmp_rec_out2  ) : clip3_c12(min,max,tmp_rec_out2  );
@@ -271,6 +273,23 @@ wire [depth-1:0] rec_out12 = k==0 ? clip3_tmp(min,max,tmp_rec_out12 ) : clip3_c1
 wire [depth-1:0] rec_out13 = k==0 ? clip3_tmp(min,max,tmp_rec_out13 ) : clip3_c12(min,max,tmp_rec_out13 );
 wire [depth-1:0] rec_out14 = k==0 ? clip3_tmp(min,max,tmp_rec_out14 ) : clip3_c12(min,max,tmp_rec_out14 );
 wire [depth-1:0] rec_out15 = k==0 ? clip3_tmp(min,max,tmp_rec_out15 ) : clip3_c12(min,max,tmp_rec_out15 );
+
+assign xfm_rec_out[0 ] = rec_out0 ;
+assign xfm_rec_out[1 ] = rec_out1 ;
+assign xfm_rec_out[2 ] = rec_out2 ;
+assign xfm_rec_out[3 ] = rec_out3 ;
+assign xfm_rec_out[4 ] = rec_out4 ;
+assign xfm_rec_out[5 ] = rec_out5 ;
+assign xfm_rec_out[6 ] = rec_out6 ;
+assign xfm_rec_out[7 ] = rec_out7 ;
+assign xfm_rec_out[8 ] = rec_out8 ;
+assign xfm_rec_out[9 ] = rec_out9 ;
+assign xfm_rec_out[10] = rec_out10;
+assign xfm_rec_out[11] = rec_out11;
+assign xfm_rec_out[12] = rec_out12;
+assign xfm_rec_out[13] = rec_out13;
+assign xfm_rec_out[14] = rec_out14;
+assign xfm_rec_out[15] = rec_out15;
 
 function [7:0] compQpmod;
   input [7:0] masterQp;

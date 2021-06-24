@@ -12,6 +12,9 @@ input modeNxt_MPPF,
 input modeNxt_XFM,
 input modeNxt_BP,
 input use2x2,
+output [5:0] bpv2x2,
+output [5:0] bpv2x1_p0,
+output [5:0] bpv2x1_p1,
 
 input [3:0] modeNxt_Mpp_stepsize,
 
@@ -314,7 +317,10 @@ decBpvBlock #(.ssm_idx(ssm_idx)) u_decBpvBlock (
     .isFls                   ( isFls),
     .use2x2                  ( use2x2_ff            ),
     .suffix                  ( mode_BP ? suffix    [127:0]:0 ),
-    .bp_size                ( bp_size  [7:0]   )
+    .bp_size                 ( bp_size  [7:0]   ),
+    .bpv2x2                  ( bpv2x2           ),
+    .bpv2x1_p0               ( bpv2x1_p0        ),
+    .bpv2x1_p1               ( bpv2x1_p1        )
 );
 
 assign  nxtBlkbitsSsm = rd_shifter_rqst ? ( mode_XFM ? xfm_size :mode_BP ? bp_size: mode_MPPF ? qres_mppf_size: qres_size  )//: 0)

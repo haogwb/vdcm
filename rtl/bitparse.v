@@ -10,9 +10,13 @@ input isNxtBlockFls,
 
 output modeNxt_XFM,
 output modeNxt_BP,
+output modeNxt_MPP,
 output modeNxt_MPPF,
 output modeNxt_BPSKIP,
 output [3:0] use2x2,
+output [5:0] bpv2x2,
+output [5:0] bpv2x1_p0,
+output [5:0] bpv2x1_p1,
 output [3:0] modeNxt_Mpp_stepsize,
 
 output reg [7:0]nxtBlkbitsSsm0 ,
@@ -233,7 +237,7 @@ wire [1:0] tmp = shifter_out[126:125];
 wire  MPPF_BPSkip = shifter_out[124];
 reg [1:0] prevMode;
 wire [2:0] modeNxt = sameFlag ? prevMode : (&tmp ? (MPPF_BPSkip?4:3) : tmp);
-wire modeNxt_MPP = modeNxt == 2;
+assign modeNxt_MPP = modeNxt == 2;
 assign modeNxt_XFM = modeNxt == 0;
 assign modeNxt_BP = modeNxt == 1;
 assign modeNxt_MPPF = modeNxt == 3;
@@ -255,7 +259,7 @@ assign flatness_header_bits = 1 + (flatnessFlag ? 2 : 0);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////modeNxt==2, MPP 
 wire [1:0] m_origSrcCsc = 0;
-wire mppDecCsc = shifter_out[127-(flatness_header_bits+mode_header_bits)];
+wire mppDecCsc = modeNxt_MPP & shifter_out[127-(flatness_header_bits+mode_header_bits)];
 parameter Ycbcr = 2;
 parameter Ycocg = 1;
 parameter Rgb = 0; reg [1:0] m_nxtBlkCsc;
@@ -373,10 +377,8 @@ wire [3:0] block_part_x = 0;
 wire [7:0] p0 = ( block_part_y << (m_partBitsPerLine+1)) + block_part_x;
 wire [7:0] p1 = p0 + (1<<m_partBitsPerLine);
 
-reg [7:0] bpv2x2_tmp[0:3];
-wire [7:0] bpv2x2[0:3];
-wire [7:0] bpv2x1[0:9]; // is 9 ?,TBD
-reg [7:0] bpv2x1_tmp[0:1];
+reg [5:0] bpv2x2_tmp[0:3];
+reg [5:0] bpv2x1_tmp[0:1];
 
 always@(*)
 begin
@@ -388,11 +390,11 @@ begin
   8'h4: bpv2x2_tmp[0] = use2x2[0] ? bp_remove_header[127-:4] : 0;
   8'h5: bpv2x2_tmp[0] = use2x2[0] ? bp_remove_header[127-:5] : 0;
   8'h6: bpv2x2_tmp[0] = use2x2[0] ? bp_remove_header[127-:6] : 0;
-  8'h7: bpv2x2_tmp[0] = use2x2[0] ? bp_remove_header[127-:7] : 0;
+//  8'h7: bpv2x2_tmp[0] = use2x2[0] ? bp_remove_header[127-:7] : 0;
   default: bpv2x2_tmp[0] = 0;
   endcase
 end
-assign bpv2x2[0] = isNxtBlockFls ? bpv2x2_tmp[0] + 32 : bpv2x2_tmp[0] ;
+assign bpv2x2 = use2x2[0] & isNxtBlockFls ? bpv2x2_tmp[0] + 32 : bpv2x2_tmp[0] ;
 
 always@(*)
 begin
@@ -404,11 +406,11 @@ begin
   8'h4: bpv2x1_tmp[0] = ~use2x2[0] ? bp_remove_header[127-4-:4] : 0;
   8'h5: bpv2x1_tmp[0] = ~use2x2[0] ? bp_remove_header[127-5-:5] : 0;
   8'h6: bpv2x1_tmp[0] = ~use2x2[0] ? bp_remove_header[127-6-:6] : 0;
-  8'h7: bpv2x1_tmp[0] = ~use2x2[0] ? bp_remove_header[127-7-:7] : 0;
+//  8'h7: bpv2x1_tmp[0] = ~use2x2[0] ? bp_remove_header[127-7-:7] : 0;
   default: bpv2x1_tmp[0] = 0;
   endcase
 end
-assign bpv2x1[0] = isNxtBlockFls ? bpv2x1_tmp[0] + 32 : bpv2x1_tmp[0];
+assign bpv2x1_p0 = ~use2x2[0] & isNxtBlockFls ? bpv2x1_tmp[0] + 32 : bpv2x1_tmp[0];
 
 always@(*)
 begin
@@ -420,11 +422,11 @@ begin
   8'h4: bpv2x1_tmp[1] = ~use2x2[0] ? bp_remove_header[127-:4] : 0;
   8'h5: bpv2x1_tmp[1] = ~use2x2[0] ? bp_remove_header[127-:5] : 0;
   8'h6: bpv2x1_tmp[1] = ~use2x2[0] ? bp_remove_header[127-:6] : 0;
-  8'h7: bpv2x1_tmp[1] = ~use2x2[0] ? bp_remove_header[127-:7] : 0;
+//  8'h7: bpv2x1_tmp[1] = ~use2x2[0] ? bp_remove_header[127-:7] : 0;
   default: bpv2x1_tmp[0] = 0;
   endcase
 end
-assign bpv2x1[1] = isNxtBlockFls ? bpv2x1_tmp[1] + 32 : bpv2x1_tmp[1] ;
+assign bpv2x1_p1 = ~use2x2[0] &isNxtBlockFls ? bpv2x1_tmp[1] + 32 : bpv2x1_tmp[1] ;
 
 
 ///////////////////////////////////                                                                                                     //XFM
