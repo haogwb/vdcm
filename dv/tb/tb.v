@@ -89,8 +89,16 @@ wire [7:0] mpp_qres_ssm3 [0:16-1];
 
 wire modeNxt_XFM;
 wire modeNxt_BP;
+wire modeNxt_BPSKIP;
 wire modeNxt_MPPF;
+wire modeNxt_MPP;
 wire [3:0] use2x2;
+wire [5:0] bpv2x2_ssm0;
+wire [5:0] bpv2x1_p0_ssm0;
+wire [5:0] bpv2x1_p1_ssm0;
+wire [5:0] bpv2x2[0:3];
+wire [5:0] bpv2x1_p0[0:3];
+wire [5:0] bpv2x1_p1[0:3];
 wire [3:0] modeNxt_Mpp_stepsize;
 wire [7:0]nxtBlkbitsSsm0 ;
 wire [7:0]nxtBlkbitsSsm1 ;
@@ -100,6 +108,7 @@ wire [7:0] r_initTxDelay;
 wire [15:0] r_rcBufferFullnessOffsetThd;
 wire [23:0] r_rcFullnessSlope;
 wire [15:0] r_sliceWidth;
+wire [15:0] r_sliceHeight;
 wire [16*8-1:0] r_tgt_rate_delta_lut ; 
 wire [7:0] r_rcFullnessScale;
 wire [7:0] m_qp;
@@ -152,6 +161,9 @@ wire [8:0]xfm_coeff_c2_12;
 wire [8:0]xfm_coeff_c2_13; 
 wire [8:0]xfm_coeff_c2_14; 
 wire [8:0]xfm_coeff_c2_15; 
+wire [8:0]bp_quant_c0[0:15];
+wire [8:0]bp_quant_c1[0:15];
+wire [8:0]bp_quant_c2[0:15];
 bitparse #(.ssm_idx(0)) u_bitparse(
 
   .clk     (clk),
@@ -165,8 +177,13 @@ bitparse #(.ssm_idx(0)) u_bitparse(
 
   .modeNxt_XFM      (modeNxt_XFM),
   .modeNxt_BP       (modeNxt_BP),
+  .modeNxt_BPSKIP       (modeNxt_BPSKIP),
+  .modeNxt_MPP        (modeNxt_MPP),
   .modeNxt_MPPF       (modeNxt_MPPF),
   .use2x2           (use2x2),
+  .bpv2x2           ( bpv2x2_ssm0           ),
+  .bpv2x1_p0        ( bpv2x1_p0_ssm0        ),
+  .bpv2x1_p1        ( bpv2x1_p1_ssm0        ),
   .modeNxt_Mpp_stepsize(modeNxt_Mpp_stepsize),
   .nxtBlkbitsSsm0    (nxtBlkbitsSsm0),
   .pnxtBlkQuant(mpp_qres_ssm0)
@@ -186,6 +203,9 @@ bitparse_ssm123 #(.ssm_idx(1)) u_bitparse_ssm1(
   .modeNxt_BP       (modeNxt_BP),
   .modeNxt_MPPF       (modeNxt_MPPF),
   .use2x2           (use2x2[1]),
+  .bpv2x2           ( bpv2x2[1]           ),
+  .bpv2x1_p0        ( bpv2x1_p0[1]        ),
+  .bpv2x1_p1        ( bpv2x1_p1[1]        ),
   .modeNxt_Mpp_stepsize(modeNxt_Mpp_stepsize),
 
   .nxtBlkbitsSsm    (nxtBlkbitsSsm1),
@@ -206,7 +226,9 @@ bitparse_ssm123 #(.ssm_idx(1)) u_bitparse_ssm1(
   .xfm_coeff_12  (xfm_coeff_c0_12) ,
   .xfm_coeff_13  (xfm_coeff_c0_13) ,
   .xfm_coeff_14  (xfm_coeff_c0_14) ,
-  .xfm_coeff_15  (xfm_coeff_c0_15) 
+  .xfm_coeff_15  (xfm_coeff_c0_15) ,
+
+  .bp_quant      (bp_quant_c0    )
 );
 bitparse_ssm123 #(.ssm_idx(2)) u_bitparse_ssm2(
 
@@ -223,6 +245,9 @@ bitparse_ssm123 #(.ssm_idx(2)) u_bitparse_ssm2(
   .modeNxt_BP       (modeNxt_BP),
   .modeNxt_MPPF       (modeNxt_MPPF),
   .use2x2           (use2x2[2]),
+  .bpv2x2           ( bpv2x2[2]           ),
+  .bpv2x1_p0        ( bpv2x1_p0[2]        ),
+  .bpv2x1_p1        ( bpv2x1_p1[2]        ),
   .modeNxt_Mpp_stepsize(modeNxt_Mpp_stepsize),
 
   .nxtBlkbitsSsm    (nxtBlkbitsSsm2),
@@ -243,7 +268,9 @@ bitparse_ssm123 #(.ssm_idx(2)) u_bitparse_ssm2(
   .xfm_coeff_12  (xfm_coeff_c1_12) ,
   .xfm_coeff_13  (xfm_coeff_c1_13) ,
   .xfm_coeff_14  (xfm_coeff_c1_14) ,
-  .xfm_coeff_15  (xfm_coeff_c1_15) 
+  .xfm_coeff_15  (xfm_coeff_c1_15) ,
+
+  .bp_quant      (bp_quant_c1    )
 );
 
 bitparse_ssm123 #(.ssm_idx(3)) u_bitparse_ssm3(
@@ -261,6 +288,9 @@ bitparse_ssm123 #(.ssm_idx(3)) u_bitparse_ssm3(
   .modeNxt_BP       (modeNxt_BP),
   .modeNxt_MPPF       (modeNxt_MPPF),
   .use2x2           (use2x2[3]),
+  .bpv2x2           ( bpv2x2[3]           ),
+  .bpv2x1_p0        ( bpv2x1_p0[3]        ),
+  .bpv2x1_p1        ( bpv2x1_p1[3]        ),
   .modeNxt_Mpp_stepsize(modeNxt_Mpp_stepsize),
 
   .nxtBlkbitsSsm    (nxtBlkbitsSsm3),
@@ -282,20 +312,14 @@ bitparse_ssm123 #(.ssm_idx(3)) u_bitparse_ssm3(
   .xfm_coeff_12  (xfm_coeff_c2_12) ,
   .xfm_coeff_13  (xfm_coeff_c2_13) ,
   .xfm_coeff_14  (xfm_coeff_c2_14) ,
-  .xfm_coeff_15  (xfm_coeff_c2_15) 
+  .xfm_coeff_15  (xfm_coeff_c2_15) ,
+
+  .bp_quant      (bp_quant_c2    )
 );
 
 always@(posedge clk)
   mpp_qres_ssm0_ff <= mpp_qres_ssm0;
-decMpp  u_decMpp (
-    .clk     (clk),
-    .rstn     (rstn),
-    .blk_vld         ( start_dec_ff),
-    .mpp_qres_ssm0   ( mpp_qres_ssm0_ff ),
-    .mpp_qres_ssm1   ( mpp_qres_ssm1 ),
-    .mpp_qres_ssm2   ( mpp_qres_ssm2 ),
-    .mpp_qres_ssm3   ( mpp_qres_ssm3 )
-);
+
 
 wire [3*16*9-1:0]xfm_coeff;
 assign xfm_coeff[1 *9-1 -:9] = xfm_coeff_c0_0 ;
@@ -346,11 +370,53 @@ assign xfm_coeff[(2*16*9)+13*9-1 -:9] = xfm_coeff_c2_12;
 assign xfm_coeff[(2*16*9)+14*9-1 -:9] = xfm_coeff_c2_13;
 assign xfm_coeff[(2*16*9)+15*9-1 -:9] = xfm_coeff_c2_14;
 assign xfm_coeff[(2*16*9)+16*9-1 -:9] = xfm_coeff_c2_15;
-xfm_rec  u_xfm_rec (
-    .clk                     ( clk                 ),
-    .rstn                    ( rstn                ),
-    .m_qp                    ( m_qp                ),
-    .xfm_coeff               ( xfm_coeff           )
+
+reg mode_XFM;
+always@(posedge clk)
+  mode_XFM <= modeNxt_XFM;
+
+
+reg [5:0] bpv2x2_ssm0_ff;
+reg [5:0] bpv2x1_p0_ssm0_ff;
+reg [5:0] bpv2x1_p1_ssm0_ff;
+always@(posedge clk)begin
+  bpv2x2_ssm0_ff    <= bpv2x2_ssm0;
+  bpv2x1_p0_ssm0_ff <= bpv2x1_p0_ssm0;
+  bpv2x1_p1_ssm0_ff <= bpv2x1_p1_ssm0;
+end
+
+assign bpv2x2[0]    =bpv2x2_ssm0_ff    ;
+assign bpv2x1_p0[0] =bpv2x1_p0_ssm0_ff ;
+assign bpv2x1_p1[0] =bpv2x1_p1_ssm0_ff ;
+reg [3:0]use2x2_ff;
+reg bpskip_ff;
+always@(posedge clk)begin
+  use2x2_ff <= use2x2;
+  bpskip_ff <= modeNxt_BPSKIP;
+end  
+
+mode_dec  u_mode_dec (
+    .clk     (clk),
+    .rstn     (rstn),
+    .blk_vld         ( start_dec_ff),
+    .isFls            (isFls),
+    .mode_XFM        ( mode_XFM      ),
+    .mpp_qres_ssm0   ( mpp_qres_ssm0_ff ),
+    .mpp_qres_ssm1   ( mpp_qres_ssm1 ),
+    .mpp_qres_ssm2   ( mpp_qres_ssm2 ),
+    .mpp_qres_ssm3   ( mpp_qres_ssm3 ),
+
+    .m_qp            ( m_qp                ),
+    .xfm_coeff       ( xfm_coeff           ),
+
+    .bpskip           ( bpskip_ff        ),
+    .use2x2           ( use2x2_ff        ),
+    .bpv2x2           ( bpv2x2           ),
+    .bpv2x1_p0        ( bpv2x1_p0        ),
+    .bpv2x1_p1        ( bpv2x1_p1        ),
+    .bp_quant_c0      ( bp_quant_c0      ),
+    .bp_quant_c1      ( bp_quant_c1      ),
+    .bp_quant_c2      ( bp_quant_c2      )
 );
 
 wire [8*8-1:0] r_max_qp_lut;
@@ -364,6 +430,7 @@ decRateControl u_decRateControl(
   .nxtBlkbitsSsm2    (nxtBlkbitsSsm2),
   .nxtBlkbitsSsm3    (nxtBlkbitsSsm3),
   .r_sliceWidth              ( r_sliceWidth        ),
+  .r_sliceHeight             ( r_sliceHeight       ),
   .r_initTxDelay                ( r_initTxDelay                [7:0]  ),
   .r_rcBufferFullnessOffsetThd  ( r_rcBufferFullnessOffsetThd  [15:0] ),
   .r_rcFullnessSlope            ( r_rcFullnessSlope            [23:0] ),
@@ -385,6 +452,7 @@ assign r_initTxDelay =pps[29];
 assign r_rcBufferFullnessOffsetThd={pps[38],pps[39]};
 assign r_rcFullnessSlope={pps[40],pps[41],pps[42]};;
 assign r_sliceWidth = {pps[8],pps[9]};
+assign r_sliceHeight = {pps[10],pps[11]};
 assign r_max_qp_lut = {pps[56],pps[57],pps[58],pps[59],pps[60],pps[61],pps[62],pps[63]};
 reg [127:0] codec_bits[0:4050-1];
 
@@ -448,9 +516,11 @@ end
 
 integer fd_fullness;
 integer fd_rc;
+integer fd_mpp;
 initial begin
   fd_fullness = $fopen("fullness.txt","w");
   fd_rc = $fopen("/mnt/hgfs/VDC-M/VDC-M_v1.2.2_2019.02.25/debugTracerDecoder_targetrate.txt","r");
+  fd_mpp = $fopen("/mnt/hgfs/VDC-M/VDC-M_v1.2.2_2019.02.25/debugTracerDecoder_mpp.txt","r");
 end
 
 always@(posedge clk)
@@ -464,10 +534,46 @@ always@(posedge clk)
 bit[15:0] tgtRate;
 bit[15:0] bufferfullness;
 bit[15:0] rcbufferfullness;
+bit [8:0] k0_rec0,k0_rec1,k0_rec2,k0_rec3,k0_rec4,k0_rec5,k0_rec6,k0_rec7,k0_rec8,k0_rec9,k0_rec10,k0_rec11,k0_rec12,k0_rec13,k0_rec14,k0_rec15;
+bit [8:0] k1_rec0,k1_rec1,k1_rec2,k1_rec3,k1_rec4,k1_rec5,k1_rec6,k1_rec7,k1_rec8,k1_rec9,k1_rec10,k1_rec11,k1_rec12,k1_rec13,k1_rec14,k1_rec15;
+bit [8:0] k2_rec0,k2_rec1,k2_rec2,k2_rec3,k2_rec4,k2_rec5,k2_rec6,k2_rec7,k2_rec8,k2_rec9,k2_rec10,k2_rec11,k2_rec12,k2_rec13,k2_rec14,k2_rec15;
 always@(posedge clk)
   if(start_dec_ff)begin
     $fscanf(fd_rc,"%d,%d,%d",tgtRate,bufferfullness,rcbufferfullness);
   end
+
+reg mpp_dec_err=0;  
+always@(posedge clk)
+  if(modeNxt_MPP)begin
+    $fscanf(fd_mpp,"%02h %02h %02h %02h %02h %02h %02h %02h ",k0_rec0,k0_rec1,k0_rec2,k0_rec3,k0_rec4,k0_rec5,k0_rec6,k0_rec7);
+    $fscanf(fd_mpp,"%02h %02h %02h %02h %02h %02h %02h %02h ",k0_rec8,k0_rec9,k0_rec10,k0_rec11,k0_rec12,k0_rec13,k0_rec14,k0_rec15);
+    $fscanf(fd_mpp,"%02h %02h %02h %02h %02h %02h %02h %02h ",k1_rec0,k1_rec1,k1_rec2,k1_rec3,k1_rec4,k1_rec5,k1_rec6,k1_rec7);
+    $fscanf(fd_mpp,"%02h %02h %02h %02h %02h %02h %02h %02h ",k1_rec8,k1_rec9,k1_rec10,k1_rec11,k1_rec12,k1_rec13,k1_rec14,k1_rec15);
+    $fscanf(fd_mpp,"%02h %02h %02h %02h %02h %02h %02h %02h ",k2_rec0,k2_rec1,k2_rec2,k2_rec3,k2_rec4,k2_rec5,k2_rec6,k2_rec7);
+    $fscanf(fd_mpp,"%02h %02h %02h %02h %02h %02h %02h %02h ",k2_rec8,k2_rec9,k2_rec10,k2_rec11,k2_rec12,k2_rec13,k2_rec14,k2_rec15);
+  end
+
+reg  mode_MPP;
+always@(posedge clk)
+  mode_MPP <= modeNxt_MPP;
+always@(negedge clk)
+    if( mode_MPP & 
+      (  k0_rec0!=tb.u_mode_dec.u_decMpp.pRec0[0]| k0_rec1!=tb.u_mode_dec.u_decMpp.pRec0[1]| k0_rec2!=tb.u_mode_dec.u_decMpp.pRec0[2]| k0_rec3!=tb.u_mode_dec.u_decMpp.pRec0[3]
+      | k0_rec4!=tb.u_mode_dec.u_decMpp.pRec0[4]| k0_rec5!=tb.u_mode_dec.u_decMpp.pRec0[5]| k0_rec6!=tb.u_mode_dec.u_decMpp.pRec0[6]| k0_rec7!=tb.u_mode_dec.u_decMpp.pRec0[7]
+      | k0_rec8!=tb.u_mode_dec.u_decMpp.pRec0[8]| k0_rec9!=tb.u_mode_dec.u_decMpp.pRec0[9]| k0_rec10!=tb.u_mode_dec.u_decMpp.pRec0[10]| k0_rec11!=tb.u_mode_dec.u_decMpp.pRec0[11]
+      | k0_rec12!=tb.u_mode_dec.u_decMpp.pRec0[12]| k0_rec13!=tb.u_mode_dec.u_decMpp.pRec0[13]| k0_rec14!=tb.u_mode_dec.u_decMpp.pRec0[14]| k0_rec15!=tb.u_mode_dec.u_decMpp.pRec0[15]
+      | k1_rec0!=tb.u_mode_dec.u_decMpp.pRec1[0]| k1_rec1!=tb.u_mode_dec.u_decMpp.pRec1[1]| k1_rec2!=tb.u_mode_dec.u_decMpp.pRec1[2]| k1_rec3!=tb.u_mode_dec.u_decMpp.pRec1[3]
+      | k1_rec4!=tb.u_mode_dec.u_decMpp.pRec1[4]| k1_rec5!=tb.u_mode_dec.u_decMpp.pRec1[5]| k1_rec6!=tb.u_mode_dec.u_decMpp.pRec1[6]| k1_rec7!=tb.u_mode_dec.u_decMpp.pRec1[7]
+      | k1_rec8!=tb.u_mode_dec.u_decMpp.pRec1[8]| k1_rec9!=tb.u_mode_dec.u_decMpp.pRec1[9]| k1_rec10!=tb.u_mode_dec.u_decMpp.pRec1[10]| k1_rec11!=tb.u_mode_dec.u_decMpp.pRec1[11]
+      | k1_rec12!=tb.u_mode_dec.u_decMpp.pRec1[12]| k1_rec13!=tb.u_mode_dec.u_decMpp.pRec1[13]| k1_rec14!=tb.u_mode_dec.u_decMpp.pRec1[14]| k1_rec15!=tb.u_mode_dec.u_decMpp.pRec1[15]
+      | k2_rec0!=tb.u_mode_dec.u_decMpp.pRec2[0]| k2_rec1!=tb.u_mode_dec.u_decMpp.pRec2[1]| k2_rec2!=tb.u_mode_dec.u_decMpp.pRec2[2]| k2_rec3!=tb.u_mode_dec.u_decMpp.pRec2[3]
+      | k2_rec4!=tb.u_mode_dec.u_decMpp.pRec2[4]| k2_rec5!=tb.u_mode_dec.u_decMpp.pRec2[5]| k2_rec6!=tb.u_mode_dec.u_decMpp.pRec2[6]| k2_rec7!=tb.u_mode_dec.u_decMpp.pRec2[7]
+      | k2_rec8!=tb.u_mode_dec.u_decMpp.pRec2[8]| k2_rec9!=tb.u_mode_dec.u_decMpp.pRec2[9]| k2_rec10!=tb.u_mode_dec.u_decMpp.pRec2[10]| k2_rec11!=tb.u_mode_dec.u_decMpp.pRec2[11]
+      | k2_rec12!=tb.u_mode_dec.u_decMpp.pRec2[12]| k2_rec13!=tb.u_mode_dec.u_decMpp.pRec2[13]| k2_rec14!=tb.u_mode_dec.u_decMpp.pRec2[14]| k2_rec15!=tb.u_mode_dec.u_decMpp.pRec2[15]
+      ))
+      mpp_dec_err <= 1'b1;
+    else
+      mpp_dec_err <= 1'b0;
 
 initial begin
 

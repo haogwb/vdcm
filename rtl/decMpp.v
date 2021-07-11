@@ -61,7 +61,7 @@ for(i=4;i<16;i=i+1)begin
   assign c2[i] =mpp_qres_ssm3[i-4] ;
 end
 endgenerate
-decMpp_com  #(.depth(BPC))u_decMpp_c0 (
+decMpp_com  #(.depth(BPC),.k(0))u_decMpp_c0 (
     .clk                     ( clk                            ),
     .rstn                    ( rstn                           ),
     .blk_vld                 ( blk_vld                        ),
@@ -71,7 +71,7 @@ decMpp_com  #(.depth(BPC))u_decMpp_c0 (
     .c0                      ( c0                             ),
     .pRec0                   ( pRec0                          )
 );
-decMpp_com  #(.depth(BPC+1)) u_decMpp_c1 (
+decMpp_com  #(.depth(BPC+1),.k(1)) u_decMpp_c1 (
     .clk                     ( clk                            ),
     .rstn                    ( rstn                           ),
     .blk_vld                 ( blk_vld                        ),
@@ -82,7 +82,7 @@ decMpp_com  #(.depth(BPC+1)) u_decMpp_c1 (
     .pRec0                   ( pRec1                          )
 
 );
-decMpp_com  #(.depth(BPC+1))u_decMpp_c2 (
+decMpp_com  #(.depth(BPC+1),.k(1))u_decMpp_c2 (
     .clk                     ( clk                            ),
     .rstn                    ( rstn                           ),
     .blk_vld                 ( blk_vld                        ),

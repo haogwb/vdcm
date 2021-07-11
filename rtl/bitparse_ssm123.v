@@ -37,7 +37,9 @@ output [8:0] xfm_coeff_11  ,
 output [8:0] xfm_coeff_12  ,
 output [8:0] xfm_coeff_13  ,
 output [8:0] xfm_coeff_14  ,
-output [8:0] xfm_coeff_15  
+output [8:0] xfm_coeff_15  ,
+
+output [8:0] bp_quant[0:15]
 );
 
 wire [7:0] m_seMaxSize= 128;
@@ -312,6 +314,38 @@ reg use2x2_ff;
 always@(posedge clk)
   use2x2_ff <= use2x2;
 wire [7:0] bp_size;
+wire [8:0] bpquant_0   ;
+wire [8:0] bpquant_1   ;
+wire [8:0] bpquant_2   ;
+wire [8:0] bpquant_3   ;
+wire [8:0] bpquant_4   ;
+wire [8:0] bpquant_5   ;
+wire [8:0] bpquant_6   ;
+wire [8:0] bpquant_7   ;
+wire [8:0] bpquant_8   ;
+wire [8:0] bpquant_9   ;
+wire [8:0] bpquant_10  ;
+wire [8:0] bpquant_11  ;
+wire [8:0] bpquant_12  ;
+wire [8:0] bpquant_13  ;
+wire [8:0] bpquant_14  ;
+wire [8:0] bpquant_15  ;
+assign bp_quant[0 ] = bpquant_0 ;
+assign bp_quant[1 ] = bpquant_1 ;
+assign bp_quant[2 ] = bpquant_2 ;
+assign bp_quant[3 ] = bpquant_3 ;
+assign bp_quant[4 ] = bpquant_4 ;
+assign bp_quant[5 ] = bpquant_5 ;
+assign bp_quant[6 ] = bpquant_6 ;
+assign bp_quant[7 ] = bpquant_7 ;
+assign bp_quant[8 ] = bpquant_8 ;
+assign bp_quant[9 ] = bpquant_9 ;
+assign bp_quant[10] = bpquant_10;
+assign bp_quant[11] = bpquant_11;
+assign bp_quant[12] = bpquant_12;
+assign bp_quant[13] = bpquant_13;
+assign bp_quant[14] = bpquant_14;
+assign bp_quant[15] = bpquant_15;
 decBpvBlock #(.ssm_idx(ssm_idx)) u_decBpvBlock (
     .mode_BP                 ( mode_BP           ),
     .isFls                   ( isFls),
@@ -320,7 +354,25 @@ decBpvBlock #(.ssm_idx(ssm_idx)) u_decBpvBlock (
     .bp_size                 ( bp_size  [7:0]   ),
     .bpv2x2                  ( bpv2x2           ),
     .bpv2x1_p0               ( bpv2x1_p0        ),
-    .bpv2x1_p1               ( bpv2x1_p1        )
+    .bpv2x1_p1               ( bpv2x1_p1        ),
+
+    .coeff_0                 ( bpquant_0        ),
+    .coeff_1                 ( bpquant_1        ),
+    .coeff_2                 ( bpquant_2        ),
+    .coeff_3                 ( bpquant_3        ),
+    .coeff_4                 ( bpquant_4        ),
+    .coeff_5                 ( bpquant_5        ),
+    .coeff_6                 ( bpquant_6        ),
+    .coeff_7                 ( bpquant_7        ),
+    .coeff_8                 ( bpquant_8        ),
+    .coeff_9                 ( bpquant_9        ),
+    .coeff_10                ( bpquant_10       ),
+    .coeff_11                ( bpquant_11       ),
+    .coeff_12                ( bpquant_12       ),
+    .coeff_13                ( bpquant_13       ),
+    .coeff_14                ( bpquant_14       ),
+    .coeff_15                ( bpquant_15       ) 
+
 );
 
 assign  nxtBlkbitsSsm = rd_shifter_rqst ? ( mode_XFM ? xfm_size :mode_BP ? bp_size: mode_MPPF ? qres_mppf_size: qres_size  )//: 0)

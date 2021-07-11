@@ -1,4 +1,4 @@
-module decMpp_com #(parameter depth=8)
+module decMpp_com #(parameter depth=8,k=0)
 (
   input clk,
   input rstn,
@@ -25,13 +25,13 @@ for(i=0;i<16;i=i+1)begin
   always@*
   case(i)
     0,1,8,9:
-  pRec0[i] = clip3(clipMax,clipMinc0,$signed(deQuant_c0)+mp[0]);
-    2,3,10,11:
-  pRec0[i] = clip3(clipMax,clipMinc0,$signed(deQuant_c0)+mp[1]);
-    4,5,12,13:
-  pRec0[i] = clip3(clipMax,clipMinc0,$signed(deQuant_c0)+mp[2]);
-    6,7,14,15:
-  pRec0[i] = clip3(clipMax,clipMinc0,$signed(deQuant_c0)+mp[3]);
+  pRec0[i] = clip3(clipMax,clipMinc0,(k==0?{1'b0,deQuant_c0} :{deQuant_c0[8],deQuant_c0})+mp[0]);
+    2,3,10,11:                                                           
+  pRec0[i] = clip3(clipMax,clipMinc0,(k==0?{1'b0,deQuant_c0} :{deQuant_c0[8],deQuant_c0})+mp[1]);
+    4,5,12,13:                                                          
+  pRec0[i] = clip3(clipMax,clipMinc0,(k==0?{1'b0,deQuant_c0} :{deQuant_c0[8],deQuant_c0})+mp[2]);
+    6,7,14,15:                                                         
+  pRec0[i] = clip3(clipMax,clipMinc0,(k==0?{1'b0,deQuant_c0} :{deQuant_c0[8],deQuant_c0})+mp[3]);
   endcase
 end
 endgenerate
@@ -40,7 +40,7 @@ reg [10:0] mean_c0[0:3];
 //always@(posedge clk or rstn)
 //  if(blk_vld)
   always@(*)
-    if(blkcounter==0)begin
+    if(blkcounter==1)begin
     //if(isFls==1)begin
       mean_c0[0] = 1<<(8-1);
       mean_c0[1] = 1<<(8-1);
@@ -69,7 +69,7 @@ assign mp[3] = clip3(maxClip,middle,mean_c0[3]+2*curBias);
 function [7:0] clip3;
   input [7:0] clipMax;
   input [7:0] clipMin;
-  input [7:0] rec;
+  input [8:0] rec;
 
   clip3 =  rec>clipMax ? clipMax : (rec<clipMin ? clipMin : rec);
 endfunction

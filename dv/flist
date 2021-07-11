@@ -25,3 +25,13 @@
 ../../rtl/decRateControl.v
 ../../rtl/decBufferFullness.v
 ../../rtl/updateRcOffset.v
+../../rtl/calcDeltaQp.v
+
+
+../../rtl/mode_dec.v
+../../rtl/ycocg2rgb.v
+../../rtl/rgb2ycocg_16.v
+../../rtl/rgb2ycocg.v
+
+../../rtl/bp_rec.v
+../../rtl/bp_rec_com.v
